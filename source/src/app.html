@@ -7,17 +7,17 @@
 :root {
   --bg: #eef0f2; --surface: #ffffff; --surface-2: #e4e7eb; --fg: #14171c; --muted: #5a616d; --line: #d3d7dd;
   --ink: #14171c; --on-ink: #f6f7f8;
-  --good: #1d8148; --warn: #a86a12; --bad: #b8322a;
+  --good: #1d8148; --act: #6a4fc8; --warn: #a86a12; --bad: #b8322a;
   --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
   --font-body: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
   --radius: 12px;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0e1013; --surface: #171a1f; --surface-2: #22262d; --fg: #eceef1; --muted: #9aa1ac; --line: #2b3038;
-  --ink: #eceef1; --on-ink: #121418; --good: #3fbf74; --warn: #e0a43c; --bad: #ef6a5f; color-scheme: dark } }
+  --ink: #eceef1; --on-ink: #121418; --good: #3fbf74; --act: #a58cf2; --warn: #e0a43c; --bad: #ef6a5f; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0e1013; --surface: #171a1f; --surface-2: #22262d; --fg: #eceef1; --muted: #9aa1ac; --line: #2b3038;
-  --ink: #eceef1; --on-ink: #121418; --good: #3fbf74; --warn: #e0a43c; --bad: #ef6a5f; color-scheme: dark }
+  --ink: #eceef1; --on-ink: #121418; --good: #3fbf74; --act: #a58cf2; --warn: #e0a43c; --bad: #ef6a5f; color-scheme: dark }
 
 * { box-sizing: border-box; }
 html, body { background: var(--bg); color: var(--fg); }
@@ -70,6 +70,7 @@ nav.tabs .dot { position: absolute; top: 4px; right: calc(50% - 18px); width: 8p
 
 input[type=text], input[type=number], input[type=date], input[type=search], select, textarea { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; width: 100%; min-height: 40px; }
 textarea { resize: vertical; min-height: 64px; }
+[hidden] { display: none !important; }
 .field { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
 .seg { display: inline-flex; background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 2px; flex-wrap: wrap; }
 .seg button { border: 0; background: transparent; padding: 6px 11px; border-radius: 8px; font-weight: 600; font-size: 13.5px; color: var(--muted); }
@@ -117,6 +118,9 @@ textarea { resize: vertical; min-height: 64px; }
 .heat { display: grid; grid-template-rows: repeat(7, 1fr); grid-auto-flow: column; gap: 3px; }
 .heat i { width: 100%; aspect-ratio: 1; border-radius: 3px; background: var(--surface-2); }
 .heat i.on { background: var(--good); }
+.heat i.act { background: var(--act); }
+.heatkey { display: inline-flex; align-items: center; gap: 5px; } .heatkey i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.actbars .list-row { gap: 10px; } .actbars .bar { flex: 1; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; } .actbars .bar i { display: block; height: 100%; background: var(--act); border-radius: 4px; }
 .heat i.today { outline: 1.5px solid var(--fg); outline-offset: -1.5px; }
 
 .chart { width: 100%; height: auto; display: block; overflow: visible; }
@@ -459,8 +463,10 @@ function viewHome() {
   if (state.active) h += `<button class="btn primary block" data-act="tab" data-id="workout">Resume ${esc(state.active.name || 'workout')}</button>`;
   else if (ps && !ps.finished) h += `<button class="btn primary block" data-act="loadProgDay" data-day="${ps.nextDay}">Start next: ${esc(ps.def.days[ps.nextDay].name)}</button>`;
   else h += `<div class="row"><button class="btn primary" style="flex:1" data-act="tab" data-id="workout">Build a workout</button><button class="btn" style="flex:1" data-act="tab" data-id="programs">Pick a program</button></div>`;
+  h += `<button class="btn ghost block" data-act="activitySheet">+ Log other activity (walk, run, Pilates, yoga…)</button>`;
+  const wkAct = new Set(logs.filter(l => isAct(l) && l.date >= m && l.date <= t).map(l => l.date)).size;
   h += `<div class="grid2">
-    <div class="card stat"><div class="label">This week</div><div class="v">${wk}<small>days</small></div></div>
+    <div class="card stat"><div class="label">This week</div><div class="v">${wk}<small>days</small></div>${wkAct ? `<div class="small muted">Includes ${wkAct} activity day${wkAct > 1 ? 's' : ''}</div>` : ''}</div>
     <div class="card stat"><div class="label">This month</div><div class="v">${mo}<small>days</small></div></div>
     <div class="card stat"><div class="label">Week streak</div><div class="v">${weekStreak()}<small>wks</small></div></div>
     <div class="card stat" data-act="bwSheet" style="cursor:pointer"><div class="label">Body weight</div><div class="v">${bw ? round1(bw.kg) : '–'}<small>${unit()}</small></div><div class="small muted">${bwDelta != null ? `${bwDelta > 0 ? '+' : ''}${bwDelta} ${unit()} in 30 days` : bw ? 'Logged ' + fmtD(bw.date) : 'Tap to log'}</div></div>
@@ -478,10 +484,10 @@ function viewHome() {
   return h + '</div>';
 }
 function heatmap() {
-  const t = today(), start = addDays(mondayOf(t), -7 * 15), set = new Set(logs.map(l => l.date));
+  const t = today(), start = addDays(mondayOf(t), -7 * 15), gym = new Set(logs.filter(l => !isAct(l)).map(l => l.date)), act = new Set(logs.filter(isAct).map(l => l.date));
   let cells = '';
-  for (let i = 0; i < 16 * 7; i++) { const d = addDays(start, i); cells += d > t ? '<i style="visibility:hidden"></i>' : `<i class="${set.has(d) ? 'on' : ''} ${d === t ? 'today' : ''}" title="${fmtD(d)}${set.has(d) ? ': trained' : ''}"></i>`; }
-  return `<div class="heat" style="grid-template-columns:repeat(16,1fr)">${cells}</div><div class="row between small muted" style="margin-top:8px"><span>${fmtD(start)}</span><span>Last 16 weeks</span><span>Today</span></div>`;
+  for (let i = 0; i < 16 * 7; i++) { const d = addDays(start, i), c = gym.has(d) ? 'on' : act.has(d) ? 'act' : ''; cells += d > t ? '<i style="visibility:hidden"></i>' : `<i class="${c} ${d === t ? 'today' : ''}" title="${fmtD(d)}${c === 'on' ? ': gym' : c ? ': activity' : ''}"></i>`; }
+  return `<div class="heat" style="grid-template-columns:repeat(16,1fr)">${cells}</div><div class="row between small muted" style="margin-top:8px"><span>${fmtD(start)}</span><span class="row" style="gap:10px"><span class="heatkey"><i style="background:var(--good)"></i>Gym</span><span class="heatkey"><i style="background:var(--act)"></i>Other activity</span></span><span>Today</span></div>`;
 }
 function recentPRs() {
   const out = [], best = {};
@@ -493,6 +499,49 @@ function recentPRs() {
   })));
   const seen = new Set();
   return out.reverse().filter(p => !seen.has(p.exId) && seen.add(p.exId)).slice(0, 5);
+}
+// ---------- other activities ----------
+const ACTS = [['walking', 'Walking', 1], ['running', 'Running', 1], ['cycling', 'Cycling', 1], ['swimming', 'Swimming', 1], ['hiking', 'Hiking', 1], ['pilates', 'Pilates'], ['yoga', 'Yoga'], ['class', 'Fitness class'], ['sport', 'Sport'], ['dance', 'Dance'], ['stretching', 'Stretching'], ['other', 'Other']].map(([id, name, dist]) => ({ id, name, dist: !!dist }));
+const ACT = Object.fromEntries(ACTS.map(a => [a.id, a]));
+const EFFORT = { easy: 'Easy', moderate: 'Moderate', hard: 'Hard' };
+const isAct = l => l.kind === 'activity';
+const distUnit = () => unit() === 'lb' ? 'mi' : 'km';
+const toKm = v => distUnit() === 'mi' ? v * 1.60934 : v;
+const fromKm = km => distUnit() === 'mi' ? km / 1.60934 : km;
+const actPill = id => `<span class="pill" style="--c:var(--act);--t:#fff">${esc(ACT[id]?.name || 'Activity')}</span>`;
+function actSummary(l) { return [l.minutes ? l.minutes + ' min' : '', l.km ? round1(fromKm(l.km)) + ' ' + distUnit() : '', EFFORT[l.effort] || ''].filter(Boolean).join(' · '); }
+function actRow(l) {
+  return `<div class="list-row"><div style="min-width:0"><strong>${esc(l.name)}</strong><div class="small muted">${fmtDL(l.date)} · ${actSummary(l)}</div>${l.note ? `<div class="small" style="margin-top:2px">${esc(l.note)}</div>` : ''}<div class="chips" style="margin-top:4px">${actPill(l.activity)}</div></div><button class="btn sm ghost danger" data-act="delLog" data-id="${l.id}" aria-label="Delete activity">×</button></div>`;
+}
+function activitySheet() {
+  if (!ACT[ui.actType]) ui.actType = 'walking';
+  if (!EFFORT[ui.actEffort]) ui.actEffort = 'moderate';
+  const a = ACT[ui.actType];
+  openSheet(`<div class="sheet-head"><div><div class="label">Outside the gym</div><h2>Log an activity</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
+   <div class="stack">
+    <div class="field"><span class="label">What did you do?</span><div class="chips">${ACTS.map(x => `<button class="chip ${x.id === a.id ? 'on' : ''}" aria-pressed="${x.id === a.id}" data-act="selActType" data-id="${x.id}">${esc(x.name)}</button>`).join('')}</div></div>
+    <div class="grid2"><div class="field"><label class="label" for="actMin">Minutes</label><input id="actMin" type="number" inputmode="numeric" min="1" placeholder="45"></div><div class="field"><label class="label" for="actDate">Date</label><input id="actDate" type="date" value="${today()}" max="${today()}"></div></div>
+    <div class="field" id="actDistF" ${a.dist ? '' : 'hidden'}><label class="label" for="actDist">Distance (${distUnit()}, optional)</label><input id="actDist" type="number" inputmode="decimal" step="0.1" min="0" placeholder="5"></div>
+    <div class="field"><span class="label">How hard was it?</span><div class="seg">${Object.entries(EFFORT).map(([k, v]) => `<button data-act="selActEffort" data-v="${k}" aria-pressed="${ui.actEffort === k}">${v}</button>`).join('')}</div></div>
+    <div class="field"><label class="label" for="actName">Name (optional)</label><input id="actName" type="text" placeholder="${esc(a.name)}"></div>
+    <div class="field"><label class="label" for="actNote">Note (optional)</label><input id="actNote" type="text" placeholder="e.g. Reformer class, hilly route"></div>
+    <button class="btn primary block" data-act="saveActivity">Save activity</button>
+    <div class="small muted">Activities count toward your days attended, week streak and weekly training goals.</div>
+   </div>`);
+}
+function activityProgress() {
+  const acts = logs.filter(isAct);
+  let h = `<div class="section-head"><h2>Other activities</h2><button class="link small" data-act="activitySheet">Log activity</button></div>`;
+  if (!acts.length) return h + `<div class="card flat empty"><div><strong>Nothing logged outside the gym yet</strong><div class="small muted">Add Pilates, yoga, runs, walks, classes or sport so every active day counts.</div></div><button class="btn" data-act="activitySheet">Log activity</button></div>`;
+  const t = today(), m = mondayOf(t), from = addDays(t, -29), recent = acts.filter(l => l.date >= from);
+  const mins = recent.reduce((s, l) => s + (+l.minutes || 0), 0), km = recent.reduce((s, l) => s + (+l.km || 0), 0);
+  const wkMin = acts.filter(l => l.date >= m && l.date <= t).reduce((s, l) => s + (+l.minutes || 0), 0);
+  const by = {}; recent.forEach(l => { const b = by[l.activity] || (by[l.activity] = { n: 0, min: 0, km: 0 }); b.n++; b.min += +l.minutes || 0; b.km += +l.km || 0; });
+  const rows = Object.entries(by).sort((a, b) => b[1].min - a[1].min), top = rows.length ? rows[0][1].min || 1 : 1;
+  h += `<div class="card stack" style="gap:12px"><div class="grid3"><div><div class="label">This week</div><div class="big">${wkMin}<small> min</small></div></div><div><div class="label">Last 30 days</div><div class="big">${recent.length}<small> sessions</small></div></div><div><div class="label">${km ? 'Distance' : 'Time'} (30d)</div><div class="big">${km ? round1(fromKm(km)) : Math.round(mins / 6) / 10}<small> ${km ? distUnit() : 'hrs'}</small></div></div></div>`;
+  if (rows.length) h += `<div class="actbars">${rows.map(([id, b]) => `<div class="list-row"><span style="width:96px;flex:none">${esc(ACT[id]?.name || id)}</span><span class="bar"><i style="width:${Math.max(4, Math.round(b.min / top * 100))}%"></i></span><span class="small muted" style="flex:none;text-align:right;min-width:92px">${b.n}× · ${b.min} min${b.km ? ` · ${round1(fromKm(b.km))} ${distUnit()}` : ''}</span></div>`).join('')}</div>`;
+  else h += `<div class="small muted">No activities in the last 30 days.</div>`;
+  return h + `</div>`;
 }
 function programCard(ps, full) {
   const { def } = ps;
@@ -627,6 +676,7 @@ function viewWorkout() {
     h += `<div class="row"><button class="btn primary" style="flex:2" data-act="startSession">Start workout</button><button class="btn" style="flex:1" data-act="saveTemplate">Save for later</button></div>`;
     h += `<button class="btn ghost block" data-act="tab" data-id="exercises">+ Add more exercises</button>`;
   }
+  h += `<div class="card flat row between" style="flex-wrap:nowrap;gap:12px"><div style="min-width:0"><strong>Not lifting today?</strong><div class="small muted">Log Pilates, yoga, a run, a walk or a class so it counts toward your days.</div></div><button class="btn" style="flex:none;white-space:nowrap" data-act="activitySheet">Log activity</button></div>`;
   if (state.templates.length) h += `<div class="section-head"><h2>Saved workouts</h2></div><div class="card">${state.templates.map(t => `<div class="list-row"><div style="min-width:0"><strong>${esc(t.name)}</strong><div class="small muted">${t.items.length} exercises · ${[...new Set(t.items.flatMap(i => EX[i.exId] ? EX[i.exId].groups : []))].map(g => G[g].name).join(', ')}</div></div><div class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn sm" data-act="loadTemplate" data-id="${t.id}">Load</button><button class="btn sm ghost danger" data-act="delTemplate" data-id="${t.id}" aria-label="Delete ${esc(t.name)}">×</button></div></div>`).join('')}</div>`;
   return h + '</div>';
 }
@@ -747,7 +797,7 @@ function ruleRecommend(text, seed) {
 }
 async function claudeRecommend(text) {
   const catalogue = EXERCISES.map(e => `${e.id}|${e.name}|${e.primary.map(m => M[m].name).join(',')}|${TAX.equipment[e.equipment]}|${e.type}`).join('\n');
-  const recent = logs.slice(-5).map(l => `${l.date}: ${l.items.map(i => EX[i.exId]?.name).join(', ')}`).join('\n');
+  const recent = logs.slice(-5).map(l => `${l.date}: ${isAct(l) ? `${l.name} (${actSummary(l)})` : l.items.map(i => EX[i.exId]?.name).join(', ')}`).join('\n');
   const ps = programStatus();
   const prompt = `You are a strength coach inside a gym app. Build one training session from the exercise catalogue for this request.
 
@@ -860,6 +910,7 @@ function progDetail(id) {
    <div class="stack"><div>${esc(p.summary)}</div>
     <div class="card"><div class="label" style="margin-bottom:8px">Phases · ${p.weeks} weeks</div>${phaseBar(p, 0)}<div style="margin-top:10px">${p.phases.map(ph => `<div class="list-row" style="align-items:flex-start"><div style="min-width:0"><strong>Wk ${ph.weeks[0]}${ph.weeks[1] > ph.weeks[0] ? '-' + ph.weeks[1] : ''} · ${esc(ph.name)}</strong><div class="small muted">${esc(ph.focus)}</div></div><div class="rec" style="text-align:right">${esc(ph.sets)} × ${esc(ph.reps)}<div class="small muted" style="font-family:var(--font-body);font-weight:500">${esc(ph.rpe)}</div></div></div>`).join('')}</div></div>
     <div class="card"><div class="label">Weekly plan · ${p.daysPerWeek} days</div>${p.days.map((d, di) => { const labels = ssLabels(d.exercises.map((x, k) => ({ link: !!(x[3] && d.exercises[k + 1] && d.exercises[k + 1][3] === x[3]) }))); return `<div style="margin-top:12px"><div class="row between"><strong>Day ${di + 1} · ${esc(d.name)}</strong>${running ? `<button class="btn sm" data-act="loadProgDay" data-day="${di}">Load</button>` : ''}</div><div class="dayex">${d.exercises.map((x, k) => `<div><span class="ssl">${labels[k]}</span><span><span class="dotc" style="background:${G[EX[x[0]].primaryGroup].color};margin-right:6px"></span>${esc(EX[x[0]].name)}</span><span class="rec">${x[1]} × ${esc(x[2])}</span></div>`).join('')}</div></div>`; }).join('')}<div class="small muted" style="margin-top:10px">Matching letters (A1, A2) are supersets. Sets and reps shift with each phase.</div></div>
+    ${p.extras?.length ? `<div class="card"><div class="label">Alongside your sessions</div><ul class="cues" style="margin:6px 0 0">${p.extras.map(x => `<li>${esc(x)}</li>`).join('')}</ul><div class="small muted" style="margin-top:8px">Log these with Log activity so they count toward your week.</div></div>` : ''}
     <div class="card"><div class="label">How to progress</div><div>${esc(p.progression)}</div><div class="label" style="margin-top:10px">Nutrition</div><div>${esc(p.nutrition)}</div></div>
     ${running ? `<button class="btn block" data-act="closeSheet">This is your current program</button>` : `<div class="field"><label class="label" for="progStart">Start date</label><input type="date" id="progStart" value="${mondayOf(today()) === today() ? today() : today()}"></div><button class="btn primary block" data-act="startProgram" data-id="${id}">${state.program ? 'Switch to this program' : 'Start this program'}</button>${state.program ? `<div class="small muted">This ends ${esc(PROG[state.program.id]?.name || 'your current program')} and saves it to your past programs.</div>` : ''}`}
    </div>`);
@@ -891,8 +942,9 @@ function viewProgress() {
       <div class="label">Top set per session</div>${lineChart(hist.map(x => ({ x: x.date, y: x.top })), { h: 140 })}
       <div class="tablewrap"><table class="hist"><thead><tr><th>Date</th><th>Sets (${unit()} × reps)</th><th>Volume</th></tr></thead><tbody>${hist.slice().reverse().slice(0, 12).map(x => `<tr><td>${fmtD(x.date)}</td><td>${x.sets.map(s => `${round1(+s.w)}×${s.r}`).join(', ')}</td><td>${Math.round(x.vol)}</td></tr>`).join('')}</tbody></table></div></div>`;
   } else h += `<div class="card flat empty"><div><strong>No lifts logged yet</strong><div class="small muted">Finish a workout and every exercise you tick off gets its own progress chart here.</div></div><button class="btn" data-act="tab" data-id="workout">Start a workout</button></div>`;
-  h += `<div class="section-head"><h2>Workout history</h2><span class="small muted">${logs.length} session${logs.length === 1 ? '' : 's'}</span></div>`;
-  h += logs.length ? `<div class="card">${logs.slice().reverse().slice(0, 40).map(l => { const sets = l.items.reduce((n, i) => n + i.sets.length, 0); const gs = [...new Set(l.items.flatMap(i => EX[i.exId] ? [EX[i.exId].primaryGroup] : []))]; return `<div class="list-row"><div style="min-width:0"><strong>${esc(l.name)}</strong><div class="small muted">${fmtDL(l.date)} · ${l.items.length} exercises · ${sets} sets${l.programId && PROG[l.programId] ? ' · ' + esc(PROG[l.programId].name) : ''}</div><div class="chips" style="margin-top:4px">${gs.map(gPill).join('')}</div></div><div class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn sm" data-act="repeatLog" data-id="${l.id}">Repeat</button><button class="btn sm ghost danger" data-act="delLog" data-id="${l.id}" aria-label="Delete workout">×</button></div></div>`; }).join('')}</div>` : `<div class="card flat empty small muted">Your finished workouts will be listed here.</div>`;
+  h += activityProgress();
+  h += `<div class="section-head"><h2>History</h2><span class="small muted">${logs.length} session${logs.length === 1 ? '' : 's'}</span></div>`;
+  h += logs.length ? `<div class="card">${logs.slice().reverse().slice(0, 40).map(l => { if (isAct(l)) return actRow(l); const sets = l.items.reduce((n, i) => n + i.sets.length, 0); const gs = [...new Set(l.items.flatMap(i => EX[i.exId] ? [EX[i.exId].primaryGroup] : []))]; return `<div class="list-row"><div style="min-width:0"><strong>${esc(l.name)}</strong><div class="small muted">${fmtDL(l.date)} · ${l.items.length} exercises · ${sets} sets${l.programId && PROG[l.programId] ? ' · ' + esc(PROG[l.programId].name) : ''}</div><div class="chips" style="margin-top:4px">${gs.map(gPill).join('')}</div></div><div class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn sm" data-act="repeatLog" data-id="${l.id}">Repeat</button><button class="btn sm ghost danger" data-act="delLog" data-id="${l.id}" aria-label="Delete workout">×</button></div></div>`; }).join('')}</div>` : `<div class="card flat empty small muted">Your finished workouts and activities will be listed here.</div>`;
   return h + '</div>';
 }
 
@@ -1009,6 +1061,15 @@ const A = {
   discardSession: () => confirmSheet('Discard this workout?', 'Nothing from this session will be saved.', () => { state.active = null; ui.timerEnd = 0; saveState(true); render(); }, 'Discard'),
   timerDur: d => { ui.timerDur = +d.s; render(); },
   timerAdd: d => { ui.timerEnd = Math.max(Date.now(), ui.timerEnd) + +d.s * 1000; renderTimer(); }, timerStop: () => { ui.timerEnd = 0; renderTimer(); },
+  activitySheet: () => activitySheet(),
+  selActType: d => { ui.actType = d.id; document.querySelectorAll('[data-act="selActType"]').forEach(b => { const on = b.dataset.id === d.id; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); $('#actDistF').hidden = !ACT[d.id].dist; const n = $('#actName'); if (n) n.placeholder = ACT[d.id].name; },
+  selActEffort: d => { ui.actEffort = d.v; document.querySelectorAll('[data-act="selActEffort"]').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === d.v)); },
+  saveActivity: () => {
+    const a = ACT[ui.actType], min = Math.round(+$('#actMin').value || 0), dist = +($('#actDist')?.value || 0);
+    if (!(min > 0)) { toast('Add how many minutes it took'); return $('#actMin').focus(); }
+    const log = { id: uid(), kind: 'activity', date: $('#actDate').value || today(), name: $('#actName').value.trim() || a.name, activity: a.id, minutes: min, km: a.dist && dist > 0 ? Math.round(toKm(dist) * 100) / 100 : null, effort: ui.actEffort, note: $('#actNote').value.trim(), programId: null, started: Date.now(), ended: Date.now(), items: [] };
+    logs.push(log); sortLogs(); saveLog(log); closeSheet(); render(); toast(`${a.name} logged`);
+  },
   progCat: d => { ui.progCat = d.v; render(); }, progDetail: d => progDetail(d.id),
   startProgram: d => { const start = $('#progStart')?.value || today(); endProgramRecord(); state.program = { id: d.id, start, runId: uid() }; state.draft = blankDraft(); saveState(true); closeSheet(); go('home'); toast('Program started. Good luck!'); },
   endProgram: () => confirmSheet('End this program?', 'It moves to your past programs. Your logged workouts stay.', () => { endProgramRecord(); saveState(true); render(); }, 'End program'),
@@ -1019,7 +1080,7 @@ const A = {
   goalDel: d => confirmSheet('Delete this goal?', 'Its history is removed too.', () => { state.goals = state.goals.filter(x => x.id !== d.id); saveState(); render(); }, 'Delete goal'),
   unitSet: d => { state.settings.unit = d.v; saveState(); render(); settingsSheet(); },
   resetAll: () => confirmSheet('Delete all your data?', 'This removes every workout, weigh-in, goal and program from this app. It cannot be undone.', () => { const old = logs.slice(); state = blankState(); logs = []; saveState(true); old.forEach(l => deleteLog(l.id)); render(); toast('All data deleted'); }, 'Delete everything'),
-  delLog: d => confirmSheet('Delete this workout?', 'It is removed from your history, progress charts and program tracking.', () => { logs = logs.filter(l => l.id !== d.id); deleteLog(d.id); render(); }, 'Delete workout'),
+  delLog: d => confirmSheet(isAct(logs.find(l => l.id === d.id) || {}) ? 'Delete this activity?' : 'Delete this workout?', 'It is removed from your history, progress charts and program tracking.', () => { logs = logs.filter(l => l.id !== d.id); deleteLog(d.id); render(); }, 'Delete workout'),
   repeatLog: d => { const l = logs.find(x => x.id === d.id); state.draft = { name: l.name, programId: null, dayIndex: null, items: l.items.filter(i => EX[i.exId]).map(i => ({ exId: i.exId, sets: i.sets.length, reps: i.target || String(i.sets[0]?.r || 10), link: !!i.link })) }; if (state.draft.items.length) state.draft.items[state.draft.items.length - 1].link = false; saveState(); go('workout'); },
   backup: () => {
     const blob = new Blob([JSON.stringify({ app: 'duolifto', version: 1, exported: new Date().toISOString(), state, logs })], { type: 'application/json' });

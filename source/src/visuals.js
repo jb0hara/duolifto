@@ -202,10 +202,77 @@ function benchLabel(e, key) {
 function howToCard(e) {
   const h = HOWTO[e.id]; if (!h) return '';
   return `<div class="card stack" style="gap:12px"><div class="label">How to do it</div>
-    ${(() => { const key = DIAGRAM_OVERRIDE[e.id] || h.diagram, bl = benchLabel(e, key); return (bl ? `<div class="benchtag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15h18M6 15v5M18 15v5M5 11h9"/></svg>${esc(bl)}</div>` : '') + movementDiagram(e, key); })()}
+    ${(() => { const key = DIAGRAM_OVERRIDE[e.id] || h.diagram, bl = benchLabel(e, key); if (SEQ_FOR[e.id]) return (bl ? `<div class="benchtag">${esc(bl)}</div>` : '') + sequenceDiagram(e, SEQ_FOR[e.id]); return (bl ? `<div class="benchtag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15h18M6 15v5M18 15v5M5 11h9"/></svg>${esc(bl)}</div>` : '') + movementDiagram(e, key); })()}
     ${h.setup ? `<div><strong>Setup.</strong> ${esc(h.setup)}</div>` : ''}
     <ol class="steps">${h.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
     ${h.cues?.length ? `<div><div class="label" style="margin-bottom:4px">Coaching cues</div><ul class="cues">${h.cues.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>` : ''}
     ${h.mistakes?.length ? `<div><div class="label" style="margin-bottom:4px">Avoid</div><ul class="cues bad">${h.mistakes.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>` : ''}
     ${h.breathing ? `<div class="small muted"><strong style="color:var(--fg)">Breathing.</strong> ${esc(h.breathing)}</div>` : ''}</div>`;
+}
+
+// ---------- multi-phase sequences for complex lifts ----------
+const P_ = {
+  floor: side({ hp: [88, 114], k: [112, 126], s: [118, 92], e: [117, 115], w: [116, 138] }),
+  knee: side({ hp: [90, 100], k: [106, 124], s: [118, 70], e: [118, 92], w: [116, 114] }),
+  hang: side({ hp: [94, 94], k: [104, 122], s: [114, 58], e: [114, 80], w: [112, 102] }),
+  ext: side({ a: [104, 146], k: [100, 118], hp: [98, 88], s: [96, 48], e: [100, 70], w: [102, 92] }),
+  under: side({ hp: [94, 104], k: [112, 124], s: [98, 64], e: [118, 62], w: [106, 56] }),
+  catchR: side({ hp: [92, 110], k: [112, 128], s: [98, 70], e: [114, 78], w: [104, 66] }),
+  rack: side({ e: [114, 58], w: [104, 48] }),
+  dip: side({ hp: [98, 100], k: [112, 124], s: [100, 60], e: [114, 68], w: [104, 58] }),
+  drive: side({ a: [104, 146], k: [100, 118], hp: [100, 88], s: [100, 48], e: [106, 34], w: [104, 18] }),
+  over: side({ e: [102, 28], w: [102, 6] }),
+  snatchUnder: side({ hp: [94, 104], k: [112, 124], s: [98, 64], e: [108, 42], w: [104, 22] }),
+  snatchCatch: side({ hp: [92, 110], k: [112, 128], s: [98, 70], e: [96, 46], w: [94, 22] }),
+  split: { hp: [100, 96], s: [100, 56], e: [100, 34], w: [100, 12], k: [122, 120], a: [126, 150], k2: [86, 132], a2: [70, 150] },
+  fsBottom: side({ hp: [86, 118], k: [122, 128], s: [100, 82], e: [116, 88], w: [106, 78] }),
+  fsMid: side({ hp: [96, 100], k: [112, 124], s: [100, 60], e: [112, 64], w: [104, 52] }),
+  lockout: side({ w: [102, 94] }),
+  swingBack: side({ hp: [84, 94], k: [102, 122], s: [118, 70], e: [108, 92], w: [96, 110] }),
+  swingUp: side({ e: [122, 56], w: [144, 58] }),
+  plankTop: { a: [152, 148], k: [130, 140], hp: [110, 132], s: [70, 116], e: [70, 132], w: [70, 148] },
+  plankRow: { a: [152, 148], k: [130, 140], hp: [110, 132], s: [70, 116], e: [70, 132], w: [70, 148], e2: [88, 104], w2: [80, 124] },
+  plankLow: { a: [152, 148], k: [130, 143], hp: [110, 138], s: [70, 138], e: [86, 130], w: [70, 148] },
+  crouch: { a: [110, 150], k: [126, 126], hp: [96, 122], s: [112, 92], e: [112, 118], w: [112, 146] },
+  stand: side({}),
+  load: side({ hp: [90, 108], k: [114, 124], s: [108, 72], e: [96, 86], w: [84, 98] }),
+  air: side({ a: [118, 108], k: [128, 82], hp: [104, 76], s: [104, 36], e: [118, 30], w: [130, 22] }),
+  landBox: side({ a: [136, 118], k: [156, 98], hp: [128, 92], s: [140, 56], e: [150, 70], w: [160, 62] }),
+  tgu1: { s: [70, 140], hp: [110, 142], k: [130, 124], a: [146, 148], e: [70, 118], w: [70, 96] },
+  tgu2: { s: [78, 124], hp: [110, 142], k: [130, 124], a: [146, 148], e: [80, 100], w: [80, 78], e2: [66, 140], w2: [60, 146] },
+  tgu3: { s: [84, 110], hp: [110, 142], k: [130, 124], a: [146, 148], e: [86, 86], w: [88, 64], e2: [72, 128], w2: [62, 146] },
+  tgu4: { s: [84, 102], hp: [112, 122], k: [132, 124], a: [146, 148], e: [86, 78], w: [88, 56], e2: [72, 124], w2: [62, 146] },
+  tgu5: { hp: [100, 108], s: [100, 68], k: [124, 122], a: [124, 150], k2: [94, 148], a2: [72, 150], e: [100, 46], w: [100, 24] },
+  rotate: side({ e: [104, 72], w: [102, 52] }),
+  pressMid: side({ e: [112, 50], w: [108, 32] }),
+};
+const SEQ = {
+  clean: { labels: ['Set up', 'Lift past knees', 'Jump and shrug', 'Pull under', 'Catch', 'Stand'], frames: [P_.floor, P_.knee, P_.ext, P_.under, P_.catchR, P_.rack] },
+  hang_clean: { labels: ['Hang at mid-thigh', 'Jump and shrug', 'Pull under', 'Catch', 'Stand'], frames: [P_.hang, P_.ext, P_.under, P_.catchR, P_.rack] },
+  snatch: { labels: ['Set up, wide grip', 'Lift past knees', 'Jump and shrug', 'Pull under', 'Catch overhead', 'Stand'], frames: [P_.floor, P_.knee, P_.ext, P_.snatchUnder, P_.snatchCatch, P_.over] },
+  clean_jerk: { labels: ['Set up', 'Jump and shrug', 'Catch', 'Stand', 'Dip', 'Drive and split', 'Recover'], frames: [P_.floor, P_.ext, P_.catchR, P_.rack, P_.dip, P_.split, P_.over] },
+  thruster: { labels: ['Front rack', 'Squat down', 'Drive up', 'Press overhead'], frames: [P_.rack, P_.fsBottom, P_.fsMid, P_.over] },
+  push_press: { labels: ['Front rack', 'Dip', 'Drive with legs', 'Lock out'], frames: [P_.rack, P_.dip, P_.drive, P_.over] },
+  kb_clean_press: { labels: ['Hike back', 'Clean to rack', 'Press overhead'], frames: [P_.swingBack, P_.rack, P_.over] },
+  kb_snatch: { labels: ['Hike back', 'Drive hips', 'Punch overhead'], frames: [P_.swingBack, P_.ext, P_.over] },
+  getup: { labels: ['Lie, weight up', 'Roll to elbow', 'Up to hand', 'Lift hips', 'Sweep to kneel', 'Stand'], frames: [P_.tgu1, P_.tgu2, P_.tgu3, P_.tgu4, P_.tgu5, P_.over] },
+  man_maker: { labels: ['Plank on dumbbells', 'Push-up', 'Row each side', 'Jump feet in', 'Clean to shoulders', 'Press overhead'], frames: [P_.plankTop, P_.plankLow, P_.plankRow, P_.crouch, P_.rack, P_.over] },
+  burpee: { labels: ['Stand', 'Squat, hands down', 'Jump to plank', 'Chest to floor', 'Jump feet in', 'Jump up'], frames: [P_.stand, P_.crouch, P_.plankTop, P_.plankLow, P_.crouch, P_.air] },
+  renegade: { labels: ['Plank on dumbbells', 'Row one side', 'Back to plank, switch'], frames: [P_.plankTop, P_.plankRow, P_.plankTop] },
+  deadlift: { labels: ['Set up', 'Bar past knees', 'Lock out'], frames: [P_.floor, P_.knee, P_.lockout] },
+  box_jump: { props: ['boxhi'], labels: ['Stand', 'Load', 'Jump', 'Land soft'], frames: [P_.stand, P_.load, P_.air, P_.landBox] },
+  tire_flip: { labels: ['Squat down, grip', 'Drive hips up', 'Push it over'], frames: [P_.floor, P_.knee, side({ e: [124, 56], w: [146, 52] })] },
+  arnold: { props: ['upright'], labels: ['Palms facing you', 'Rotate and press', 'Lock out'], frames: [{ hp: [98, 118], s: [96, 78], k: [126, 120], a: [128, 150], e: [108, 96], w: [106, 76] }, { hp: [98, 118], s: [96, 78], k: [126, 120], a: [128, 150], e: [112, 64], w: [108, 46] }, { hp: [98, 118], s: [96, 78], k: [126, 120], a: [128, 150], e: [100, 54], w: [100, 32] }] },
+};
+PROPS.boxhi = '<rect x="122" y="118" width="40" height="32" rx="2" class="pr"/>';
+const SEQ_FOR = {};
+[['clean', 'power-clean'], ['hang_clean', 'hang-clean'], ['snatch', 'power-snatch'], ['clean_jerk', 'clean-and-jerk'],
+ ['thruster', 'thruster dumbbell-thruster wall-ball'], ['push_press', 'push-press'], ['kb_clean_press', 'kettlebell-clean-and-press'],
+ ['kb_snatch', 'kettlebell-snatch'], ['getup', 'turkish-get-up'], ['man_maker', 'man-maker'], ['burpee', 'burpee'], ['renegade', 'renegade-row'],
+ ['deadlift', 'conventional-deadlift sumo-deadlift trap-bar-deadlift deficit-deadlift'], ['box_jump', 'box-jump'], ['tire_flip', 'tire-flip'], ['arnold', 'arnold-press']]
+  .forEach(([k, ids]) => ids.split(' ').forEach(id => SEQ_FOR[id] = k));
+function sequenceDiagram(e, key) {
+  const d = SEQ[key];
+  const frame = (p, i) => `<figure class="mv"><svg viewBox="20 -24 170 182" role="img" aria-label="Step ${i + 1}: ${esc(d.labels[i])}"><line x1="20" y1="150.5" x2="190" y2="150.5" class="floor"/>${(d.props || []).map(k => PROPS[k]).join('')}${stick(p, e.equipment, d)}</svg><figcaption>${i + 1} · ${esc(d.labels[i])}</figcaption></figure>`;
+  return `<div class="mvseq" role="list">${d.frames.map(frame).join('')}</div><div class="small muted" style="margin-top:-4px">${d.frames.length} positions · swipe to see them all</div>`;
 }

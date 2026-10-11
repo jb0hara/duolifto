@@ -202,6 +202,31 @@ table.hist td, table.hist th { padding: 7px 6px; border-top: 1px solid var(--lin
 table.hist th { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-top: 0; }
 .tablewrap { overflow-x: auto; }
 details summary { cursor: pointer; }
+.bmrow { display: flex; gap: 10px; justify-content: center; }
+.bmv { margin: 0; flex: 1; max-width: 220px; min-width: 0; text-align: center; }
+.bodymap { width: 100%; height: auto; max-height: 230px; display: block; }
+.bodymap .sil { fill: var(--surface-2); }
+.bodymap .mu { fill: color-mix(in srgb, var(--fg) 9%, var(--surface-2)); stroke: var(--surface); stroke-width: .8; }
+.bodymap .hl { stroke: var(--surface); stroke-width: .8; }
+.bmv figcaption, .mv figcaption { font-size: 11.5px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+.legend { display: flex; gap: 14px; justify-content: center; font-size: 12.5px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.mvrow { display: grid; grid-template-columns: 1fr 22px 1fr; align-items: center; gap: 4px; background: var(--surface-2); border-radius: 10px; padding: 8px; }
+.mvrow.one { grid-template-columns: 1fr; max-width: 260px; margin: 0 auto; width: 100%; }
+.mv { margin: 0; text-align: center; min-width: 0; }
+.mv svg { width: 100%; height: auto; display: block; }
+.mv .bone { stroke: var(--fg); stroke-width: 5; stroke-linecap: round; }
+.mv .bone.far { opacity: .35; }
+.mv .headc { fill: var(--fg); }
+.mv .floor { stroke: var(--line); stroke-width: 2; }
+.mv .pr { fill: var(--line); } .mv .pr-l { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
+.mv .plate { fill: var(--surface); stroke: var(--fg); stroke-width: 2.5; } .mv .hub { fill: var(--fg); }
+.mv .cable { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.mvarrow { width: 22px; height: 22px; stroke: var(--muted); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+ol.steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
+ol.steps li::marker { font-family: var(--font-display); font-weight: 700; }
+ul.cues { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+ul.cues.bad li::marker { color: var(--bad); }
 @media (prefers-reduced-motion: no-preference) { .sheet { animation: up .22s ease-out; } @keyframes up { from { transform: translateY(30px); opacity: .6; } } }
 </style>
 
@@ -222,6 +247,7 @@ details summary { cursor: pointer; }
 
 <script>
 /*__DATA__*/
+/*__VISUALS__*/
 
 // ---------- indexes ----------
 const G = {}, SG = {}, M = {}, EX = {};
@@ -571,7 +597,8 @@ function exDetail(id) {
   const kw = [...new Set([...e.groups.map(g => G[g].name), ...e.subgroups.map(s => SG[s].name), TAX.equipment[e.equipment], TAX.patterns[e.pattern], e.type, ...e.tags])];
   openSheet(`<div class="sheet-head"><div><div class="cat muted">${esc(TAX.patterns[e.pattern])} · ${esc(TAX.equipment[e.equipment])} · ${e.type}</div><h2>${esc(e.name)}</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
    <div class="stack">
-    <div class="card"><div class="label" style="margin-bottom:8px">Muscles worked</div><div class="tree">${tree}</div><div class="small muted" style="margin-top:8px">Group, then sub-category, then the specific muscles. 2° marks secondary muscles.</div></div>
+    <div class="card"><div class="label" style="margin-bottom:8px">Muscles worked</div>${bodyMap(e.primary, e.secondary)}<div class="legend" style="margin:6px 0 12px"><span><i style="background:${SG[M[e.primary[0]].sub].color}"></i>Main</span>${e.secondary.length ? `<span><i style="background:${M[e.secondary[0]].color}"></i>Secondary</span>` : ''}</div><div class="tree">${tree}</div><div class="small muted" style="margin-top:8px">Group, then sub-category, then the specific muscles. 2° marks secondary muscles.</div></div>
+    ${howToCard(e)}
     <div class="card"><div class="label" style="margin-bottom:6px">Recommended sets × reps</div><div class="grid3">${['strength', 'hypertrophy', 'endurance'].map(k => `<div><div class="small muted">${STYLE_NAMES[k]}</div><div class="rec" style="font-size:19px">${esc(e.rec[k])}</div></div>`).join('')}</div></div>
     <div class="card"><div class="label" style="margin-bottom:6px">Keywords</div><div class="chips">${kw.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div></div>
     ${hist.length ? `<div class="card"><div class="label">Your progress · best set (estimated 1RM)</div>${lineChart(hist.map(x => ({ x: x.date, y: x.best })), { h: 130 })}<div class="small muted">Last: ${hist[hist.length - 1].sets.map(s => `${round1(+s.w)}×${s.r}`).join(', ')} on ${fmtD(hist[hist.length - 1].date)}</div></div>` : ''}

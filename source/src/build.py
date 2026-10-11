@@ -110,7 +110,11 @@ for prog in programs:
 out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "dist/gym-app.html"
 out.parent.mkdir(parents=True, exist_ok=True)
 page = (ROOT / "src/app.html").read_text()
-page = page.replace("/*__DATA__*/", "const TAX=%s;\nconst EXERCISES=%s;\nconst PROGRAMS=%s;" % (
-    json.dumps(tax, separators=(",", ":")), json.dumps(exercises, separators=(",", ":")), json.dumps(programs, separators=(",", ":"))))
+howto = {}
+for f in sorted((ROOT / "data/howto").glob("*.json")):
+    howto.update(json.loads(f.read_text()))
+page = page.replace("/*__DATA__*/", "const TAX=%s;\nconst EXERCISES=%s;\nconst PROGRAMS=%s;\nconst HOWTO=%s;" % (
+    json.dumps(tax, separators=(",", ":")), json.dumps(exercises, separators=(",", ":")), json.dumps(programs, separators=(",", ":")), json.dumps(howto, separators=(",", ":"))))
+page = page.replace("/*__VISUALS__*/", (ROOT / "src/visuals.js").read_text())
 out.write_text(page)
 print(f"{len(exercises)} exercises, {len(programs)} programs -> {out} ({out.stat().st_size//1024} KB)")

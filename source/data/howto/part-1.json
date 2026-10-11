@@ -1,0 +1,1262 @@
+{
+ "barbell-bench-press": {
+  "setup": "Lie on a flat bench with eyes under the bar, feet flat, and grip slightly wider than shoulder width.",
+  "steps": [
+   "Unrack the bar and hold it over your mid-chest with straight arms.",
+   "Lower the bar under control to your chest, elbows about 45-60 degrees from your body.",
+   "Press the bar up and slightly back until your arms are straight.",
+   "Re-rack the bar only when your arms are locked out."
+  ],
+  "cues": [
+   "Shoulder blades pinched back and down",
+   "Feet planted, drive through the floor",
+   "Wrists stacked over elbows"
+  ],
+  "mistakes": [
+   "Bouncing the bar off your chest",
+   "Flaring elbows out to 90 degrees"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "incline-barbell-bench-press": {
+  "setup": "Set an incline bench to 30-45 degrees, lie back with eyes under the bar, and grip just wider than shoulders.",
+  "steps": [
+   "Unrack the bar and hold it over your upper chest with straight arms.",
+   "Lower the bar to your upper chest under control, elbows about 45-60 degrees out.",
+   "Press the bar up until your arms are straight over your shoulders.",
+   "Re-rack the bar only when your arms are locked out."
+  ],
+  "cues": [
+   "Keep your back and hips on the bench",
+   "Bar touches the upper chest",
+   "Shoulder blades pinched back and down"
+  ],
+  "mistakes": [
+   "Setting the bench too steep, turning it into a shoulder press",
+   "Lifting your hips off the bench"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "decline-barbell-bench-press": {
+  "setup": "Lie on a decline bench with your legs secured under the pads and grip slightly wider than shoulders; use a spotter.",
+  "steps": [
+   "Unrack the bar with a spotter and hold it over your lower chest.",
+   "Lower the bar to your lower chest under control, elbows about 45 degrees out.",
+   "Press the bar up until your arms are straight.",
+   "Have your spotter help re-rack the bar before you sit up."
+  ],
+  "cues": [
+   "Control the bar all the way down",
+   "Keep shoulder blades pinched",
+   "Wrists stacked over elbows"
+  ],
+  "mistakes": [
+   "Bouncing the bar off your chest",
+   "Skipping the spotter on a decline bench"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "close-grip-bench-press": {
+  "setup": "Lie on a flat bench with eyes under the bar and hands about shoulder-width apart, just inside a normal grip.",
+  "steps": [
+   "Unrack the bar and hold it over your mid-chest with straight arms.",
+   "Lower the bar to your lower chest, keeping elbows tucked close to your ribs.",
+   "Press the bar up, squeezing your triceps to lock out.",
+   "Re-rack the bar only when your arms are locked out."
+  ],
+  "cues": [
+   "Elbows tucked about 30-45 degrees",
+   "Push the bar straight up",
+   "Keep wrists straight and stacked"
+  ],
+  "mistakes": [
+   "Hands so narrow your wrists bend painfully",
+   "Letting the elbows flare wide"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "paused-bench-press": {
+  "setup": "Lie on a flat bench with eyes under the bar, feet flat, and grip slightly wider than shoulder width.",
+  "steps": [
+   "Unrack the bar and hold it over your mid-chest with straight arms.",
+   "Lower the bar under control until it lightly touches your chest.",
+   "Hold the bar still on your chest for a full 1-2 second count.",
+   "Press the bar explosively up until your arms are straight."
+  ],
+  "cues": [
+   "Stay tight during the pause",
+   "Do not relax into your chest",
+   "Drive hard off the chest"
+  ],
+  "mistakes": [
+   "Sinking or bouncing the bar during the pause",
+   "Losing your upper-back tightness"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "floor-press": {
+  "setup": "Lie on the floor with knees bent and feet flat; take the bar from low rack supports or have it handed to you.",
+  "steps": [
+   "Hold the bar over your chest with straight arms and a grip just wider than shoulders.",
+   "Lower the bar until your upper arms lightly touch the floor.",
+   "Pause briefly without relaxing, then press the bar up.",
+   "Lock out your arms, then re-rack or set the bar down safely."
+  ],
+  "cues": [
+   "Elbows about 45 degrees from your body",
+   "Tight upper back on the floor",
+   "Press straight up over the shoulders"
+  ],
+  "mistakes": [
+   "Crashing your elbows into the floor",
+   "Flaring elbows wide"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "dumbbell-bench-press": {
+  "setup": "Sit on a flat bench with dumbbells on your thighs, then lie back and bring them to chest level.",
+  "steps": [
+   "Press the dumbbells up until your arms are straight over your chest.",
+   "Lower them slowly until your elbows are just below bench level.",
+   "Keep elbows about 45-60 degrees from your body.",
+   "Press back up, bringing the dumbbells together gently at the top."
+  ],
+  "cues": [
+   "Shoulder blades pinched back",
+   "Wrists straight over elbows",
+   "Control both dumbbells evenly"
+  ],
+  "mistakes": [
+   "Clanging the dumbbells together at the top",
+   "Lowering too deep and straining the shoulders"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "incline-dumbbell-press": {
+  "setup": "Set a bench to 30-45 degrees, sit with dumbbells on your thighs, and lie back with them at chest level.",
+  "steps": [
+   "Press the dumbbells up until your arms are straight over your upper chest.",
+   "Lower them slowly until your elbows are just below bench level.",
+   "Keep elbows about 45-60 degrees from your body.",
+   "Press back up without letting the dumbbells drift forward."
+  ],
+  "cues": [
+   "Back flat against the pad",
+   "Press up and slightly in",
+   "Control the lowering"
+  ],
+  "mistakes": [
+   "Setting the incline too steep",
+   "Arching your lower back off the bench"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "decline-dumbbell-press": {
+  "setup": "Lie on a decline bench with feet secured, holding dumbbells at chest level; get a helper to hand them over if heavy.",
+  "steps": [
+   "Press the dumbbells up until your arms are straight over your lower chest.",
+   "Lower them slowly until your elbows are just below chest level.",
+   "Keep elbows about 45 degrees from your body.",
+   "Press back up, then lower the dumbbells safely when finished."
+  ],
+  "cues": [
+   "Control the weights on the way down",
+   "Shoulder blades pinched back",
+   "Press in a smooth arc"
+  ],
+  "mistakes": [
+   "Dropping the dumbbells fast at the bottom",
+   "Letting wrists bend back"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "neutral-grip-dumbbell-press": {
+  "setup": "Lie on a flat bench with dumbbells at chest level, palms facing each other.",
+  "steps": [
+   "Press the dumbbells up with palms facing each other until arms are straight.",
+   "Lower slowly, keeping elbows tucked close to your ribs.",
+   "Stop when the dumbbells reach the sides of your chest.",
+   "Press back up, squeezing your chest and triceps."
+  ],
+  "cues": [
+   "Palms face in the whole time",
+   "Elbows tucked, not flared",
+   "Smooth, even tempo"
+  ],
+  "mistakes": [
+   "Letting the elbows flare out",
+   "Bouncing the dumbbells at the bottom"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "single-arm-dumbbell-bench-press": {
+  "setup": "Lie on a flat bench holding one dumbbell at chest level, free hand across your belly or holding the bench.",
+  "steps": [
+   "Brace your core so your torso does not rotate.",
+   "Press the dumbbell up until your arm is straight over your shoulder.",
+   "Lower it slowly to chest level with your elbow about 45 degrees out.",
+   "Finish all reps, then switch arms."
+  ],
+  "cues": [
+   "Squeeze your glutes and stay square",
+   "Resist twisting toward the weight",
+   "Control the lowering"
+  ],
+  "mistakes": [
+   "Twisting or rolling off the bench",
+   "Using too heavy a weight to stay balanced"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "smith-machine-bench-press": {
+  "setup": "Place a flat bench in the Smith machine so the bar lines up with your mid-chest; set the safety stops.",
+  "steps": [
+   "Lie back, grip the bar slightly wider than shoulders, and twist to unhook it.",
+   "Lower the bar to your mid-chest under control.",
+   "Press the bar up until your arms are straight.",
+   "Twist the bar to re-hook it on the rack when done."
+  ],
+  "cues": [
+   "Shoulder blades pinched back",
+   "Feet planted firmly",
+   "Bar path stays over your chest"
+  ],
+  "mistakes": [
+   "Setting the bench too far forward or back",
+   "Forgetting to set safety stops"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "smith-machine-incline-press": {
+  "setup": "Set a bench to 30-45 degrees inside the Smith machine so the bar lowers to your upper chest; set safety stops.",
+  "steps": [
+   "Lie back, grip the bar slightly wider than shoulders, and twist to unhook it.",
+   "Lower the bar to your upper chest under control.",
+   "Press the bar up until your arms are straight.",
+   "Twist the bar to re-hook it on the rack when done."
+  ],
+  "cues": [
+   "Back and hips stay on the bench",
+   "Wrists stacked over elbows",
+   "Control the lowering"
+  ],
+  "mistakes": [
+   "Bench too far forward, loading the shoulders",
+   "Forgetting to set safety stops"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "machine-chest-press": {
+  "setup": "Adjust the seat so the handles are level with your mid-chest, and sit with your back flat against the pad.",
+  "steps": [
+   "Grip the handles and pull your shoulder blades back against the pad.",
+   "Press the handles forward until your arms are almost straight.",
+   "Pause, then return slowly until you feel a chest stretch.",
+   "Keep your feet flat and your head on the pad."
+  ],
+  "cues": [
+   "Back stays against the pad",
+   "Do not shrug your shoulders",
+   "Slow return, no stack slamming"
+  ],
+  "mistakes": [
+   "Seat set too low or high, straining shoulders",
+   "Letting the weight stack crash down"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "incline-machine-press": {
+  "setup": "Adjust the seat so the handles start at upper-chest height, and sit with your back flat against the pad.",
+  "steps": [
+   "Grip the handles and pull your shoulder blades back against the pad.",
+   "Press the handles up and forward until your arms are almost straight.",
+   "Return slowly until you feel a stretch across your upper chest.",
+   "Keep your feet flat and your head on the pad."
+  ],
+  "cues": [
+   "Back stays against the pad",
+   "Shoulders down, away from ears",
+   "Slow return, no stack slamming"
+  ],
+  "mistakes": [
+   "Shrugging your shoulders up",
+   "Letting the weight stack crash down"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "hammer-strength-decline-press": {
+  "setup": "Adjust the seat so the handles start at lower-chest height, and sit with your back against the pad.",
+  "steps": [
+   "Grip the handles and pull your shoulder blades back against the pad.",
+   "Press the handles forward and slightly down until arms are almost straight.",
+   "Return slowly until you feel a stretch across your lower chest.",
+   "Keep your feet planted throughout."
+  ],
+  "cues": [
+   "Back stays against the pad",
+   "Shoulders down, away from ears",
+   "Control the return"
+  ],
+  "mistakes": [
+   "Shrugging your shoulders up",
+   "Letting the handles pull your arms back too far"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you press up.",
+  "diagram": "bench_press"
+ },
+ "push-up": {
+  "setup": "Start in a high plank with hands just wider than shoulders and feet hip-width apart.",
+  "steps": [
+   "Brace your core and squeeze your glutes so your body is a straight line.",
+   "Lower your chest toward the floor, elbows about 45 degrees from your body.",
+   "Stop when your chest is just above the floor.",
+   "Push the floor away until your arms are straight."
+  ],
+  "cues": [
+   "Body in one straight line",
+   "Elbows angled back, not flared",
+   "Chest leads the movement"
+  ],
+  "mistakes": [
+   "Sagging hips or piking your hips up",
+   "Flaring elbows out to 90 degrees"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "pushup"
+ },
+ "incline-push-up": {
+  "setup": "Place your hands on a bench or sturdy bar, wider than shoulders, with feet back and body in a straight line.",
+  "steps": [
+   "Brace your core and squeeze your glutes to keep a straight line.",
+   "Lower your chest toward the bench, elbows about 45 degrees out.",
+   "Stop when your chest is just above the bench.",
+   "Push away until your arms are straight."
+  ],
+  "cues": [
+   "Body in one straight line",
+   "Elbows angled back",
+   "Lower the surface to make it harder"
+  ],
+  "mistakes": [
+   "Sagging hips",
+   "Using a wobbly surface"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "pushup"
+ },
+ "decline-push-up": {
+  "setup": "Place your feet on a bench with hands on the floor just wider than shoulders, body in a straight line.",
+  "steps": [
+   "Brace your core and squeeze your glutes to keep a straight line.",
+   "Lower your chest toward the floor, elbows about 45 degrees out.",
+   "Stop when your chest is just above the floor.",
+   "Push the floor away until your arms are straight."
+  ],
+  "cues": [
+   "Body in one straight line",
+   "Keep your hips from sagging",
+   "Elbows angled back"
+  ],
+  "mistakes": [
+   "Letting your lower back sag",
+   "Dropping your head forward"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "pushup"
+ },
+ "diamond-push-up": {
+  "setup": "Start in a high plank with your hands together under your chest, thumbs and index fingers forming a diamond.",
+  "steps": [
+   "Brace your core and squeeze your glutes to keep a straight line.",
+   "Lower your chest toward your hands, elbows brushing your sides.",
+   "Stop when your chest is just above your hands.",
+   "Push up until your arms are straight."
+  ],
+  "cues": [
+   "Elbows stay tight to your ribs",
+   "Body in one straight line",
+   "Control the lowering"
+  ],
+  "mistakes": [
+   "Elbows flaring out wide",
+   "Wrists or elbows hurting; widen hands slightly"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "pushup"
+ },
+ "deficit-push-up": {
+  "setup": "Place each hand on a plate or low block so your chest can lower below hand height; feet hip-width apart.",
+  "steps": [
+   "Brace your core and squeeze your glutes to keep a straight line.",
+   "Lower your chest below hand level, elbows about 45 degrees out.",
+   "Pause briefly at the bottom stretch.",
+   "Push up until your arms are straight."
+  ],
+  "cues": [
+   "Control the deep stretch",
+   "Body in one straight line",
+   "Shoulders stay down"
+  ],
+  "mistakes": [
+   "Dropping too fast into the stretch",
+   "Sagging hips at the bottom"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "pushup"
+ },
+ "archer-push-up": {
+  "setup": "Start in a wide push-up position with hands about twice shoulder width and feet apart.",
+  "steps": [
+   "Brace your core and shift your weight toward one hand.",
+   "Lower your chest toward that hand while the other arm stays straight.",
+   "Push back up through the bent arm, keeping the other arm straight.",
+   "Alternate sides each rep."
+  ],
+  "cues": [
+   "Straight arm acts as a light support",
+   "Keep hips level",
+   "Move slowly and smoothly"
+  ],
+  "mistakes": [
+   "Twisting your hips as you shift",
+   "Bending the support arm"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "pushup"
+ },
+ "clap-push-up": {
+  "setup": "Start in a high plank with hands just wider than shoulders on a firm, flat surface.",
+  "steps": [
+   "Brace your core and lower your chest to just above the floor.",
+   "Push up explosively so your hands leave the floor.",
+   "Clap quickly, then land with soft, slightly bent elbows.",
+   "Reset into a stable plank before the next rep."
+  ],
+  "cues": [
+   "Explode up, land softly",
+   "Keep your body straight",
+   "Stop when form slows"
+  ],
+  "mistakes": [
+   "Landing with locked elbows",
+   "Sagging hips when you land"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you explode up.",
+  "diagram": "pushup"
+ },
+ "weighted-chest-dip": {
+  "setup": "Hold the dip bars with a weight belt on and lean your torso forward; start with arms straight and knees bent.",
+  "steps": [
+   "Lean forward about 30 degrees and flare your elbows slightly.",
+   "Lower slowly until your upper arms are about parallel to the floor.",
+   "Press up until your arms are almost straight.",
+   "Step down carefully and unclip the weight when done."
+  ],
+  "cues": [
+   "Lean forward to hit the chest",
+   "Shoulders down, not shrugged",
+   "Control the bottom position"
+  ],
+  "mistakes": [
+   "Dropping too deep and straining the shoulders",
+   "Starting with too much added weight"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "dip"
+ },
+ "chest-dip": {
+  "setup": "Hold the dip bars with straight arms, lean your torso forward, and bend your knees so your feet are off the floor.",
+  "steps": [
+   "Lean forward about 30 degrees and flare your elbows slightly.",
+   "Lower slowly until your upper arms are about parallel to the floor.",
+   "Press up until your arms are almost straight.",
+   "Keep your chest forward and shoulders down."
+  ],
+  "cues": [
+   "Lean forward to hit the chest",
+   "Shoulders down, not shrugged",
+   "Control the descent"
+  ],
+  "mistakes": [
+   "Dropping too deep and straining the shoulders",
+   "Swinging your legs for momentum"
+  ],
+  "breathing": "Breathe in as you lower, then breathe out as you push up.",
+  "diagram": "dip"
+ },
+ "dumbbell-fly": {
+  "setup": "Lie on a flat bench holding dumbbells over your chest with palms facing each other and a soft bend in your elbows.",
+  "steps": [
+   "Open your arms out wide in an arc, keeping that soft elbow bend.",
+   "Lower until you feel a stretch across your chest, no lower than shoulder level.",
+   "Squeeze your chest to bring the dumbbells back up in the same arc.",
+   "Stop with the dumbbells above your chest."
+  ],
+  "cues": [
+   "Soft elbow bend, locked in place",
+   "Hug a big tree",
+   "Use lighter weight than presses"
+  ],
+  "mistakes": [
+   "Bending and straightening the elbows like a press",
+   "Lowering too deep and straining the shoulders"
+  ],
+  "breathing": "Breathe in as you open your arms, then breathe out as you bring them together.",
+  "diagram": "fly"
+ },
+ "incline-dumbbell-fly": {
+  "setup": "Set a bench to 30 degrees and lie back holding dumbbells over your upper chest, palms facing each other, soft elbows.",
+  "steps": [
+   "Open your arms out wide in an arc, keeping that soft elbow bend.",
+   "Lower until you feel a stretch across your upper chest.",
+   "Squeeze your chest to bring the dumbbells back up in the same arc.",
+   "Stop with the dumbbells above your upper chest."
+  ],
+  "cues": [
+   "Soft elbow bend, locked in place",
+   "Wide arc, then squeeze together",
+   "Use light weight"
+  ],
+  "mistakes": [
+   "Turning the fly into a press",
+   "Lowering too deep and straining the shoulders"
+  ],
+  "breathing": "Breathe in as you open your arms, then breathe out as you bring them together.",
+  "diagram": "fly"
+ },
+ "cable-fly-mid": {
+  "setup": "Set both pulleys at chest height, stand in the centre with a staggered stance, and hold a handle in each hand.",
+  "steps": [
+   "Step forward with your chest tall and a soft bend in your elbows.",
+   "Open your arms out until you feel a chest stretch.",
+   "Bring your hands together in front of your chest in a wide arc.",
+   "Squeeze for a second, then return slowly."
+  ],
+  "cues": [
+   "Soft elbows, fixed angle",
+   "Chest up, shoulders down",
+   "Squeeze hands together"
+  ],
+  "mistakes": [
+   "Leaning forward and turning it into a press",
+   "Using momentum from your body"
+  ],
+  "breathing": "Breathe in as you open your arms, then breathe out as you bring them together.",
+  "diagram": "fly"
+ },
+ "low-to-high-cable-fly": {
+  "setup": "Set both pulleys at the lowest position, stand in the centre with a staggered stance, and hold a handle in each hand.",
+  "steps": [
+   "Lean slightly forward with a soft bend in your elbows.",
+   "Sweep your hands up and together to about eye level.",
+   "Squeeze your upper chest at the top.",
+   "Lower slowly back to hip level with control."
+  ],
+  "cues": [
+   "Soft elbows, fixed angle",
+   "Lift in an upward arc",
+   "Shoulders stay down"
+  ],
+  "mistakes": [
+   "Shrugging your shoulders up",
+   "Swinging your torso to lift the weight"
+  ],
+  "breathing": "Breathe in as you open your arms, then breathe out as you bring them together.",
+  "diagram": "fly"
+ },
+ "high-to-low-cable-fly": {
+  "setup": "Set both pulleys at the highest position, stand in the centre with a staggered stance, and hold a handle in each hand.",
+  "steps": [
+   "Lean slightly forward with a soft bend in your elbows.",
+   "Sweep your hands down and together to about hip height.",
+   "Squeeze your lower chest at the bottom.",
+   "Return slowly until you feel a chest stretch."
+  ],
+  "cues": [
+   "Soft elbows, fixed angle",
+   "Pull down in a wide arc",
+   "Keep your chest tall"
+  ],
+  "mistakes": [
+   "Bending the elbows into a pushdown",
+   "Swinging your torso to lift the weight"
+  ],
+  "breathing": "Breathe in as you open your arms, then breathe out as you bring them together.",
+  "diagram": "fly"
+ },
+ "pec-deck": {
+  "setup": "Adjust the seat so the handles are at chest height, and sit with your back flat against the pad.",
+  "steps": [
+   "Grip the handles with a soft bend in your elbows and shoulders back.",
+   "Bring the handles together in front of your chest.",
+   "Squeeze your chest for a second.",
+   "Return slowly until you feel a gentle chest stretch."
+  ],
+  "cues": [
+   "Back stays against the pad",
+   "Shoulders down, not shrugged",
+   "Slow return"
+  ],
+  "mistakes": [
+   "Letting the weight pull your arms too far back",
+   "Shrugging your shoulders up"
+  ],
+  "breathing": "Breathe in as you open your arms, then breathe out as you bring them together.",
+  "diagram": "fly"
+ },
+ "svend-press": {
+  "setup": "Stand tall holding a weight plate (5-10 kg) between your palms, pressed together at chest height.",
+  "steps": [
+   "Squeeze the plate hard between your palms in front of your chest.",
+   "Press it straight out until your arms are extended.",
+   "Pause, keeping the squeeze on the plate.",
+   "Pull it back to your chest under control."
+  ],
+  "cues": [
+   "Never stop squeezing the plate",
+   "Elbows slightly bent at the end",
+   "Stay tall, ribs down"
+  ],
+  "mistakes": [
+   "Letting the plate slip as you press",
+   "Leaning back to push the plate"
+  ],
+  "breathing": "Breathe out as you press the plate forward, in as you return.",
+  "diagram": "fly"
+ },
+ "dumbbell-pullover": {
+  "setup": "Lie across or along a flat bench with your upper back supported, holding one dumbbell over your chest with both hands.",
+  "steps": [
+   "Keep a slight bend in your elbows and brace your core.",
+   "Lower the dumbbell in an arc back behind your head.",
+   "Stop when you feel a deep stretch in your lats and chest.",
+   "Pull the dumbbell back over your chest in the same arc."
+  ],
+  "cues": [
+   "Soft elbows, fixed angle",
+   "Ribs down, core braced",
+   "Move from the shoulders"
+  ],
+  "mistakes": [
+   "Arching your lower back as you lower",
+   "Using a weight that is too heavy"
+  ],
+  "breathing": "Breathe in as the dumbbell goes back, out as you pull it up.",
+  "diagram": "lying_ext"
+ },
+ "landmine-press": {
+  "setup": "Wedge one end of a barbell in a landmine or corner, stand holding the other end at your shoulder in a split stance.",
+  "steps": [
+   "Hold the bar end at your shoulder with your elbow slightly forward.",
+   "Brace your core and press the bar up and forward.",
+   "Extend your arm fully without leaning back.",
+   "Lower the bar slowly to your shoulder."
+  ],
+  "cues": [
+   "Ribs down, glutes squeezed",
+   "Press along the bar's arc",
+   "Stay tall, no leaning back"
+  ],
+  "mistakes": [
+   "Leaning back to push the weight up",
+   "Using leg drive instead of arm strength"
+  ],
+  "breathing": "Breathe out as you press up, in as you lower.",
+  "diagram": "overhead_press"
+ },
+ "plate-press-out": {
+  "setup": "Stand tall holding a weight plate (5-10 kg) against your chest with both hands.",
+  "steps": [
+   "Brace your core and squeeze your glutes.",
+   "Press the plate straight out in front of you until your arms are straight.",
+   "Hold for a second without letting the plate drop.",
+   "Bring the plate back to your chest slowly."
+  ],
+  "cues": [
+   "Ribs down, no leaning back",
+   "Shoulders down",
+   "Move slowly"
+  ],
+  "mistakes": [
+   "Leaning back as you press out",
+   "Shrugging your shoulders"
+  ],
+  "breathing": "Breathe out as you press out, in as you return.",
+  "diagram": "bench_press"
+ },
+ "scapular-push-up": {
+  "setup": "Start in a high plank with arms straight and hands just wider than shoulders.",
+  "steps": [
+   "Keep your arms straight and brace your core.",
+   "Let your chest sink between your shoulder blades.",
+   "Push the floor away to spread your shoulder blades wide.",
+   "Pause, then repeat with arms staying straight."
+  ],
+  "cues": [
+   "Arms stay straight",
+   "Push the floor away",
+   "Small, controlled movement"
+  ],
+  "mistakes": [
+   "Bending your elbows",
+   "Sagging your hips"
+  ],
+  "breathing": "Breathe in as your chest sinks, out as you push away.",
+  "diagram": "pushup"
+ },
+ "conventional-deadlift": {
+  "setup": "Stand with feet hip-width, the bar over mid-foot, and hands just outside your legs.",
+  "steps": [
+   "Hinge down and grip the bar, shins touching it, chest up and back flat.",
+   "Brace your core and push the floor away as you lift.",
+   "Stand tall, hips and knees locking out together.",
+   "Reverse the movement and lower the bar to the floor under control."
+  ],
+  "cues": [
+   "Bar stays against your legs",
+   "Neutral spine, chest proud",
+   "Push the floor away"
+  ],
+  "mistakes": [
+   "Rounding your lower back",
+   "Jerking the bar off the floor"
+  ],
+  "breathing": "Brace your core with a big breath in before each pull, then breathe out as you pass the sticking point.",
+  "diagram": "hinge"
+ },
+ "sumo-deadlift": {
+  "setup": "Stand with a wide stance, toes angled out, and the bar over mid-foot; grip with hands inside your knees.",
+  "steps": [
+   "Sit your hips down, grip the bar, chest up and back flat.",
+   "Brace your core and push the floor apart with your feet.",
+   "Stand tall, driving your hips forward to lock out.",
+   "Lower the bar under control back to the floor."
+  ],
+  "cues": [
+   "Knees track over your toes",
+   "Spread the floor with your feet",
+   "Chest up, back flat"
+  ],
+  "mistakes": [
+   "Knees caving inward",
+   "Hips shooting up before the bar moves"
+  ],
+  "breathing": "Brace your core with a big breath in before each pull, then breathe out as you pass the sticking point.",
+  "diagram": "hinge"
+ },
+ "trap-bar-deadlift": {
+  "setup": "Stand inside a hex bar with feet hip-width apart and grip the handles at your sides.",
+  "steps": [
+   "Hinge down and grip the handles, chest up and back flat.",
+   "Brace your core and push the floor away with your legs.",
+   "Stand tall, squeezing your glutes at the top.",
+   "Lower the bar to the floor under control."
+  ],
+  "cues": [
+   "Chest up, back flat",
+   "Push the floor away",
+   "Stand tall without leaning back"
+  ],
+  "mistakes": [
+   "Rounding your lower back",
+   "Leaning back at the top"
+  ],
+  "breathing": "Brace your core with a big breath in before each pull, then breathe out as you pass the sticking point.",
+  "diagram": "hinge"
+ },
+ "deficit-deadlift": {
+  "setup": "Stand on a low platform (2-5 cm) with feet hip-width, the bar over mid-foot, and hands just outside your legs.",
+  "steps": [
+   "Hinge down and grip the bar, chest up and back flat.",
+   "Brace your core and push the floor away as you lift.",
+   "Stand tall, hips and knees locking out together.",
+   "Lower the bar under control back to the floor."
+  ],
+  "cues": [
+   "Bar stays against your legs",
+   "Neutral spine, chest proud",
+   "Control the deeper start"
+  ],
+  "mistakes": [
+   "Rounding your back in the deeper start",
+   "Using too much weight too soon"
+  ],
+  "breathing": "Brace your core with a big breath in before each pull, then breathe out as you pass the sticking point.",
+  "diagram": "hinge"
+ },
+ "rack-pull": {
+  "setup": "Set the bar in a rack at knee height or just below; stand close with feet hip-width and hands outside your legs.",
+  "steps": [
+   "Hinge down and grip the bar, chest up and back flat.",
+   "Brace your core and pull the bar up along your thighs.",
+   "Stand tall, squeezing your glutes and upper back.",
+   "Lower the bar under control back to the rack pins."
+  ],
+  "cues": [
+   "Bar stays against your thighs",
+   "Squeeze shoulder blades at the top",
+   "Neutral spine"
+  ],
+  "mistakes": [
+   "Leaning back at lockout",
+   "Dropping the bar onto the pins"
+  ],
+  "breathing": "Brace your core with a big breath in before each pull, then breathe out as you pass the sticking point.",
+  "diagram": "hinge"
+ },
+ "barbell-row": {
+  "setup": "Stand with feet hip-width, bar over mid-foot, hinge forward with a flat back and hold the bar just wider than shoulders.",
+  "steps": [
+   "Hinge until your torso is about 45 degrees and brace your core.",
+   "Pull the bar toward your lower ribs, elbows close to your body.",
+   "Squeeze your shoulder blades together at the top.",
+   "Lower the bar slowly until your arms are straight."
+  ],
+  "cues": [
+   "Flat back, chest proud",
+   "Lead with your elbows",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Using body swing to heave the bar",
+   "Rounding your lower back"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "pendlay-row": {
+  "setup": "Stand with feet hip-width over the bar, hinge forward until your torso is near parallel, and grip the bar just wider than shoulders.",
+  "steps": [
+   "Set a flat back with your arms straight and the bar on the floor.",
+   "Pull the bar explosively to your lower chest.",
+   "Lower it fully back to the floor under control.",
+   "Reset your back position before each rep."
+  ],
+  "cues": [
+   "Back stays near parallel",
+   "Bar returns to floor each rep",
+   "Flat back, braced core"
+  ],
+  "mistakes": [
+   "Standing up as you pull",
+   "Rounding your back on reset"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "yates-row": {
+  "setup": "Stand holding a barbell with an underhand grip, hinge forward to about 60-70 degrees from the floor, back flat.",
+  "steps": [
+   "Brace your core and keep a flat back at a slight forward lean.",
+   "Pull the bar toward your lower stomach, elbows close.",
+   "Squeeze your lats and shoulder blades together.",
+   "Lower the bar slowly until your arms are straight."
+  ],
+  "cues": [
+   "Elbows stay close to your ribs",
+   "Flat back, braced core",
+   "Pull to your belly button"
+  ],
+  "mistakes": [
+   "Heaving with your hips and lower back",
+   "Rounding your lower back"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "seal-row": {
+  "setup": "Lie face down on a high bench with a barbell on the floor below you, arms hanging straight, gripping the bar just wider than shoulders.",
+  "steps": [
+   "Keep your chest and stomach pressed against the bench.",
+   "Pull the bar up to the underside of the bench.",
+   "Squeeze your shoulder blades together at the top.",
+   "Lower the bar slowly until your arms are straight."
+  ],
+  "cues": [
+   "Chest stays on the bench",
+   "Lead with your elbows",
+   "Squeeze at the top"
+  ],
+  "mistakes": [
+   "Lifting your chest off the bench",
+   "Using a bench that is too low"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "t-bar-row": {
+  "setup": "Straddle a landmine bar, hinge forward with a flat back, and grip the handle or V-handle attachment.",
+  "steps": [
+   "Hinge to about 45 degrees and brace your core.",
+   "Pull the handle toward your lower chest, elbows close.",
+   "Squeeze your shoulder blades together at the top.",
+   "Lower the weight slowly until your arms are straight."
+  ],
+  "cues": [
+   "Flat back, chest proud",
+   "Lead with your elbows",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Using hip swing to yank the weight",
+   "Rounding your lower back"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "chest-supported-t-bar-row": {
+  "setup": "Set the pad so your chest rests on it, feet on the platform, and grip the handles with arms straight.",
+  "steps": [
+   "Keep your chest firmly pressed against the pad.",
+   "Pull the handles toward your lower ribs, elbows close.",
+   "Squeeze your shoulder blades together at the top.",
+   "Lower slowly until your arms are straight."
+  ],
+  "cues": [
+   "Chest stays on the pad",
+   "Lead with your elbows",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Lifting your chest off the pad",
+   "Shrugging your shoulders up"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "single-arm-dumbbell-row": {
+  "setup": "Place one hand and the same-side knee on a bench, other foot on the floor, holding a dumbbell with a flat back.",
+  "steps": [
+   "Let the dumbbell hang with your arm straight and back flat.",
+   "Pull the dumbbell toward your hip, elbow close to your body.",
+   "Squeeze your shoulder blade back at the top.",
+   "Lower slowly until your arm is straight."
+  ],
+  "cues": [
+   "Back flat, hips square",
+   "Pull toward your hip",
+   "Do not twist your torso"
+  ],
+  "mistakes": [
+   "Twisting your torso to lift the weight",
+   "Pulling to your chest, shrugging up"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "chest-supported-dumbbell-row": {
+  "setup": "Lie face down on an incline bench set to 30-45 degrees, holding a dumbbell in each hand with arms straight.",
+  "steps": [
+   "Keep your chest pressed against the bench.",
+   "Pull both dumbbells toward your hips, elbows close.",
+   "Squeeze your shoulder blades together at the top.",
+   "Lower slowly until your arms are straight."
+  ],
+  "cues": [
+   "Chest stays on the bench",
+   "Lead with your elbows",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Lifting your chest off the bench",
+   "Shrugging your shoulders up"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "meadows-row": {
+  "setup": "Stand side-on to a landmine bar, staggered stance, hinge forward and grip the thick end of the bar with the near hand.",
+  "steps": [
+   "Hinge forward with a flat back, free hand on your knee for support.",
+   "Pull the bar end up toward your hip, elbow high.",
+   "Squeeze your lat and shoulder blade at the top.",
+   "Lower slowly until your arm is straight."
+  ],
+  "cues": [
+   "Flat back, hips back",
+   "Elbow drives to the ceiling",
+   "Control the stretch"
+  ],
+  "mistakes": [
+   "Twisting your torso to lift",
+   "Rounding your lower back"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "kroc-row": {
+  "setup": "Stand with a split stance, one hand on a bench or rack for support, holding a heavy dumbbell in the other hand.",
+  "steps": [
+   "Hinge forward with a flat back and your arm hanging straight.",
+   "Pull the dumbbell toward your hip with a slight controlled body movement.",
+   "Squeeze your lat at the top.",
+   "Lower under control and repeat for high reps."
+  ],
+  "cues": [
+   "Use straps if grip limits you",
+   "Keep body swing small",
+   "Flat back, braced core"
+  ],
+  "mistakes": [
+   "Excessive body swing that rounds your back",
+   "Using a weight you cannot control"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "seated-cable-row": {
+  "setup": "Sit at a cable row station with feet on the platform, knees slightly bent, and grip the handle with arms straight.",
+  "steps": [
+   "Sit tall with a flat back and your shoulders relaxed.",
+   "Pull the handle toward your lower stomach, elbows close.",
+   "Squeeze your shoulder blades together at the end.",
+   "Let your arms extend slowly without rounding your back."
+  ],
+  "cues": [
+   "Chest tall, no rocking",
+   "Lead with your elbows",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Rocking your torso back and forth",
+   "Shrugging your shoulders up"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_seated"
+ },
+ "wide-grip-cable-row": {
+  "setup": "Sit at a cable row station with a long bar attachment, feet on the platform, gripping the bar wide with arms straight.",
+  "steps": [
+   "Sit tall with a flat back and shoulders relaxed.",
+   "Pull the bar toward your upper stomach, elbows flaring out.",
+   "Squeeze your upper back together at the end.",
+   "Let your arms extend slowly without rounding your back."
+  ],
+  "cues": [
+   "Elbows out wide",
+   "Chest tall, no rocking",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Rocking your torso to pull the weight",
+   "Shrugging your shoulders up"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_seated"
+ },
+ "single-arm-cable-row": {
+  "setup": "Sit or stand facing a low cable with a single handle, feet braced, and hold the handle with your arm straight.",
+  "steps": [
+   "Sit tall with a flat back and a braced core.",
+   "Pull the handle toward your hip, elbow close to your body.",
+   "Squeeze your shoulder blade back at the end.",
+   "Let your arm extend slowly without twisting."
+  ],
+  "cues": [
+   "Keep your torso square",
+   "Pull toward your hip",
+   "Slow return"
+  ],
+  "mistakes": [
+   "Twisting your torso as you pull",
+   "Shrugging your shoulder up"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_seated"
+ },
+ "machine-row": {
+  "setup": "Adjust the seat so the handles line up with your mid-chest, and rest your chest against the pad.",
+  "steps": [
+   "Grip the handles with arms straight and chest on the pad.",
+   "Pull the handles toward your body, elbows close.",
+   "Squeeze your shoulder blades together at the end.",
+   "Return slowly until your arms are straight."
+  ],
+  "cues": [
+   "Chest stays on the pad",
+   "Lead with your elbows",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Shrugging your shoulders up",
+   "Letting the weight stack crash down"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_seated"
+ },
+ "inverted-row": {
+  "setup": "Set a bar at waist height, lie underneath it, and grip it slightly wider than shoulders with heels on the floor.",
+  "steps": [
+   "Hang with arms straight and body in a straight line.",
+   "Brace your core and squeeze your glutes.",
+   "Pull your chest up to the bar, elbows close.",
+   "Lower slowly until your arms are straight."
+  ],
+  "cues": [
+   "Body stays in a straight line",
+   "Lead with your chest",
+   "Squeeze shoulder blades"
+  ],
+  "mistakes": [
+   "Sagging hips",
+   "Not pulling your chest all the way up"
+  ],
+  "breathing": "Breathe out as you pull the weight, in as you lower it.",
+  "diagram": "row_bent"
+ },
+ "pull-up": {
+  "setup": "Hang from a bar with an overhand grip just wider than shoulders and arms straight.",
+  "steps": [
+   "Pull your shoulder blades down to start the movement.",
+   "Pull yourself up until your chin passes the bar.",
+   "Squeeze your lats at the top.",
+   "Lower slowly until your arms are fully straight."
+  ],
+  "cues": [
+   "Chest up to the bar",
+   "Elbows drive down to your ribs",
+   "Control the way down"
+  ],
+  "mistakes": [
+   "Kipping or swinging for momentum",
+   "Not lowering to straight arms"
+  ],
+  "breathing": "Breathe out as you pull yourself up, in as you lower.",
+  "diagram": "pullup"
+ },
+ "weighted-pull-up": {
+  "setup": "Wear a weight belt or hold a dumbbell between your feet, and hang from a bar with an overhand grip just wider than shoulders.",
+  "steps": [
+   "Pull your shoulder blades down to start the movement.",
+   "Pull yourself up until your chin passes the bar.",
+   "Squeeze your lats at the top.",
+   "Lower slowly until your arms are fully straight."
+  ],
+  "cues": [
+   "Chest up to the bar",
+   "Elbows drive down to your ribs",
+   "Control the way down"
+  ],
+  "mistakes": [
+   "Swinging with the added weight",
+   "Adding too much weight too soon"
+  ],
+  "breathing": "Breathe out as you pull yourself up, in as you lower.",
+  "diagram": "pullup"
+ },
+ "chin-up": {
+  "setup": "Hang from a bar with an underhand grip at shoulder width and arms straight.",
+  "steps": [
+   "Pull your shoulder blades down to start the movement.",
+   "Pull yourself up until your chin passes the bar.",
+   "Squeeze your lats and biceps at the top.",
+   "Lower slowly until your arms are fully straight."
+  ],
+  "cues": [
+   "Chest up to the bar",
+   "Elbows drive down and in",
+   "Control the way down"
+  ],
+  "mistakes": [
+   "Kipping or swinging for momentum",
+   "Not lowering to straight arms"
+  ],
+  "breathing": "Breathe out as you pull yourself up, in as you lower.",
+  "diagram": "pullup"
+ },
+ "neutral-grip-pull-up": {
+  "setup": "Hang from parallel handles with palms facing each other and arms straight.",
+  "steps": [
+   "Pull your shoulder blades down to start the movement.",
+   "Pull yourself up until your chin passes the handles.",
+   "Squeeze your lats at the top.",
+   "Lower slowly until your arms are fully straight."
+  ],
+  "cues": [
+   "Chest up to the handles",
+   "Elbows drive down to your ribs",
+   "Control the way down"
+  ],
+  "mistakes": [
+   "Kipping or swinging for momentum",
+   "Not lowering to straight arms"
+  ],
+  "breathing": "Breathe out as you pull yourself up, in as you lower.",
+  "diagram": "pullup"
+ },
+ "assisted-pull-up": {
+  "setup": "Set the assistance weight, kneel or stand on the pad, and grip the handles with an overhand grip.",
+  "steps": [
+   "Pull your shoulder blades down to start the movement.",
+   "Pull yourself up until your chin passes the bar.",
+   "Squeeze your lats at the top.",
+   "Lower slowly until your arms are fully straight."
+  ],
+  "cues": [
+   "Chest up to the bar",
+   "Control the way down",
+   "Lower the assist as you get stronger"
+  ],
+  "mistakes": [
+   "Using too much assistance and bouncing",
+   "Not lowering to straight arms"
+  ],
+  "breathing": "Breathe out as you pull yourself up, in as you lower.",
+  "diagram": "pullup"
+ },
+ "lat-pulldown": {
+  "setup": "Sit at the pulldown machine, adjust the thigh pad to lock your legs, and grip the bar wider than shoulders.",
+  "steps": [
+   "Sit tall with a slight lean back and your chest up.",
+   "Pull the bar down to your upper chest, elbows toward your hips.",
+   "Squeeze your lats at the bottom.",
+   "Let the bar rise slowly until your arms are straight."
+  ],
+  "cues": [
+   "Chest up to meet the bar",
+   "Elbows drive down and in",
+   "Slow return"
+  ],
+  "mistakes": [
+   "Leaning far back to heave the bar",
+   "Pulling the bar behind your neck"
+  ],
+  "breathing": "Breathe out as you pull the bar down, in as you return.",
+  "diagram": "pulldown"
+ },
+ "close-grip-lat-pulldown": {
+  "setup": "Sit at the pulldown machine, lock your thighs under the pad, and grip a close V-handle or narrow bar.",
+  "steps": [
+   "Sit tall with a slight lean back and your chest up.",
+   "Pull the handle down to your upper chest, elbows close to your sides.",
+   "Squeeze your lats at the bottom.",
+   "Let the handle rise slowly until your arms are straight."
+  ],
+  "cues": [
+   "Chest up to meet the handle",
+   "Elbows drive down and in",
+   "Slow return"
+  ],
+  "mistakes": [
+   "Leaning far back to heave the weight",
+   "Shrugging your shoulders up"
+  ],
+  "breathing": "Breathe out as you pull the bar down, in as you return.",
+  "diagram": "pulldown"
+ }
+}

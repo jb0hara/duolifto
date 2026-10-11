@@ -1,0 +1,9596 @@
+[
+ {
+  "id": "barbell-bench-press",
+  "name": "Barbell Bench Press",
+  "equipment": "barbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "pec_upper",
+   "pec_lower",
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "upper_chest",
+   "lower_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "powerlifting",
+   "strength",
+   "flat"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "incline-barbell-bench-press",
+  "name": "Incline Barbell Bench Press",
+  "equipment": "barbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "pec_mid"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts",
+   "triceps",
+   "mid_chest"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "incline"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "decline-barbell-bench-press",
+  "name": "Decline Barbell Bench Press",
+  "equipment": "barbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_lower"
+  ],
+  "secondary": [
+   "pec_mid",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "subgroups": [
+   "lower_chest",
+   "mid_chest",
+   "triceps",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "decline"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "close-grip-bench-press",
+  "name": "Close-Grip Bench Press",
+  "equipment": "barbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front",
+   "pec_upper"
+  ],
+  "groups": [
+   "arms",
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "triceps",
+   "mid_chest",
+   "front_delts",
+   "upper_chest"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps builder"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "paused-bench-press",
+  "name": "Paused Bench Press",
+  "equipment": "barbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "powerlifting",
+   "strength",
+   "pause"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "floor-press",
+  "name": "Floor Press",
+  "equipment": "barbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "arms",
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "triceps",
+   "mid_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "lockout",
+   "partial"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "dumbbell-bench-press",
+  "name": "Dumbbell Bench Press",
+  "equipment": "dumbbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "pec_upper",
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "upper_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "flat"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "incline-dumbbell-press",
+  "name": "Incline Dumbbell Press",
+  "equipment": "dumbbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "incline"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "decline-dumbbell-press",
+  "name": "Decline Dumbbell Press",
+  "equipment": "dumbbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_lower"
+  ],
+  "secondary": [
+   "pec_mid",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "arms"
+  ],
+  "subgroups": [
+   "lower_chest",
+   "mid_chest",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "decline"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "neutral-grip-dumbbell-press",
+  "name": "Neutral-Grip Dumbbell Press",
+  "equipment": "dumbbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "triceps",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "shoulder friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-arm-dumbbell-bench-press",
+  "name": "Single-Arm Dumbbell Bench Press",
+  "equipment": "dumbbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "core",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "abs",
+   "obliques",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "unilateral",
+   "anti-rotation"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "smith-machine-bench-press",
+  "name": "Smith Machine Bench Press",
+  "equipment": "smith",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "smith-machine-incline-press",
+  "name": "Smith Machine Incline Press",
+  "equipment": "smith",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "incline"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "machine-chest-press",
+  "name": "Machine Chest Press",
+  "equipment": "machine",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "beginner",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "incline-machine-press",
+  "name": "Incline Machine Press",
+  "equipment": "machine",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "incline",
+   "beginner"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "hammer-strength-decline-press",
+  "name": "Hammer Strength Decline Press",
+  "equipment": "machine",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_lower"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "arms"
+  ],
+  "subgroups": [
+   "lower_chest",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "decline"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "push-up",
+  "name": "Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "serratus"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques",
+   "side_chest"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "home",
+   "no equipment",
+   "beginner",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "incline-push-up",
+  "name": "Incline Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_lower"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "lower_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "home",
+   "beginner",
+   "easy"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "decline-push-up",
+  "name": "Decline Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "home",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "diamond-push-up",
+  "name": "Diamond Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "secondary": [
+   "pec_mid",
+   "delt_front"
+  ],
+  "groups": [
+   "arms",
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "triceps",
+   "mid_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "home",
+   "calisthenics",
+   "triceps"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "deficit-push-up",
+  "name": "Deficit Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "home",
+   "stretch"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "archer-push-up",
+  "name": "Archer Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "delt_front",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "chest",
+   "arms",
+   "shoulders",
+   "core"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "triceps",
+   "front_delts",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "home",
+   "advanced",
+   "unilateral",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "clap-push-up",
+  "name": "Clap Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "plyo",
+  "type": "compound",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "triceps",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "explosive",
+   "power",
+   "plyometric",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 3-5",
+   "hypertrophy": "4 x 5-6",
+   "endurance": "3 x 10",
+   "default": "4 x 5"
+  }
+ },
+ {
+  "id": "weighted-chest-dip",
+  "name": "Weighted Chest Dip",
+  "equipment": "bodyweight",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "pec_lower"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "subgroups": [
+   "lower_chest",
+   "triceps",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "dip",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "chest-dip",
+  "name": "Chest Dip",
+  "equipment": "bodyweight",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "pec_lower"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "subgroups": [
+   "lower_chest",
+   "triceps",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "dip",
+   "calisthenics",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "dumbbell-fly",
+  "name": "Dumbbell Fly",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "pec_upper",
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "upper_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "stretch",
+   "fly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "incline-dumbbell-fly",
+  "name": "Incline Dumbbell Fly",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "stretch",
+   "fly",
+   "incline"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cable-fly-mid",
+  "name": "Cable Fly (Mid)",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "fly",
+   "crossover",
+   "pump"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "low-to-high-cable-fly",
+  "name": "Low-to-High Cable Fly",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "fly",
+   "crossover",
+   "upper chest"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "high-to-low-cable-fly",
+  "name": "High-to-Low Cable Fly",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_lower"
+  ],
+  "secondary": [
+   "pec_mid"
+  ],
+  "groups": [
+   "chest"
+  ],
+  "subgroups": [
+   "lower_chest",
+   "mid_chest"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "fly",
+   "crossover",
+   "lower chest"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "pec-deck",
+  "name": "Pec Deck",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "fly",
+   "beginner",
+   "machine-friendly",
+   "pump"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "svend-press",
+  "name": "Svend Press",
+  "equipment": "other",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "plate",
+   "squeeze",
+   "inner chest"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "dumbbell-pullover",
+  "name": "Dumbbell Pullover",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "lats",
+   "pec_lower"
+  ],
+  "secondary": [
+   "serratus",
+   "tri_long"
+  ],
+  "groups": [
+   "back",
+   "chest",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "lower_chest",
+   "side_chest",
+   "triceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "stretch",
+   "ribcage"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "landmine-press",
+  "name": "Landmine Press",
+  "equipment": "landmine",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "pec_upper",
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "serratus",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "chest",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts",
+   "triceps",
+   "side_chest",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "shoulder friendly",
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "plate-press-out",
+  "name": "Plate Press-Out",
+  "equipment": "other",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "pec_upper"
+  ],
+  "secondary": [
+   "delt_front"
+  ],
+  "groups": [
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "upper_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "plate",
+   "squeeze"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "scapular-push-up",
+  "name": "Scapular Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "serratus"
+  ],
+  "secondary": [
+   "pec_minor"
+  ],
+  "groups": [
+   "chest"
+  ],
+  "subgroups": [
+   "side_chest"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "prehab",
+   "scapula",
+   "warm-up",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "conventional-deadlift",
+  "name": "Conventional Deadlift",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "erectors",
+   "glute_max",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "lats",
+   "trap_upper",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext",
+   "add_mag",
+   "add_long",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "back",
+   "legs",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "lower_back",
+   "glutes",
+   "hamstrings",
+   "lats",
+   "traps",
+   "upper_back",
+   "quads",
+   "forearms",
+   "hips",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "powerlifting",
+   "strength",
+   "posterior chain",
+   "full body"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "sumo-deadlift",
+  "name": "Sumo Deadlift",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "add_mag",
+   "add_long",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "erectors",
+   "trap_upper",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "glutes",
+   "hips",
+   "quads",
+   "hamstrings",
+   "lower_back",
+   "traps",
+   "forearms"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "powerlifting",
+   "strength"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "trap-bar-deadlift",
+  "name": "Trap Bar Deadlift",
+  "equipment": "trap-bar",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "erectors",
+   "trap_upper",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hamstrings",
+   "lower_back",
+   "traps",
+   "forearms"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "beginner",
+   "strength",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "deficit-deadlift",
+  "name": "Deficit Deadlift",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "erectors",
+   "glute_max",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "lats",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "back",
+   "legs",
+   "arms"
+  ],
+  "subgroups": [
+   "lower_back",
+   "glutes",
+   "hamstrings",
+   "quads",
+   "lats",
+   "forearms"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "strength",
+   "off the floor"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "rack-pull",
+  "name": "Rack Pull",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "erectors",
+   "trap_upper",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "back",
+   "legs",
+   "arms"
+  ],
+  "subgroups": [
+   "lower_back",
+   "traps",
+   "upper_back",
+   "glutes",
+   "hamstrings",
+   "forearms"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "lockout",
+   "partial",
+   "thickness"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "barbell-row",
+  "name": "Barbell Row",
+  "equipment": "barbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "lats",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short",
+   "brachialis",
+   "erectors"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "rear_delts",
+   "biceps",
+   "lower_back"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "thickness",
+   "bent-over"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "pendlay-row",
+  "name": "Pendlay Row",
+  "equipment": "barbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "lats"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short",
+   "erectors"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps",
+   "lower_back"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "explosive",
+   "strength",
+   "thickness"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "yates-row",
+  "name": "Yates Row",
+  "equipment": "barbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "bi_long",
+   "bi_short",
+   "delt_rear"
+  ],
+  "groups": [
+   "back",
+   "arms",
+   "shoulders"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "biceps",
+   "rear_delts"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "underhand"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "seal-row",
+  "name": "Seal Row",
+  "equipment": "barbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "lats"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "chest supported",
+   "strict"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "t-bar-row",
+  "name": "T-Bar Row",
+  "equipment": "landmine",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "lats"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short",
+   "erectors"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps",
+   "lower_back"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "thickness"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "chest-supported-t-bar-row",
+  "name": "Chest-Supported T-Bar Row",
+  "equipment": "machine",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "lats",
+   "delt_rear",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "chest supported",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-arm-dumbbell-row",
+  "name": "Single-Arm Dumbbell Row",
+  "equipment": "dumbbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "delt_rear",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "rear_delts",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "unilateral",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "chest-supported-dumbbell-row",
+  "name": "Chest-Supported Dumbbell Row",
+  "equipment": "dumbbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "lats",
+   "delt_rear",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "chest supported",
+   "incline"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "meadows-row",
+  "name": "Meadows Row",
+  "equipment": "landmine",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "lats",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "rear_delts",
+   "biceps",
+   "forearms"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "kroc-row",
+  "name": "Kroc Row",
+  "equipment": "dumbbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "forearms",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "unilateral",
+   "high rep",
+   "grip"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "seated-cable-row",
+  "name": "Seated Cable Row",
+  "equipment": "cable",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "lats"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "beginner"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "wide-grip-cable-row",
+  "name": "Wide-Grip Cable Row",
+  "equipment": "cable",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "delt_rear"
+  ],
+  "secondary": [
+   "lats",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "rear_delts",
+   "lats",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "width",
+   "upper back"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-arm-cable-row",
+  "name": "Single-Arm Cable Row",
+  "equipment": "cable",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "machine-row",
+  "name": "Machine Row",
+  "equipment": "machine",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "lats"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "machine-friendly",
+   "beginner"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "inverted-row",
+  "name": "Inverted Row",
+  "equipment": "bodyweight",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "lats"
+  ],
+  "secondary": [
+   "delt_rear",
+   "bi_long",
+   "bi_short",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "back",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "upper_back",
+   "lats",
+   "rear_delts",
+   "biceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "home",
+   "calisthenics",
+   "beginner",
+   "australian pull-up"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "pull-up",
+  "name": "Pull-Up",
+  "equipment": "bodyweight",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "bi_long",
+   "bi_short",
+   "brachialis",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "back",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "biceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "width",
+   "calisthenics",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "weighted-pull-up",
+  "name": "Weighted Pull-Up",
+  "equipment": "bodyweight",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "bi_long",
+   "bi_short",
+   "brachialis"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "width",
+   "strength",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "chin-up",
+  "name": "Chin-Up",
+  "equipment": "bodyweight",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats",
+   "bi_long",
+   "bi_short"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "brachialis"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "biceps",
+   "upper_back"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "calisthenics",
+   "underhand",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "neutral-grip-pull-up",
+  "name": "Neutral-Grip Pull-Up",
+  "equipment": "bodyweight",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "brachialis",
+   "brachiorad",
+   "bi_long",
+   "bi_short",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "biceps",
+   "forearms",
+   "upper_back"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "calisthenics",
+   "shoulder friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "assisted-pull-up",
+  "name": "Assisted Pull-Up",
+  "equipment": "machine",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "beginner",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "lat-pulldown",
+  "name": "Lat Pulldown",
+  "equipment": "cable",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "bi_long",
+   "bi_short",
+   "teres_major"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "upper_back",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "width",
+   "beginner"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "close-grip-lat-pulldown",
+  "name": "Close-Grip Lat Pulldown",
+  "equipment": "cable",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "bi_long",
+   "bi_short",
+   "brachialis",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "biceps",
+   "upper_back"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "v-bar",
+   "width"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-arm-lat-pulldown",
+  "name": "Single-Arm Lat Pulldown",
+  "equipment": "cable",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "teres_major",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "biceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "unilateral",
+   "width"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "straight-arm-pulldown",
+  "name": "Straight-Arm Pulldown",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "teres_major",
+   "tri_long"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "triceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "lat isolation",
+   "pump"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "machine-pullover",
+  "name": "Machine Pullover",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "lats"
+  ],
+  "secondary": [
+   "teres_major",
+   "pec_lower"
+  ],
+  "groups": [
+   "back",
+   "chest"
+  ],
+  "subgroups": [
+   "lats",
+   "lower_chest"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "lat isolation",
+   "stretch"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "face-pull",
+  "name": "Face Pull",
+  "equipment": "cable",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "delt_rear",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "infraspinatus",
+   "teres_minor",
+   "trap_upper"
+  ],
+  "groups": [
+   "shoulders",
+   "back"
+  ],
+  "subgroups": [
+   "rear_delts",
+   "upper_back",
+   "rotator_cuff",
+   "traps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "posture",
+   "prehab",
+   "shoulder health"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "barbell-shrug",
+  "name": "Barbell Shrug",
+  "equipment": "barbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "trap_upper"
+  ],
+  "secondary": [
+   "trap_mid",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "traps",
+   "upper_back",
+   "forearms"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "traps",
+   "neck"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "dumbbell-shrug",
+  "name": "Dumbbell Shrug",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "trap_upper"
+  ],
+  "secondary": [
+   "trap_mid",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "traps",
+   "upper_back",
+   "forearms"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "traps"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "trap-bar-shrug",
+  "name": "Trap Bar Shrug",
+  "equipment": "trap-bar",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "trap_upper"
+  ],
+  "secondary": [
+   "trap_mid",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "traps",
+   "upper_back",
+   "forearms"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "traps"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "prone-y-raise",
+  "name": "Prone Y-Raise",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "trap_lower"
+  ],
+  "secondary": [
+   "delt_rear",
+   "supraspinatus"
+  ],
+  "groups": [
+   "back",
+   "shoulders"
+  ],
+  "subgroups": [
+   "upper_back",
+   "rear_delts",
+   "rotator_cuff"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "posture",
+   "prehab",
+   "incline"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "back-extension",
+  "name": "Back Extension",
+  "equipment": "machine",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "erectors"
+  ],
+  "secondary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "back",
+   "legs"
+  ],
+  "subgroups": [
+   "lower_back",
+   "glutes",
+   "hamstrings"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "lower back",
+   "hyperextension",
+   "45 degree"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "reverse-hyperextension",
+  "name": "Reverse Hyperextension",
+  "equipment": "machine",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "erectors"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "glutes",
+   "lower_back",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "lower back",
+   "decompression"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "good-morning",
+  "name": "Good Morning",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "bf",
+   "semit",
+   "semim",
+   "erectors"
+  ],
+  "secondary": [
+   "glute_max",
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "lower_back",
+   "glutes",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "posterior chain"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "superman",
+  "name": "Superman",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "erectors"
+  ],
+  "secondary": [
+   "glute_max",
+   "delt_rear"
+  ],
+  "groups": [
+   "back",
+   "legs",
+   "shoulders"
+  ],
+  "subgroups": [
+   "lower_back",
+   "glutes",
+   "rear_delts"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "home",
+   "no equipment",
+   "beginner",
+   "lower back"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "bird-dog",
+  "name": "Bird Dog",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "erectors",
+   "tva"
+  ],
+  "secondary": [
+   "glute_max",
+   "delt_front"
+  ],
+  "groups": [
+   "back",
+   "core",
+   "legs",
+   "shoulders"
+  ],
+  "subgroups": [
+   "lower_back",
+   "abs",
+   "glutes",
+   "front_delts"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "home",
+   "rehab",
+   "beginner",
+   "stability"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "renegade-row",
+  "name": "Renegade Row",
+  "equipment": "dumbbell",
+  "pattern": "pull_h",
+  "type": "compound",
+  "primary": [
+   "lats",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "back",
+   "core",
+   "arms"
+  ],
+  "subgroups": [
+   "lats",
+   "abs",
+   "obliques",
+   "upper_back",
+   "triceps"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "anti-rotation",
+   "home",
+   "full body"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "overhead-press",
+  "name": "Overhead Press",
+  "equipment": "barbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "delt_side",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "trap_upper",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "back",
+   "core"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps",
+   "traps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "strength",
+   "standing",
+   "military press"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "seated-barbell-shoulder-press",
+  "name": "Seated Barbell Shoulder Press",
+  "equipment": "barbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "delt_side",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "strength"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "push-press",
+  "name": "Push Press",
+  "equipment": "barbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max",
+   "delt_side",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "legs",
+   "core"
+  ],
+  "subgroups": [
+   "front_delts",
+   "triceps",
+   "quads",
+   "glutes",
+   "side_delts",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "explosive",
+   "power",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "behind-the-neck-press",
+  "name": "Behind-the-Neck Press",
+  "equipment": "barbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_side",
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "trap_upper"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "back"
+  ],
+  "subgroups": [
+   "side_delts",
+   "front_delts",
+   "triceps",
+   "traps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "advanced",
+   "mobility"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "seated-dumbbell-shoulder-press",
+  "name": "Seated Dumbbell Shoulder Press",
+  "equipment": "dumbbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "delt_side",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "beginner"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "standing-dumbbell-shoulder-press",
+  "name": "Standing Dumbbell Shoulder Press",
+  "equipment": "dumbbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "delt_side",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "stability"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "arnold-press",
+  "name": "Arnold Press",
+  "equipment": "dumbbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front",
+   "delt_side"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "rotation"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-arm-dumbbell-press",
+  "name": "Single-Arm Dumbbell Press",
+  "equipment": "dumbbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "delt_side",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps",
+   "obliques"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "unilateral",
+   "anti-lateral flexion"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "machine-shoulder-press",
+  "name": "Machine Shoulder Press",
+  "equipment": "machine",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "delt_side",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "beginner",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "smith-machine-shoulder-press",
+  "name": "Smith Machine Shoulder Press",
+  "equipment": "smith",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "delt_side",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "triceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "z-press",
+  "name": "Z Press",
+  "equipment": "barbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "delt_side"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques",
+   "side_delts"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "strict",
+   "core",
+   "seated floor"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "pike-push-up",
+  "name": "Pike Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "pec_upper"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "chest"
+  ],
+  "subgroups": [
+   "front_delts",
+   "triceps",
+   "upper_chest"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "home",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "handstand-push-up",
+  "name": "Handstand Push-Up",
+  "equipment": "bodyweight",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "trap_upper",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "shoulders",
+   "arms",
+   "back",
+   "core"
+  ],
+  "subgroups": [
+   "front_delts",
+   "triceps",
+   "traps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "advanced",
+   "calisthenics",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "dumbbell-lateral-raise",
+  "name": "Dumbbell Lateral Raise",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_side"
+  ],
+  "secondary": [
+   "supraspinatus",
+   "trap_upper"
+  ],
+  "groups": [
+   "shoulders",
+   "back"
+  ],
+  "subgroups": [
+   "side_delts",
+   "rotator_cuff",
+   "traps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "width",
+   "capped delts"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cable-lateral-raise",
+  "name": "Cable Lateral Raise",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_side"
+  ],
+  "secondary": [
+   "supraspinatus"
+  ],
+  "groups": [
+   "shoulders"
+  ],
+  "subgroups": [
+   "side_delts",
+   "rotator_cuff"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "width",
+   "constant tension",
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "machine-lateral-raise",
+  "name": "Machine Lateral Raise",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_side"
+  ],
+  "secondary": [
+   "supraspinatus"
+  ],
+  "groups": [
+   "shoulders"
+  ],
+  "subgroups": [
+   "side_delts",
+   "rotator_cuff"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "width",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "lean-away-lateral-raise",
+  "name": "Lean-Away Lateral Raise",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_side"
+  ],
+  "secondary": [
+   "supraspinatus"
+  ],
+  "groups": [
+   "shoulders"
+  ],
+  "subgroups": [
+   "side_delts",
+   "rotator_cuff"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "width",
+   "unilateral",
+   "stretch"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "upright-row",
+  "name": "Upright Row",
+  "equipment": "barbell",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "delt_side",
+   "trap_upper"
+  ],
+  "secondary": [
+   "bi_long",
+   "bi_short",
+   "delt_front"
+  ],
+  "groups": [
+   "shoulders",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "side_delts",
+   "traps",
+   "biceps",
+   "front_delts"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "width",
+   "traps"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "cable-upright-row",
+  "name": "Cable Upright Row",
+  "equipment": "cable",
+  "pattern": "pull_v",
+  "type": "compound",
+  "primary": [
+   "delt_side",
+   "trap_upper"
+  ],
+  "secondary": [
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "shoulders",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "side_delts",
+   "traps",
+   "biceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "width"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "dumbbell-front-raise",
+  "name": "Dumbbell Front Raise",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "pec_upper"
+  ],
+  "groups": [
+   "shoulders",
+   "chest"
+  ],
+  "subgroups": [
+   "front_delts",
+   "upper_chest"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "front delts"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "plate-front-raise",
+  "name": "Plate Front Raise",
+  "equipment": "other",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "pec_upper",
+   "trap_upper"
+  ],
+  "groups": [
+   "shoulders",
+   "chest",
+   "back"
+  ],
+  "subgroups": [
+   "front_delts",
+   "upper_chest",
+   "traps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "plate"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cable-front-raise",
+  "name": "Cable Front Raise",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_front"
+  ],
+  "secondary": [
+   "pec_upper"
+  ],
+  "groups": [
+   "shoulders",
+   "chest"
+  ],
+  "subgroups": [
+   "front_delts",
+   "upper_chest"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "front delts"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "rear-delt-fly-dumbbell",
+  "name": "Rear Delt Fly (Dumbbell)",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_rear"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "groups": [
+   "shoulders",
+   "back"
+  ],
+  "subgroups": [
+   "rear_delts",
+   "upper_back"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "bent-over",
+   "posture"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "reverse-pec-deck",
+  "name": "Reverse Pec Deck",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_rear"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "groups": [
+   "shoulders",
+   "back"
+  ],
+  "subgroups": [
+   "rear_delts",
+   "upper_back"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "posture",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cable-rear-delt-fly",
+  "name": "Cable Rear Delt Fly",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_rear"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "groups": [
+   "shoulders",
+   "back"
+  ],
+  "subgroups": [
+   "rear_delts",
+   "upper_back"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "crossover",
+   "posture"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "band-pull-apart",
+  "name": "Band Pull-Apart",
+  "equipment": "band",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_rear",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "infraspinatus"
+  ],
+  "groups": [
+   "shoulders",
+   "back"
+  ],
+  "subgroups": [
+   "rear_delts",
+   "upper_back",
+   "rotator_cuff"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "posture",
+   "warm-up",
+   "prehab",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "external-rotation-cable",
+  "name": "External Rotation (Cable)",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "infraspinatus",
+   "teres_minor"
+  ],
+  "secondary": [
+   "delt_rear"
+  ],
+  "groups": [
+   "shoulders"
+  ],
+  "subgroups": [
+   "rotator_cuff",
+   "rear_delts"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "rotator cuff",
+   "prehab",
+   "shoulder health"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "side-lying-external-rotation",
+  "name": "Side-Lying External Rotation",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "infraspinatus",
+   "teres_minor"
+  ],
+  "secondary": [
+   "delt_rear"
+  ],
+  "groups": [
+   "shoulders"
+  ],
+  "subgroups": [
+   "rotator_cuff",
+   "rear_delts"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "rotator cuff",
+   "prehab",
+   "rehab"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "internal-rotation-cable",
+  "name": "Internal Rotation (Cable)",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "subscapularis"
+  ],
+  "secondary": [
+   "pec_mid"
+  ],
+  "groups": [
+   "shoulders",
+   "chest"
+  ],
+  "subgroups": [
+   "rotator_cuff",
+   "mid_chest"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "rotator cuff",
+   "prehab"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cuban-press",
+  "name": "Cuban Press",
+  "equipment": "dumbbell",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "infraspinatus",
+   "delt_side"
+  ],
+  "secondary": [
+   "supraspinatus",
+   "teres_minor",
+   "delt_rear"
+  ],
+  "groups": [
+   "shoulders"
+  ],
+  "subgroups": [
+   "rotator_cuff",
+   "side_delts",
+   "rear_delts"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "rotator cuff",
+   "prehab",
+   "warm-up"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "full-can-raise",
+  "name": "Full Can Raise",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "supraspinatus"
+  ],
+  "secondary": [
+   "delt_side",
+   "delt_front"
+  ],
+  "groups": [
+   "shoulders"
+  ],
+  "subgroups": [
+   "rotator_cuff",
+   "side_delts",
+   "front_delts"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "rotator cuff",
+   "prehab"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "overhead-plate-halo",
+  "name": "Overhead Plate Halo",
+  "equipment": "other",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "delt_front",
+   "delt_side"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "infraspinatus",
+   "teres_minor",
+   "supraspinatus",
+   "subscapularis"
+  ],
+  "groups": [
+   "shoulders",
+   "core"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "abs",
+   "obliques",
+   "rotator_cuff"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "warm-up",
+   "mobility"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "barbell-curl",
+  "name": "Barbell Curl",
+  "equipment": "barbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long",
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis",
+   "brachiorad"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps",
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "mass"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "ez-bar-curl",
+  "name": "EZ-Bar Curl",
+  "equipment": "ez-bar",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long",
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis",
+   "brachiorad"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps",
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "wrist friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "dumbbell-curl",
+  "name": "Dumbbell Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long",
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis",
+   "brachiorad"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps",
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "incline-dumbbell-curl",
+  "name": "Incline Dumbbell Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long"
+  ],
+  "secondary": [
+   "bi_short",
+   "brachialis"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "stretch",
+   "long head"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "hammer-curl",
+  "name": "Hammer Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "brachialis",
+   "brachiorad"
+  ],
+  "secondary": [
+   "bi_long"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps",
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "forearm",
+   "neutral grip",
+   "arm thickness"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cross-body-hammer-curl",
+  "name": "Cross-Body Hammer Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "brachialis"
+  ],
+  "secondary": [
+   "brachiorad",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps",
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "neutral grip"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "preacher-curl",
+  "name": "Preacher Curl",
+  "equipment": "ez-bar",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "peak",
+   "strict"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "machine-preacher-curl",
+  "name": "Machine Preacher Curl",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "spider-curl",
+  "name": "Spider Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "peak",
+   "shortened"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "concentration-curl",
+  "name": "Concentration Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "peak",
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cable-curl",
+  "name": "Cable Curl",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long",
+   "bi_short"
+  ],
+  "secondary": [
+   "brachialis"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "constant tension",
+   "pump"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "bayesian-cable-curl",
+  "name": "Bayesian Cable Curl",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long"
+  ],
+  "secondary": [
+   "bi_short"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps",
+   "stretch",
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "reverse-curl",
+  "name": "Reverse Curl",
+  "equipment": "ez-bar",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "brachiorad",
+   "brachialis"
+  ],
+  "secondary": [
+   "wrist_ext"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "forearms",
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "forearm",
+   "overhand"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "zottman-curl",
+  "name": "Zottman Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long",
+   "bi_short",
+   "brachiorad"
+  ],
+  "secondary": [
+   "brachialis",
+   "wrist_ext"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps",
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "forearm"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "drag-curl",
+  "name": "Drag Curl",
+  "equipment": "barbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long"
+  ],
+  "secondary": [
+   "brachialis"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "biceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "biceps"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "chin-up-hold",
+  "name": "Chin-Up Hold",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bi_long",
+   "bi_short"
+  ],
+  "secondary": [
+   "lats",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "arms",
+   "back"
+  ],
+  "subgroups": [
+   "biceps",
+   "lats",
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "isometric",
+   "grip"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "triceps-pushdown-rope",
+  "name": "Triceps Pushdown (Rope)",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_lat"
+  ],
+  "secondary": [
+   "tri_med",
+   "tri_long"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "pump"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "triceps-pushdown-bar",
+  "name": "Triceps Pushdown (Bar)",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_lat",
+   "tri_med"
+  ],
+  "secondary": [
+   "tri_long"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "heavy"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "single-arm-cable-pushdown",
+  "name": "Single-Arm Cable Pushdown",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_lat"
+  ],
+  "secondary": [
+   "tri_med"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "overhead-cable-triceps-extension",
+  "name": "Overhead Cable Triceps Extension",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_long"
+  ],
+  "secondary": [
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "stretch",
+   "long head"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "overhead-dumbbell-triceps-extension",
+  "name": "Overhead Dumbbell Triceps Extension",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_long"
+  ],
+  "secondary": [
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "stretch",
+   "long head",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "skull-crusher",
+  "name": "Skull Crusher",
+  "equipment": "ez-bar",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_long",
+   "tri_med"
+  ],
+  "secondary": [
+   "tri_lat"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "lying extension"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "dumbbell-skull-crusher",
+  "name": "Dumbbell Skull Crusher",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_long"
+  ],
+  "secondary": [
+   "tri_med",
+   "tri_lat"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "jm-press",
+  "name": "JM Press",
+  "equipment": "barbell",
+  "pattern": "push_h",
+  "type": "compound",
+  "primary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "secondary": [
+   "pec_mid"
+  ],
+  "groups": [
+   "arms",
+   "chest"
+  ],
+  "subgroups": [
+   "triceps",
+   "mid_chest"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "strength"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "triceps-kickback",
+  "name": "Triceps Kickback",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tri_lat"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_med"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "triceps"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "shortened"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "bench-dip",
+  "name": "Bench Dip",
+  "equipment": "bodyweight",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "secondary": [
+   "delt_front",
+   "pec_lower"
+  ],
+  "groups": [
+   "arms",
+   "shoulders",
+   "chest"
+  ],
+  "subgroups": [
+   "triceps",
+   "front_delts",
+   "lower_chest"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "home",
+   "beginner"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "triceps-dip",
+  "name": "Triceps Dip",
+  "equipment": "bodyweight",
+  "pattern": "push_v",
+  "type": "compound",
+  "primary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "secondary": [
+   "pec_lower",
+   "delt_front"
+  ],
+  "groups": [
+   "arms",
+   "chest",
+   "shoulders"
+  ],
+  "subgroups": [
+   "triceps",
+   "lower_chest",
+   "front_delts"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "triceps",
+   "calisthenics",
+   "upright"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "wrist-curl",
+  "name": "Wrist Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "wrist_flex"
+  ],
+  "secondary": [],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "forearm",
+   "grip"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "reverse-wrist-curl",
+  "name": "Reverse Wrist Curl",
+  "equipment": "dumbbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "wrist_ext"
+  ],
+  "secondary": [
+   "brachiorad"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "forearm"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "behind-the-back-wrist-curl",
+  "name": "Behind-the-Back Wrist Curl",
+  "equipment": "barbell",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "wrist_flex"
+  ],
+  "secondary": [],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "forearm",
+   "grip"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "wrist-roller",
+  "name": "Wrist Roller",
+  "equipment": "other",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "secondary": [
+   "brachiorad"
+  ],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "forearm",
+   "grip"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "dead-hang",
+  "name": "Dead Hang",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "wrist_flex"
+  ],
+  "secondary": [
+   "lats"
+  ],
+  "groups": [
+   "arms",
+   "back"
+  ],
+  "subgroups": [
+   "forearms",
+   "lats"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "grip",
+   "isometric",
+   "home",
+   "decompression"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "plate-pinch",
+  "name": "Plate Pinch",
+  "equipment": "other",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "wrist_flex"
+  ],
+  "secondary": [],
+  "groups": [
+   "arms"
+  ],
+  "subgroups": [
+   "forearms"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "grip",
+   "isometric"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "plank",
+  "name": "Plank",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "tva",
+   "rectus_abs"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int",
+   "delt_front",
+   "glute_max"
+  ],
+  "groups": [
+   "core",
+   "shoulders",
+   "legs"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques",
+   "front_delts",
+   "glutes"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "home",
+   "isometric",
+   "beginner",
+   "anti-extension"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "side-plank",
+  "name": "Side Plank",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "tva",
+   "glute_med",
+   "glute_min"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "obliques",
+   "abs",
+   "glutes"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "home",
+   "isometric",
+   "anti-lateral flexion"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "copenhagen-plank",
+  "name": "Copenhagen Plank",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "add_mag",
+   "add_long",
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "tva"
+  ],
+  "groups": [
+   "legs",
+   "core"
+  ],
+  "subgroups": [
+   "hips",
+   "obliques",
+   "abs"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "isometric",
+   "groin",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "crunch",
+  "name": "Crunch",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "home",
+   "beginner",
+   "upper abs"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "cable-crunch",
+  "name": "Cable Crunch",
+  "equipment": "cable",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "weighted abs"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "machine-crunch",
+  "name": "Machine Crunch",
+  "equipment": "machine",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "decline-sit-up",
+  "name": "Decline Sit-Up",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "abs"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "hanging-leg-raise",
+  "name": "Hanging Leg Raise",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "core",
+   "legs",
+   "arms"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "obliques",
+   "forearms"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "lower abs",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "hanging-knee-raise",
+  "name": "Hanging Knee Raise",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "lower abs",
+   "beginner"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "toes-to-bar",
+  "name": "Toes-to-Bar",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "lats",
+   "obl_ext",
+   "obl_int",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "core",
+   "legs",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "lats",
+   "obliques",
+   "forearms"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "advanced",
+   "crossfit"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "captains-chair-leg-raise",
+  "name": "Captain's Chair Leg Raise",
+  "equipment": "machine",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "lower abs"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "lying-leg-raise",
+  "name": "Lying Leg Raise",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "tva"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "abs",
+   "hips"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "lower abs",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "reverse-crunch",
+  "name": "Reverse Crunch",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "lower abs",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "ab-wheel-rollout",
+  "name": "Ab Wheel Rollout",
+  "equipment": "other",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "tva"
+  ],
+  "secondary": [
+   "lats",
+   "obl_ext",
+   "obl_int",
+   "delt_front"
+  ],
+  "groups": [
+   "core",
+   "back",
+   "shoulders"
+  ],
+  "subgroups": [
+   "abs",
+   "lats",
+   "obliques",
+   "front_delts"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "anti-extension"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "dead-bug",
+  "name": "Dead Bug",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "tva",
+   "rectus_abs"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "home",
+   "beginner",
+   "rehab",
+   "anti-extension"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "hollow-body-hold",
+  "name": "Hollow Body Hold",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "tva"
+  ],
+  "secondary": [
+   "iliopsoas"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "abs",
+   "hips"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "gymnastics",
+   "isometric",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "v-up",
+  "name": "V-Up",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs"
+  ],
+  "secondary": [
+   "iliopsoas",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "bicycle-crunch",
+  "name": "Bicycle Crunch",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "obl_ext",
+   "obl_int",
+   "rectus_abs"
+  ],
+  "secondary": [
+   "iliopsoas"
+  ],
+  "groups": [
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "obliques",
+   "abs",
+   "hips"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "home",
+   "rotation"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "russian-twist",
+  "name": "Russian Twist",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "rectus_abs"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "obliques",
+   "abs"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "rotation",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "pallof-press",
+  "name": "Pallof Press",
+  "equipment": "cable",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "obl_ext",
+   "obl_int",
+   "tva"
+  ],
+  "secondary": [
+   "rectus_abs"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "obliques",
+   "abs"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "anti-rotation",
+   "stability"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "cable-woodchop",
+  "name": "Cable Woodchop",
+  "equipment": "cable",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "tva",
+   "delt_front"
+  ],
+  "groups": [
+   "core",
+   "shoulders"
+  ],
+  "subgroups": [
+   "obliques",
+   "abs",
+   "front_delts"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "rotation",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "landmine-rotation",
+  "name": "Landmine Rotation",
+  "equipment": "landmine",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "delt_front",
+   "tva",
+   "glute_max"
+  ],
+  "groups": [
+   "core",
+   "shoulders",
+   "legs"
+  ],
+  "subgroups": [
+   "obliques",
+   "front_delts",
+   "abs",
+   "glutes"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "rotation",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "suitcase-carry",
+  "name": "Suitcase Carry",
+  "equipment": "dumbbell",
+  "pattern": "carry",
+  "type": "compound",
+  "primary": [
+   "obl_ext",
+   "obl_int",
+   "ql"
+  ],
+  "secondary": [
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext",
+   "trap_upper",
+   "tva"
+  ],
+  "groups": [
+   "core",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "obliques",
+   "lower_back",
+   "forearms",
+   "traps",
+   "abs"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "anti-lateral flexion",
+   "unilateral",
+   "grip"
+  ],
+  "rec": {
+   "strength": "4 x 20m heavy",
+   "hypertrophy": "3 x 30m",
+   "endurance": "3 x 60m",
+   "default": "3 x 30-40m"
+  }
+ },
+ {
+  "id": "farmers-carry",
+  "name": "Farmer's Carry",
+  "equipment": "dumbbell",
+  "pattern": "carry",
+  "type": "compound",
+  "primary": [
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext",
+   "trap_upper"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max",
+   "ql"
+  ],
+  "groups": [
+   "arms",
+   "back",
+   "core",
+   "legs"
+  ],
+  "subgroups": [
+   "forearms",
+   "traps",
+   "abs",
+   "obliques",
+   "quads",
+   "glutes",
+   "lower_back"
+  ],
+  "primaryGroup": "arms",
+  "tags": [
+   "grip",
+   "full body",
+   "conditioning"
+  ],
+  "rec": {
+   "strength": "4 x 20m heavy",
+   "hypertrophy": "3 x 30m",
+   "endurance": "3 x 60m",
+   "default": "3 x 30-40m"
+  }
+ },
+ {
+  "id": "mountain-climber",
+  "name": "Mountain Climber",
+  "equipment": "bodyweight",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "delt_front",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "groups": [
+   "core",
+   "legs",
+   "shoulders"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "front_delts",
+   "quads"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "home",
+   "cardio",
+   "hiit"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "stir-the-pot",
+  "name": "Stir the Pot",
+  "equipment": "other",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "tva"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "core"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "stability ball",
+   "anti-extension"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "dragon-flag",
+  "name": "Dragon Flag",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs"
+  ],
+  "secondary": [
+   "obl_ext",
+   "obl_int",
+   "tva",
+   "lats"
+  ],
+  "groups": [
+   "core",
+   "back"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques",
+   "lats"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "advanced",
+   "calisthenics"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "l-sit",
+  "name": "L-Sit",
+  "equipment": "bodyweight",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "rectus_abs",
+   "iliopsoas"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "groups": [
+   "core",
+   "legs",
+   "arms"
+  ],
+  "subgroups": [
+   "abs",
+   "hips",
+   "triceps",
+   "quads"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "gymnastics",
+   "isometric",
+   "advanced"
+  ],
+  "rec": {
+   "strength": "4 x 15-20s",
+   "hypertrophy": "3 x 30-45s",
+   "endurance": "3 x 60s",
+   "default": "3 x 30-45s"
+  }
+ },
+ {
+  "id": "side-bend-dumbbell",
+  "name": "Side Bend (Dumbbell)",
+  "equipment": "dumbbell",
+  "pattern": "core",
+  "type": "isolation",
+  "primary": [
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "ql"
+  ],
+  "groups": [
+   "core",
+   "back"
+  ],
+  "subgroups": [
+   "obliques",
+   "lower_back"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "lateral flexion"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "back-squat",
+  "name": "Back Squat",
+  "equipment": "barbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long",
+   "bf",
+   "semit",
+   "semim",
+   "erectors",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips",
+   "hamstrings",
+   "lower_back",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "powerlifting",
+   "strength",
+   "high bar"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "low-bar-back-squat",
+  "name": "Low-Bar Back Squat",
+  "equipment": "barbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long",
+   "bf",
+   "semit",
+   "semim",
+   "erectors"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "glutes",
+   "quads",
+   "hips",
+   "hamstrings",
+   "lower_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "powerlifting",
+   "strength"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "front-squat",
+  "name": "Front Squat",
+  "equipment": "barbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "glute_max",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "erectors",
+   "trap_mid"
+  ],
+  "groups": [
+   "legs",
+   "core",
+   "back"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "abs",
+   "obliques",
+   "lower_back",
+   "upper_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "upright",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "paused-squat",
+  "name": "Paused Squat",
+  "equipment": "barbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long",
+   "erectors"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips",
+   "lower_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "strength",
+   "pause"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "box-squat",
+  "name": "Box Squat",
+  "equipment": "barbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "add_mag",
+   "add_long",
+   "erectors"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "glutes",
+   "quads",
+   "hamstrings",
+   "hips",
+   "lower_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "powerlifting"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "safety-bar-squat",
+  "name": "Safety Bar Squat",
+  "equipment": "other",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "erectors",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "lower_back",
+   "upper_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "back friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "zercher-squat",
+  "name": "Zercher Squat",
+  "equipment": "barbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "core",
+   "arms"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "upper_back",
+   "abs",
+   "obliques",
+   "biceps"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "advanced"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "goblet-squat",
+  "name": "Goblet Squat",
+  "equipment": "dumbbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "abs",
+   "obliques",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "beginner",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "hack-squat",
+  "name": "Hack Squat",
+  "equipment": "machine",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "glute_max",
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "machine-friendly",
+   "quad focus"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "pendulum-squat",
+  "name": "Pendulum Squat",
+  "equipment": "machine",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "glute_max"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "machine-friendly",
+   "quad focus"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "smith-machine-squat",
+  "name": "Smith Machine Squat",
+  "equipment": "smith",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "leg-press",
+  "name": "Leg Press",
+  "equipment": "machine",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "beginner",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-leg-leg-press",
+  "name": "Single-Leg Leg Press",
+  "equipment": "machine",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "belt-squat",
+  "name": "Belt Squat",
+  "equipment": "machine",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "back friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "bodyweight-squat",
+  "name": "Bodyweight Squat",
+  "equipment": "bodyweight",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "home",
+   "beginner",
+   "no equipment",
+   "warm-up"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "pistol-squat",
+  "name": "Pistol Squat",
+  "equipment": "bodyweight",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "glute_med",
+   "glute_min",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "gastroc",
+   "soleus"
+  ],
+  "groups": [
+   "legs",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "abs",
+   "obliques",
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "calisthenics",
+   "advanced",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "sissy-squat",
+  "name": "Sissy Squat",
+  "equipment": "bodyweight",
+  "pattern": "squat",
+  "type": "isolation",
+  "primary": [
+   "rect_fem",
+   "vas_med",
+   "vas_lat"
+  ],
+  "secondary": [],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "quad focus",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "jump-squat",
+  "name": "Jump Squat",
+  "equipment": "bodyweight",
+  "pattern": "plyo",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "gastroc",
+   "soleus"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "explosive",
+   "plyometric",
+   "home",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "4 x 3-5",
+   "hypertrophy": "4 x 5-6",
+   "endurance": "3 x 10",
+   "default": "4 x 5"
+  }
+ },
+ {
+  "id": "box-jump",
+  "name": "Box Jump",
+  "equipment": "bodyweight",
+  "pattern": "plyo",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "gastroc",
+   "soleus",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "calves",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "explosive",
+   "plyometric",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "4 x 3-5",
+   "hypertrophy": "4 x 5-6",
+   "endurance": "3 x 10",
+   "default": "4 x 5"
+  }
+ },
+ {
+  "id": "bulgarian-split-squat",
+  "name": "Bulgarian Split Squat",
+  "equipment": "dumbbell",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long",
+   "glute_med",
+   "glute_min",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "walking-lunge",
+  "name": "Walking Lunge",
+  "equipment": "dumbbell",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long",
+   "bf",
+   "semit",
+   "semim",
+   "glute_med",
+   "glute_min"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "reverse-lunge",
+  "name": "Reverse Lunge",
+  "equipment": "dumbbell",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes",
+   "quads",
+   "hamstrings",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "knee friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "barbell-lunge",
+  "name": "Barbell Lunge",
+  "equipment": "barbell",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "add_mag",
+   "add_long",
+   "bf",
+   "semit",
+   "semim",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hips",
+   "hamstrings",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "bodyweight-lunge",
+  "name": "Bodyweight Lunge",
+  "equipment": "bodyweight",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "home",
+   "beginner",
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "step-up",
+  "name": "Step-Up",
+  "equipment": "dumbbell",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "glute_med",
+   "glute_min",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "lateral-lunge",
+  "name": "Lateral Lunge",
+  "equipment": "dumbbell",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "add_mag",
+   "add_long",
+   "glute_max"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_med",
+   "glute_min"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "hips",
+   "glutes",
+   "quads"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "frontal plane",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "curtsy-lunge",
+  "name": "Curtsy Lunge",
+  "equipment": "dumbbell",
+  "pattern": "lunge",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "glute_med",
+   "glute_min"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "add_mag",
+   "add_long"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes",
+   "quads",
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "glute focus"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "leg-extension",
+  "name": "Leg Extension",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "quad focus",
+   "beginner",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "single-leg-leg-extension",
+  "name": "Single-Leg Leg Extension",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "quad focus"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "romanian-deadlift",
+  "name": "Romanian Deadlift",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "bf",
+   "semit",
+   "semim",
+   "glute_max"
+  ],
+  "secondary": [
+   "erectors",
+   "add_mag",
+   "add_long",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "glutes",
+   "lower_back",
+   "hips",
+   "forearms"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "posterior chain",
+   "stretch",
+   "rdl"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "dumbbell-romanian-deadlift",
+  "name": "Dumbbell Romanian Deadlift",
+  "equipment": "dumbbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "bf",
+   "semit",
+   "semim",
+   "glute_max"
+  ],
+  "secondary": [
+   "erectors",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "arms"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "glutes",
+   "lower_back",
+   "forearms"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "posterior chain",
+   "rdl",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-leg-romanian-deadlift",
+  "name": "Single-Leg Romanian Deadlift",
+  "equipment": "dumbbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "bf",
+   "semit",
+   "semim",
+   "glute_max"
+  ],
+  "secondary": [
+   "glute_med",
+   "glute_min",
+   "erectors"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "glutes",
+   "lower_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "balance",
+   "rdl"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "stiff-leg-deadlift",
+  "name": "Stiff-Leg Deadlift",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "glute_max",
+   "erectors"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "glutes",
+   "lower_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "posterior chain"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "kettlebell-swing",
+  "name": "Kettlebell Swing",
+  "equipment": "kettlebell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "erectors",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "delt_front",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "core",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "lower_back",
+   "abs",
+   "obliques",
+   "front_delts",
+   "forearms"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "explosive",
+   "conditioning",
+   "home",
+   "hiit"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "lying-leg-curl",
+  "name": "Lying Leg Curl",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "gastroc"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "hamstring curl",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "seated-leg-curl",
+  "name": "Seated Leg Curl",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "gastroc"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "hamstring curl",
+   "stretch",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "nordic-hamstring-curl",
+  "name": "Nordic Hamstring Curl",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "gastroc"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "eccentric",
+   "injury prevention",
+   "home",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "glute-ham-raise",
+  "name": "Glute-Ham Raise",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "compound",
+  "primary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "glute_max",
+   "gastroc",
+   "erectors"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "glutes",
+   "calves",
+   "lower_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "ghr",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "stability-ball-leg-curl",
+  "name": "Stability Ball Leg Curl",
+  "equipment": "other",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "glute_max",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "core"
+  ],
+  "subgroups": [
+   "hamstrings",
+   "glutes",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "barbell-hip-thrust",
+  "name": "Barbell Hip Thrust",
+  "equipment": "barbell",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "add_mag",
+   "add_long",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "hips",
+   "quads"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute focus",
+   "booty"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "machine-hip-thrust",
+  "name": "Machine Hip Thrust",
+  "equipment": "machine",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute focus",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "single-leg-hip-thrust",
+  "name": "Single-Leg Hip Thrust",
+  "equipment": "bodyweight",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "glute_med",
+   "glute_min"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "unilateral",
+   "home",
+   "glute focus"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "glute-bridge",
+  "name": "Glute Bridge",
+  "equipment": "bodyweight",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "home",
+   "beginner",
+   "glute focus"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "cable-pull-through",
+  "name": "Cable Pull-Through",
+  "equipment": "cable",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "secondary": [
+   "erectors"
+  ],
+  "groups": [
+   "legs",
+   "back"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "lower_back"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute focus",
+   "hinge"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "cable-glute-kickback",
+  "name": "Cable Glute Kickback",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "glute_max"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute focus",
+   "unilateral"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "hip-abduction-machine",
+  "name": "Hip Abduction Machine",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "glute_med",
+   "glute_min"
+  ],
+  "secondary": [
+   "tfl"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute med",
+   "side glutes",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "banded-lateral-walk",
+  "name": "Banded Lateral Walk",
+  "equipment": "band",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "glute_med",
+   "glute_min"
+  ],
+  "secondary": [
+   "tfl"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute med",
+   "warm-up",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "clamshell",
+  "name": "Clamshell",
+  "equipment": "band",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "glute_med",
+   "glute_min"
+  ],
+  "secondary": [],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute med",
+   "rehab",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "frog-pump",
+  "name": "Frog Pump",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "glute_max"
+  ],
+  "secondary": [
+   "glute_med",
+   "glute_min"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "glutes"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "glute focus",
+   "home",
+   "pump"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "hip-adduction-machine",
+  "name": "Hip Adduction Machine",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "add_mag",
+   "add_long"
+  ],
+  "secondary": [],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "hips"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "inner thigh",
+   "groin",
+   "machine-friendly"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "standing-calf-raise",
+  "name": "Standing Calf Raise",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "gastroc"
+  ],
+  "secondary": [
+   "soleus"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "calves"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "seated-calf-raise",
+  "name": "Seated Calf Raise",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "soleus"
+  ],
+  "secondary": [
+   "gastroc"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "calves",
+   "bent knee"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "leg-press-calf-raise",
+  "name": "Leg Press Calf Raise",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "gastroc"
+  ],
+  "secondary": [
+   "soleus"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "calves"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "single-leg-calf-raise",
+  "name": "Single-Leg Calf Raise",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "gastroc"
+  ],
+  "secondary": [
+   "soleus"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "calves",
+   "unilateral",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "donkey-calf-raise",
+  "name": "Donkey Calf Raise",
+  "equipment": "machine",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "gastroc"
+  ],
+  "secondary": [
+   "soleus"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "calves",
+   "stretch"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "tibialis-raise",
+  "name": "Tibialis Raise",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "tib_ant"
+  ],
+  "secondary": [],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "shins",
+   "knee health",
+   "home"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "hanging-hip-flexor-raise",
+  "name": "Hanging Hip Flexor Raise",
+  "equipment": "bodyweight",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "iliopsoas"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "rect_fem"
+  ],
+  "groups": [
+   "legs",
+   "core"
+  ],
+  "subgroups": [
+   "hips",
+   "abs",
+   "quads"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "hip flexors"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "cable-hip-flexion",
+  "name": "Cable Hip Flexion",
+  "equipment": "cable",
+  "pattern": "iso",
+  "type": "isolation",
+  "primary": [
+   "iliopsoas",
+   "rect_fem"
+  ],
+  "secondary": [],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "hips",
+   "quads"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "hip flexors",
+   "sprinting",
+   "athletic"
+  ],
+  "rec": {
+   "strength": "3 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "2 x 20-25",
+   "default": "3 x 12-15"
+  }
+ },
+ {
+  "id": "sled-push",
+  "name": "Sled Push",
+  "equipment": "sled",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max"
+  ],
+  "secondary": [
+   "gastroc",
+   "soleus",
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "calves",
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "conditioning",
+   "athletic",
+   "knee friendly"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "sled-pull-backwards",
+  "name": "Sled Pull (Backwards)",
+  "equipment": "sled",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "gastroc",
+   "soleus"
+  ],
+  "groups": [
+   "legs"
+  ],
+  "subgroups": [
+   "quads",
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "conditioning",
+   "knee health"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "power-clean",
+  "name": "Power Clean",
+  "equipment": "barbell",
+  "pattern": "olympic",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim",
+   "trap_upper"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "erectors",
+   "delt_front",
+   "gastroc",
+   "soleus",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "traps",
+   "quads",
+   "lower_back",
+   "front_delts",
+   "calves",
+   "forearms"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "explosive",
+   "power",
+   "olympic lifting",
+   "athletic",
+   "full body"
+  ],
+  "rec": {
+   "strength": "5 x 2-3",
+   "hypertrophy": "4 x 3-5",
+   "endurance": "6 x 2 (EMOM)",
+   "default": "5 x 3"
+  }
+ },
+ {
+  "id": "hang-clean",
+  "name": "Hang Clean",
+  "equipment": "barbell",
+  "pattern": "olympic",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim",
+   "trap_upper"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "erectors",
+   "delt_front"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "shoulders"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "traps",
+   "quads",
+   "lower_back",
+   "front_delts"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "explosive",
+   "power",
+   "olympic lifting",
+   "full body"
+  ],
+  "rec": {
+   "strength": "5 x 2-3",
+   "hypertrophy": "4 x 3-5",
+   "endurance": "6 x 2 (EMOM)",
+   "default": "5 x 3"
+  }
+ },
+ {
+  "id": "power-snatch",
+  "name": "Power Snatch",
+  "equipment": "barbell",
+  "pattern": "olympic",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim",
+   "trap_upper",
+   "delt_side"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "erectors",
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "traps",
+   "side_delts",
+   "quads",
+   "lower_back",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "explosive",
+   "olympic lifting",
+   "full body",
+   "advanced"
+  ],
+  "rec": {
+   "strength": "5 x 2-3",
+   "hypertrophy": "4 x 3-5",
+   "endurance": "6 x 2 (EMOM)",
+   "default": "5 x 3"
+  }
+ },
+ {
+  "id": "clean-and-jerk",
+  "name": "Clean and Jerk",
+  "equipment": "barbell",
+  "pattern": "olympic",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "delt_front"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "trap_upper",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "erectors",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "back",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "glutes",
+   "quads",
+   "front_delts",
+   "hamstrings",
+   "traps",
+   "triceps",
+   "lower_back",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "olympic lifting",
+   "full body",
+   "advanced"
+  ],
+  "rec": {
+   "strength": "5 x 2-3",
+   "hypertrophy": "4 x 3-5",
+   "endurance": "6 x 2 (EMOM)",
+   "default": "5 x 3"
+  }
+ },
+ {
+  "id": "thruster",
+  "name": "Thruster",
+  "equipment": "barbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max",
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "conditioning",
+   "crossfit",
+   "full body"
+  ],
+  "rec": {
+   "strength": "5 x 3-5",
+   "hypertrophy": "4 x 6-10",
+   "endurance": "3 x 12-15",
+   "default": "4 x 6-8"
+  }
+ },
+ {
+  "id": "dumbbell-thruster",
+  "name": "Dumbbell Thruster",
+  "equipment": "dumbbell",
+  "pattern": "squat",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max",
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "conditioning",
+   "full body",
+   "home"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ },
+ {
+  "id": "kettlebell-clean-and-press",
+  "name": "Kettlebell Clean and Press",
+  "equipment": "kettlebell",
+  "pattern": "olympic",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "delt_front"
+  ],
+  "secondary": [
+   "bf",
+   "semit",
+   "semim",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "glutes",
+   "front_delts",
+   "hamstrings",
+   "triceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "full body",
+   "home"
+  ],
+  "rec": {
+   "strength": "5 x 2-3",
+   "hypertrophy": "4 x 3-5",
+   "endurance": "6 x 2 (EMOM)",
+   "default": "5 x 3"
+  }
+ },
+ {
+  "id": "kettlebell-snatch",
+  "name": "Kettlebell Snatch",
+  "equipment": "kettlebell",
+  "pattern": "olympic",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim",
+   "delt_front"
+  ],
+  "secondary": [
+   "trap_upper",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "back",
+   "core"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "front_delts",
+   "traps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "explosive",
+   "conditioning",
+   "full body"
+  ],
+  "rec": {
+   "strength": "5 x 2-3",
+   "hypertrophy": "4 x 3-5",
+   "endurance": "6 x 2 (EMOM)",
+   "default": "5 x 3"
+  }
+ },
+ {
+  "id": "turkish-get-up",
+  "name": "Turkish Get-Up",
+  "equipment": "kettlebell",
+  "pattern": "core",
+  "type": "compound",
+  "primary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "delt_front"
+  ],
+  "secondary": [
+   "glute_max",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "infraspinatus",
+   "teres_minor",
+   "supraspinatus",
+   "subscapularis"
+  ],
+  "groups": [
+   "core",
+   "shoulders",
+   "legs",
+   "arms"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques",
+   "front_delts",
+   "glutes",
+   "quads",
+   "triceps",
+   "rotator_cuff"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "stability",
+   "full body",
+   "mobility"
+  ],
+  "rec": {
+   "strength": "4 x 6-8",
+   "hypertrophy": "3 x 10-15",
+   "endurance": "3 x 20+",
+   "default": "3 x 10-15"
+  }
+ },
+ {
+  "id": "man-maker",
+  "name": "Man Maker",
+  "equipment": "dumbbell",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "pec_mid",
+   "lats",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "glute_max"
+  ],
+  "groups": [
+   "chest",
+   "back",
+   "legs",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "mid_chest",
+   "lats",
+   "quads",
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques",
+   "glutes"
+  ],
+  "primaryGroup": "chest",
+  "tags": [
+   "full body",
+   "conditioning",
+   "home"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "burpee",
+  "name": "Burpee",
+  "equipment": "bodyweight",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "pec_mid"
+  ],
+  "secondary": [
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "gastroc",
+   "soleus"
+  ],
+  "groups": [
+   "legs",
+   "chest",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "mid_chest",
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques",
+   "calves"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "cardio",
+   "hiit",
+   "home",
+   "no equipment",
+   "full body"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "wall-ball",
+  "name": "Wall Ball",
+  "equipment": "other",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max",
+   "delt_front"
+  ],
+  "secondary": [
+   "tri_long",
+   "tri_lat",
+   "tri_med",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "front_delts",
+   "triceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "crossfit",
+   "conditioning",
+   "full body"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "battle-ropes",
+  "name": "Battle Ropes",
+  "equipment": "other",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "delt_front",
+   "delt_side"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "shoulders",
+   "core",
+   "arms"
+  ],
+  "subgroups": [
+   "front_delts",
+   "side_delts",
+   "abs",
+   "obliques",
+   "forearms",
+   "biceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "cardio",
+   "hiit",
+   "conditioning"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "rowing-machine",
+  "name": "Rowing Machine",
+  "equipment": "machine",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "lats",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "rhomboids",
+   "trap_mid",
+   "trap_lower",
+   "bf",
+   "semit",
+   "semim",
+   "glute_max",
+   "bi_long",
+   "bi_short",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "groups": [
+   "back",
+   "legs",
+   "arms",
+   "core"
+  ],
+  "subgroups": [
+   "lats",
+   "quads",
+   "upper_back",
+   "hamstrings",
+   "glutes",
+   "biceps",
+   "abs",
+   "obliques"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "cardio",
+   "erg",
+   "full body"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "assault-bike",
+  "name": "Assault Bike",
+  "equipment": "machine",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim",
+   "delt_front"
+  ],
+  "groups": [
+   "legs",
+   "shoulders"
+  ],
+  "subgroups": [
+   "quads",
+   "glutes",
+   "hamstrings",
+   "front_delts"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "cardio",
+   "hiit",
+   "conditioning"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "ski-erg",
+  "name": "Ski Erg",
+  "equipment": "machine",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "lats",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "secondary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "delt_front"
+  ],
+  "groups": [
+   "back",
+   "arms",
+   "core",
+   "shoulders"
+  ],
+  "subgroups": [
+   "lats",
+   "triceps",
+   "abs",
+   "obliques",
+   "front_delts"
+  ],
+  "primaryGroup": "back",
+  "tags": [
+   "cardio",
+   "conditioning"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "bear-crawl",
+  "name": "Bear Crawl",
+  "equipment": "bodyweight",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "delt_front",
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "shoulders",
+   "core",
+   "legs",
+   "arms"
+  ],
+  "subgroups": [
+   "front_delts",
+   "abs",
+   "obliques",
+   "quads",
+   "triceps"
+  ],
+  "primaryGroup": "shoulders",
+  "tags": [
+   "home",
+   "cardio",
+   "stability"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "jumping-jacks",
+  "name": "Jumping Jacks",
+  "equipment": "bodyweight",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "gastroc",
+   "soleus",
+   "glute_med",
+   "glute_min"
+  ],
+  "secondary": [
+   "delt_side"
+  ],
+  "groups": [
+   "legs",
+   "shoulders"
+  ],
+  "subgroups": [
+   "calves",
+   "glutes",
+   "side_delts"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "cardio",
+   "warm-up",
+   "home"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "jump-rope",
+  "name": "Jump Rope",
+  "equipment": "other",
+  "pattern": "conditioning",
+  "type": "compound",
+  "primary": [
+   "gastroc",
+   "soleus"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "delt_side",
+   "brachiorad",
+   "wrist_flex",
+   "wrist_ext"
+  ],
+  "groups": [
+   "legs",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "calves",
+   "quads",
+   "side_delts",
+   "forearms"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "cardio",
+   "footwork",
+   "home"
+  ],
+  "rec": {
+   "strength": "6 x 20s",
+   "hypertrophy": "5 x 30s",
+   "endurance": "4 x 60s",
+   "default": "5 x 30s on / 30s off"
+  }
+ },
+ {
+  "id": "sandbag-carry",
+  "name": "Sandbag Carry",
+  "equipment": "other",
+  "pattern": "carry",
+  "type": "compound",
+  "primary": [
+   "rectus_abs",
+   "tva",
+   "obl_ext",
+   "obl_int",
+   "rhomboids",
+   "trap_mid",
+   "trap_lower"
+  ],
+  "secondary": [
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int",
+   "glute_max",
+   "bi_long",
+   "bi_short"
+  ],
+  "groups": [
+   "core",
+   "back",
+   "legs",
+   "arms"
+  ],
+  "subgroups": [
+   "abs",
+   "obliques",
+   "upper_back",
+   "quads",
+   "glutes",
+   "biceps"
+  ],
+  "primaryGroup": "core",
+  "tags": [
+   "strongman",
+   "full body"
+  ],
+  "rec": {
+   "strength": "4 x 20m heavy",
+   "hypertrophy": "3 x 30m",
+   "endurance": "3 x 60m",
+   "default": "3 x 30-40m"
+  }
+ },
+ {
+  "id": "tire-flip",
+  "name": "Tire Flip",
+  "equipment": "other",
+  "pattern": "hinge",
+  "type": "compound",
+  "primary": [
+   "glute_max",
+   "bf",
+   "semit",
+   "semim",
+   "rect_fem",
+   "vas_lat",
+   "vas_med",
+   "vas_int"
+  ],
+  "secondary": [
+   "erectors",
+   "delt_front",
+   "tri_long",
+   "tri_lat",
+   "tri_med"
+  ],
+  "groups": [
+   "legs",
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "subgroups": [
+   "glutes",
+   "hamstrings",
+   "quads",
+   "lower_back",
+   "front_delts",
+   "triceps"
+  ],
+  "primaryGroup": "legs",
+  "tags": [
+   "strongman",
+   "full body",
+   "explosive"
+  ],
+  "rec": {
+   "strength": "4 x 5-6",
+   "hypertrophy": "3 x 8-12",
+   "endurance": "3 x 15-20",
+   "default": "3 x 8-12"
+  }
+ }
+]

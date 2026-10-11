@@ -1,0 +1,190 @@
+[
+ {"id":"ppl-hypertrophy-8","name":"8-Week Push Pull Legs","category":"Hypertrophy","weeks":8,"daysPerWeek":6,"level":"Intermediate",
+  "summary":"Classic six-day split hitting every muscle twice a week, built to add muscle with steadily rising volume.",
+  "nutrition":"Eat at maintenance to a small surplus (+200 kcal). Aim for 1.6 to 2.2 g protein per kg body weight.",
+  "progression":"When you hit the top of the rep range on every set, add 2.5 kg (upper) or 5 kg (lower) next session.",
+  "phases":[
+   {"weeks":[1,3],"name":"Accumulation","focus":"Learn the movements, build volume","sets":"3 sets","reps":"8-12","rpe":"RPE 7-8"},
+   {"weeks":[4,6],"name":"Intensification","focus":"Add a set to big lifts, push closer to failure","sets":"3-4 sets","reps":"6-10","rpe":"RPE 8-9"},
+   {"weeks":[7,7],"name":"Overreach","focus":"Last set of each exercise to failure","sets":"4 sets","reps":"6-10","rpe":"RPE 9-10"},
+   {"weeks":[8,8],"name":"Deload","focus":"Halve your sets, keep the weights","sets":"2 sets","reps":"8-10","rpe":"RPE 6"}],
+  "days":[
+   {"name":"Push","exercises":[["barbell-bench-press",4,"6-8"],["incline-dumbbell-press",3,"8-10"],["seated-dumbbell-shoulder-press",3,"8-10"],["cable-lateral-raise",3,"12-15","A"],["triceps-pushdown-rope",3,"10-12","A"],["overhead-cable-triceps-extension",3,"10-12"]]},
+   {"name":"Pull","exercises":[["pull-up",4,"6-10"],["barbell-row",3,"8-10"],["seated-cable-row",3,"10-12"],["face-pull",3,"12-15","A"],["incline-dumbbell-curl",3,"10-12","A"],["hammer-curl",3,"10-12"]]},
+   {"name":"Legs","exercises":[["back-squat",4,"6-8"],["romanian-deadlift",3,"8-10"],["leg-press",3,"10-12"],["leg-extension",3,"12-15","A"],["seated-leg-curl",3,"12-15","A"],["standing-calf-raise",4,"10-15"],["hanging-leg-raise",3,"10-15"]]}]},
+
+ {"id":"ul-strength-8","name":"8-Week Upper/Lower Strength","category":"Strength","weeks":8,"daysPerWeek":4,"level":"Intermediate",
+  "summary":"Four days a week built around the squat, bench, deadlift and overhead press, moving from volume to heavy triples.",
+  "nutrition":"Eat at maintenance or slightly above. Strength climbs fastest when you are not in a deficit.",
+  "progression":"Percentages are of your current 1 rep max. Add 2.5 kg to main lifts each week you complete every rep.",
+  "phases":[
+   {"weeks":[1,2],"name":"Volume","focus":"Build work capacity","sets":"5 sets","reps":"5","rpe":"~75% 1RM"},
+   {"weeks":[3,5],"name":"Strength","focus":"Heavier sets, fewer reps","sets":"4 sets","reps":"4","rpe":"80-85% 1RM"},
+   {"weeks":[6,7],"name":"Peak","focus":"Heavy triples and doubles","sets":"3-5 sets","reps":"2-3","rpe":"88-92% 1RM"},
+   {"weeks":[8,8],"name":"Test & Deload","focus":"Test a new 1RM early in the week, then rest","sets":"Work to a single","reps":"1","rpe":"RPE 9-10"}],
+  "days":[
+   {"name":"Upper A (Bench)","exercises":[["barbell-bench-press",5,"5"],["barbell-row",4,"6-8"],["seated-dumbbell-shoulder-press",3,"8-10"],["chin-up",3,"6-10"],["skull-crusher",3,"10-12","A"],["ez-bar-curl",3,"10-12","A"]]},
+   {"name":"Lower A (Squat)","exercises":[["back-squat",5,"5"],["romanian-deadlift",3,"8"],["bulgarian-split-squat",3,"8-10"],["lying-leg-curl",3,"10-12"],["standing-calf-raise",3,"10-12","A"],["plank",3,"45s","A"]]},
+   {"name":"Upper B (Press)","exercises":[["overhead-press",5,"5"],["incline-dumbbell-press",3,"8-10"],["weighted-pull-up",4,"5-8"],["chest-supported-dumbbell-row",3,"10"],["face-pull",3,"15","A"],["triceps-pushdown-bar",3,"10-12","A"]]},
+   {"name":"Lower B (Deadlift)","exercises":[["conventional-deadlift",5,"3-5"],["front-squat",3,"6"],["barbell-hip-thrust",3,"8-10"],["leg-extension",3,"12"],["hanging-leg-raise",3,"10-12","A"],["suitcase-carry",3,"30m","A"]]}]},
+
+ {"id":"loading-3","name":"3-Week Loading Block","category":"Loading","weeks":3,"daysPerWeek":4,"level":"Intermediate",
+  "summary":"A short overload block. Volume and effort climb each week so you can deload into a new level of fitness.",
+  "nutrition":"Eat at maintenance or a little above, with extra carbs around training. Prioritise sleep.",
+  "progression":"Same exercises each week. Week 2 adds a set; week 3 adds another and pushes closer to failure. Follow with the 1-Week Deload.",
+  "phases":[
+   {"weeks":[1,1],"name":"Base","focus":"Set your working weights","sets":"3 sets","reps":"8-10","rpe":"RPE 7"},
+   {"weeks":[2,2],"name":"Load","focus":"+1 set on everything","sets":"4 sets","reps":"8-10","rpe":"RPE 8"},
+   {"weeks":[3,3],"name":"Overload","focus":"+2 sets, final sets near failure","sets":"5 sets","reps":"6-10","rpe":"RPE 9"}],
+  "days":[
+   {"name":"Upper Heavy","exercises":[["barbell-bench-press",3,"6-8"],["pendlay-row",3,"6-8"],["overhead-press",3,"6-8"],["lat-pulldown",3,"8-10"],["dumbbell-curl",3,"10","A"],["overhead-dumbbell-triceps-extension",3,"10","A"]]},
+   {"name":"Lower Heavy","exercises":[["back-squat",3,"6-8"],["romanian-deadlift",3,"8"],["walking-lunge",3,"10 each"],["seated-leg-curl",3,"10-12"],["standing-calf-raise",3,"12"],["ab-wheel-rollout",3,"10"]]},
+   {"name":"Upper Volume","exercises":[["incline-dumbbell-press",3,"10-12"],["single-arm-dumbbell-row",3,"10-12"],["dumbbell-lateral-raise",3,"15","A"],["rear-delt-fly-dumbbell",3,"15","A"],["cable-fly-mid",3,"12-15"],["cable-curl",3,"12","B"],["triceps-pushdown-rope",3,"12","B"]]},
+   {"name":"Lower Volume","exercises":[["hack-squat",3,"10-12"],["barbell-hip-thrust",3,"10-12"],["leg-extension",3,"15","A"],["lying-leg-curl",3,"15","A"],["seated-calf-raise",3,"15"],["cable-crunch",3,"15"]]}]},
+
+ {"id":"deload-1","name":"1-Week Deload","category":"Deload","weeks":1,"daysPerWeek":3,"level":"All levels",
+  "summary":"Recover from hard training while keeping the habit. Lighter weights, fewer sets, lots left in the tank.",
+  "nutrition":"Eat at maintenance. Keep protein high.",
+  "progression":"Use about 60% of your normal working weights and stop every set with 4 or more reps in reserve.",
+  "phases":[{"weeks":[1,1],"name":"Deload","focus":"Move well, recover","sets":"2 sets","reps":"8-10","rpe":"RPE 5-6"}],
+  "days":[
+   {"name":"Full Body A","exercises":[["goblet-squat",2,"10"],["dumbbell-bench-press",2,"10"],["seated-cable-row",2,"10"],["face-pull",2,"15"],["dead-bug",2,"10 each"]]},
+   {"name":"Full Body B","exercises":[["trap-bar-deadlift",2,"6"],["seated-dumbbell-shoulder-press",2,"10"],["lat-pulldown",2,"10"],["glute-bridge",2,"15"],["side-plank",2,"30s each"]]},
+   {"name":"Full Body C","exercises":[["leg-press",2,"12"],["push-up",2,"10-15"],["inverted-row",2,"10"],["band-pull-apart",2,"20"],["bird-dog",2,"10 each"]]}]},
+
+ {"id":"lean-bulk-12","name":"12-Week Lean Bulk","category":"Bulking","weeks":12,"daysPerWeek":5,"level":"Intermediate",
+  "summary":"A five-day upper/lower plus push/pull/legs hybrid with a controlled calorie surplus to add size without much fat.",
+  "nutrition":"Eat a 250-400 kcal surplus. Target 0.25-0.5% body weight gain per week; adjust calories every 2 weeks.",
+  "progression":"Add reps first, then weight. Each 4-week block adds one set to your two biggest lifts per day.",
+  "phases":[
+   {"weeks":[1,4],"name":"Base","focus":"Establish surplus, moderate volume","sets":"3 sets","reps":"8-12","rpe":"RPE 7-8"},
+   {"weeks":[5,8],"name":"Build","focus":"More volume on key lifts","sets":"4 sets","reps":"6-12","rpe":"RPE 8-9"},
+   {"weeks":[9,11],"name":"Push","focus":"Heaviest weights of the block","sets":"4 sets","reps":"5-10","rpe":"RPE 9"},
+   {"weeks":[12,12],"name":"Deload","focus":"Recover and reassess body weight","sets":"2 sets","reps":"8-10","rpe":"RPE 6"}],
+  "days":[
+   {"name":"Upper","exercises":[["barbell-bench-press",4,"6-8"],["barbell-row",4,"6-8"],["seated-dumbbell-shoulder-press",3,"8-10"],["lat-pulldown",3,"10-12"],["ez-bar-curl",3,"10","A"],["skull-crusher",3,"10","A"]]},
+   {"name":"Lower","exercises":[["back-squat",4,"6-8"],["romanian-deadlift",3,"8-10"],["leg-press",3,"10-12"],["lying-leg-curl",3,"10-12"],["standing-calf-raise",4,"10-12"]]},
+   {"name":"Push","exercises":[["incline-barbell-bench-press",4,"8-10"],["machine-chest-press",3,"10-12"],["dumbbell-lateral-raise",4,"12-15","A"],["pec-deck",3,"12-15","A"],["overhead-cable-triceps-extension",3,"12"],["triceps-pushdown-rope",3,"12-15"]]},
+   {"name":"Pull","exercises":[["weighted-pull-up",4,"6-8"],["chest-supported-t-bar-row",3,"8-10"],["single-arm-cable-row",3,"10-12"],["reverse-pec-deck",3,"15","A"],["barbell-shrug",3,"12","A"],["incline-dumbbell-curl",3,"10-12"],["hammer-curl",3,"12"]]},
+   {"name":"Legs","exercises":[["hack-squat",4,"8-10"],["barbell-hip-thrust",3,"8-10"],["bulgarian-split-squat",3,"10 each"],["leg-extension",3,"15","A"],["seated-leg-curl",3,"15","A"],["seated-calf-raise",3,"15"],["cable-crunch",3,"12-15"]]}]},
+
+ {"id":"cut-8","name":"8-Week Cut","category":"Cutting","weeks":8,"daysPerWeek":4,"level":"All levels",
+  "summary":"Keep the heavy lifting to hold on to muscle, add short conditioning finishers, and lose fat steadily.",
+  "nutrition":"Eat a 300-500 kcal deficit. Aim to lose 0.5-1% body weight per week. Keep protein at 2 g per kg or higher.",
+  "progression":"Try to keep your main lift weights the same for all 8 weeks. Holding strength in a deficit is a win.",
+  "phases":[
+   {"weeks":[1,4],"name":"Cut Phase 1","focus":"Hold strength, finishers twice a week","sets":"3 sets","reps":"6-10","rpe":"RPE 8"},
+   {"weeks":[5,7],"name":"Cut Phase 2","focus":"Trim accessory volume, keep main lifts heavy","sets":"2-3 sets","reps":"6-10","rpe":"RPE 8"},
+   {"weeks":[8,8],"name":"Diet Break","focus":"Eat at maintenance, normal training","sets":"3 sets","reps":"8-10","rpe":"RPE 7"}],
+  "days":[
+   {"name":"Upper Strength","exercises":[["barbell-bench-press",3,"5-6"],["weighted-pull-up",3,"5-6"],["overhead-press",3,"6-8"],["chest-supported-dumbbell-row",3,"8-10"],["dumbbell-lateral-raise",3,"15","A"],["triceps-pushdown-rope",3,"12","A"]]},
+   {"name":"Lower Strength","exercises":[["back-squat",3,"5-6"],["romanian-deadlift",3,"6-8"],["walking-lunge",3,"10 each"],["lying-leg-curl",3,"10-12"],["kettlebell-swing",5,"15","A"],["mountain-climber",5,"30s","A"]]},
+   {"name":"Upper Pump","exercises":[["incline-dumbbell-press",3,"10-12","A"],["lat-pulldown",3,"10-12","A"],["cable-fly-mid",3,"12-15","B"],["seated-cable-row",3,"12","B"],["cable-curl",3,"12-15","C"],["overhead-cable-triceps-extension",3,"12-15","C"]]},
+   {"name":"Lower + Conditioning","exercises":[["trap-bar-deadlift",3,"5"],["leg-press",3,"12"],["barbell-hip-thrust",3,"10"],["standing-calf-raise",3,"12"],["sled-push",6,"20m"],["assault-bike",6,"20s on / 40s off"]]}]},
+
+ {"id":"peak-4","name":"4-Week Strength Peak","category":"Peaking","weeks":4,"daysPerWeek":4,"level":"Advanced",
+  "summary":"Bring your squat, bench and deadlift to a peak for a max test or meet. Volume drops as intensity climbs.",
+  "nutrition":"Eat at maintenance. Do not diet during a peak.",
+  "progression":"Work up to the listed top set, then do back-off sets at 90% of that weight.",
+  "phases":[
+   {"weeks":[1,1],"name":"Heavy Triples","focus":"Top triple, then back-offs","sets":"1 top + 3 back-off","reps":"3","rpe":"~87% 1RM"},
+   {"weeks":[2,2],"name":"Heavy Doubles","focus":"Top double, then back-offs","sets":"1 top + 2 back-off","reps":"2","rpe":"~92% 1RM"},
+   {"weeks":[3,3],"name":"Openers","focus":"Single at opener weight, very low volume","sets":"1-2 singles","reps":"1","rpe":"~93% 1RM"},
+   {"weeks":[4,4],"name":"Test Week","focus":"Rest early in the week, test maxes at the end","sets":"Work up to max","reps":"1","rpe":"100%"}],
+  "days":[
+   {"name":"Squat","exercises":[["back-squat",4,"3"],["paused-squat",3,"3"],["leg-press",2,"8"],["ab-wheel-rollout",3,"8"]]},
+   {"name":"Bench","exercises":[["barbell-bench-press",4,"3"],["paused-bench-press",3,"3"],["chest-supported-dumbbell-row",3,"10"],["triceps-pushdown-bar",3,"10"]]},
+   {"name":"Deadlift","exercises":[["conventional-deadlift",4,"2-3"],["romanian-deadlift",2,"6"],["back-extension",2,"10"],["plank",3,"45s"]]},
+   {"name":"Bench Volume","exercises":[["close-grip-bench-press",3,"5"],["overhead-press",3,"5"],["lat-pulldown",3,"10"],["face-pull",3,"15"]]}]},
+
+ {"id":"beginner-fb-6","name":"6-Week Beginner Full Body","category":"Beginner","weeks":6,"daysPerWeek":3,"level":"Beginner",
+  "summary":"Three full-body sessions a week alternating two workouts. Simple, safe, and quick to show progress.",
+  "nutrition":"Eat at maintenance with plenty of protein. Focus on consistency over perfection.",
+  "progression":"Add a little weight every session you complete all reps with good form.",
+  "phases":[
+   {"weeks":[1,2],"name":"Learn","focus":"Practise technique with light weights","sets":"2-3 sets","reps":"10-12","rpe":"RPE 6-7"},
+   {"weeks":[3,6],"name":"Progress","focus":"Add weight session to session","sets":"3 sets","reps":"8-12","rpe":"RPE 7-8"}],
+  "days":[
+   {"name":"Workout A","exercises":[["goblet-squat",3,"10"],["dumbbell-bench-press",3,"10"],["lat-pulldown",3,"10"],["glute-bridge",3,"12"],["plank",3,"30s"]]},
+   {"name":"Workout B","exercises":[["leg-press",3,"10"],["seated-dumbbell-shoulder-press",3,"10"],["seated-cable-row",3,"10"],["dumbbell-romanian-deadlift",3,"10"],["dead-bug",3,"8 each"]]}]},
+
+ {"id":"5x5-12","name":"12-Week 5x5 Linear Strength","category":"Strength","weeks":12,"daysPerWeek":3,"level":"Beginner",
+  "summary":"The classic 5x5. Squat every session, alternate bench/row and press/deadlift, and add weight every time.",
+  "nutrition":"Eat at a small surplus. Linear progress needs fuel.",
+  "progression":"Add 2.5 kg to upper lifts and 5 kg to squat and deadlift each session. Fail a weight 3 times in a row and drop 10%.",
+  "phases":[
+   {"weeks":[1,6],"name":"Linear","focus":"Add weight every session","sets":"5 sets","reps":"5","rpe":"Start light"},
+   {"weeks":[7,12],"name":"Grind","focus":"Progress slows; use 3x5 when 5x5 stalls","sets":"3-5 sets","reps":"5","rpe":"RPE 8-9"}],
+  "days":[
+   {"name":"Workout A","exercises":[["back-squat",5,"5"],["barbell-bench-press",5,"5"],["barbell-row",5,"5"],["hanging-knee-raise",3,"10"]]},
+   {"name":"Workout B","exercises":[["back-squat",5,"5"],["overhead-press",5,"5"],["conventional-deadlift",1,"5"],["chin-up",3,"max"]]}]},
+
+ {"id":"powerbuilding-10","name":"10-Week Powerbuilding","category":"Strength","weeks":10,"daysPerWeek":4,"level":"Intermediate",
+  "summary":"Heavy main lifts first, bodybuilding work after. Get strong and look it.",
+  "nutrition":"Maintenance to small surplus. 1.8 g protein per kg.",
+  "progression":"Main lift: add 2.5 kg weekly while reps hold. Accessories: double progression within the rep range.",
+  "phases":[
+   {"weeks":[1,4],"name":"Block 1","focus":"Main lifts 4x6","sets":"4 sets","reps":"6","rpe":"RPE 7-8"},
+   {"weeks":[5,8],"name":"Block 2","focus":"Main lifts 5x4","sets":"5 sets","reps":"4","rpe":"RPE 8-9"},
+   {"weeks":[9,9],"name":"Test","focus":"Work up to a heavy single on each main lift","sets":"Singles","reps":"1","rpe":"RPE 9"},
+   {"weeks":[10,10],"name":"Deload","focus":"Recover","sets":"2 sets","reps":"8","rpe":"RPE 6"}],
+  "days":[
+   {"name":"Squat + Legs","exercises":[["back-squat",4,"6"],["romanian-deadlift",3,"8-10"],["leg-press",3,"12"],["leg-extension",3,"15","A"],["seated-leg-curl",3,"15","A"],["standing-calf-raise",4,"12"]]},
+   {"name":"Bench + Chest/Tris","exercises":[["barbell-bench-press",4,"6"],["incline-dumbbell-press",3,"10"],["low-to-high-cable-fly",3,"12-15"],["dumbbell-lateral-raise",4,"15","A"],["skull-crusher",3,"10","A"],["triceps-pushdown-rope",3,"12-15"]]},
+   {"name":"Deadlift + Back","exercises":[["conventional-deadlift",4,"5"],["weighted-pull-up",3,"6-8"],["chest-supported-t-bar-row",3,"10"],["straight-arm-pulldown",3,"12-15","A"],["incline-dumbbell-curl",3,"10-12","A"],["hammer-curl",3,"12"]]},
+   {"name":"Press + Shoulders/Arms","exercises":[["overhead-press",4,"6"],["close-grip-bench-press",3,"8"],["cable-lateral-raise",3,"15","A"],["reverse-pec-deck",3,"15","A"],["ez-bar-curl",3,"10","B"],["overhead-cable-triceps-extension",3,"12","B"],["hanging-leg-raise",3,"12"]]}]},
+
+ {"id":"arms-delts-8","name":"8-Week Arms & Shoulders","category":"Specialisation","weeks":8,"daysPerWeek":5,"level":"Intermediate",
+  "summary":"Extra arm and delt volume spread across the week, with the rest of the body on maintenance volume.",
+  "nutrition":"A small surplus helps arms grow. Keep protein high.",
+  "progression":"Double progression: reach the top of the rep range on all sets, then add weight.",
+  "phases":[
+   {"weeks":[1,3],"name":"Ramp","focus":"Moderate volume","sets":"3 sets","reps":"10-12","rpe":"RPE 8"},
+   {"weeks":[4,7],"name":"Specialise","focus":"Add one set to every arm and delt exercise","sets":"4 sets","reps":"8-15","rpe":"RPE 9"},
+   {"weeks":[8,8],"name":"Deload","focus":"Recover","sets":"2 sets","reps":"10","rpe":"RPE 6"}],
+  "days":[
+   {"name":"Arms A","exercises":[["ez-bar-curl",3,"8-10","A"],["skull-crusher",3,"8-10","A"],["incline-dumbbell-curl",3,"10-12","B"],["overhead-cable-triceps-extension",3,"10-12","B"],["hammer-curl",3,"12","C"],["triceps-pushdown-rope",3,"12-15","C"]]},
+   {"name":"Shoulders","exercises":[["seated-dumbbell-shoulder-press",4,"8-10"],["cable-lateral-raise",4,"12-15"],["lean-away-lateral-raise",3,"12-15","A"],["reverse-pec-deck",3,"15","A"],["face-pull",3,"15"],["external-rotation-cable",2,"15"]]},
+   {"name":"Legs","exercises":[["back-squat",3,"6-8"],["romanian-deadlift",3,"8"],["leg-extension",3,"12"],["seated-leg-curl",3,"12"],["standing-calf-raise",3,"12"]]},
+   {"name":"Arms B","exercises":[["preacher-curl",3,"10","A"],["close-grip-bench-press",3,"8","A"],["bayesian-cable-curl",3,"12","B"],["single-arm-cable-pushdown",3,"12","B"],["reverse-curl",3,"12","C"],["wrist-curl",3,"15","C"]]},
+   {"name":"Chest, Back & Delts","exercises":[["incline-dumbbell-press",3,"8-10"],["pull-up",3,"6-10"],["seated-cable-row",3,"10-12"],["dumbbell-lateral-raise",4,"15-20","A"],["rear-delt-fly-dumbbell",3,"15","A"]]}]},
+
+ {"id":"glutes-legs-6","name":"6-Week Glute & Leg Focus","category":"Specialisation","weeks":6,"daysPerWeek":4,"level":"All levels",
+  "summary":"Two lower-body days for glutes and legs, two lighter upper days. Hip thrusts and split squats lead the way.",
+  "nutrition":"Maintenance or small surplus.",
+  "progression":"Add weight to hip thrusts and split squats weekly while form stays clean.",
+  "phases":[
+   {"weeks":[1,3],"name":"Build","focus":"Groove the patterns","sets":"3 sets","reps":"10-12","rpe":"RPE 7-8"},
+   {"weeks":[4,6],"name":"Overload","focus":"Heavier and an extra set on hip thrusts","sets":"4 sets","reps":"8-12","rpe":"RPE 8-9"}],
+  "days":[
+   {"name":"Glutes & Hamstrings","exercises":[["barbell-hip-thrust",4,"8-10"],["romanian-deadlift",3,"8-10"],["bulgarian-split-squat",3,"10 each"],["cable-glute-kickback",3,"12-15","A"],["hip-abduction-machine",3,"15-20","A"],["lying-leg-curl",3,"12"]]},
+   {"name":"Upper A","exercises":[["dumbbell-bench-press",3,"10"],["lat-pulldown",3,"10"],["seated-dumbbell-shoulder-press",3,"10"],["seated-cable-row",3,"12"],["plank",3,"40s"]]},
+   {"name":"Quads & Glutes","exercises":[["back-squat",4,"6-8"],["walking-lunge",3,"12 each"],["leg-press",3,"12"],["leg-extension",3,"15","A"],["frog-pump",3,"20","A"],["standing-calf-raise",3,"12"]]},
+   {"name":"Upper B + Core","exercises":[["incline-dumbbell-press",3,"10"],["single-arm-dumbbell-row",3,"10"],["dumbbell-lateral-raise",3,"15","A"],["face-pull",3,"15","A"],["cable-crunch",3,"15"],["pallof-press",3,"10 each"]]}]},
+
+ {"id":"athletic-6","name":"6-Week Athletic Conditioning","category":"Conditioning","weeks":6,"daysPerWeek":3,"level":"Intermediate",
+  "summary":"Power, strength and engine together. Jumps and Olympic lifts first, strength next, conditioning to finish.",
+  "nutrition":"Maintenance. Carbs before sessions.",
+  "progression":"Keep power work crisp and fast. Add rounds to conditioning each fortnight.",
+  "phases":[
+   {"weeks":[1,2],"name":"Base","focus":"Technique and aerobic base","sets":"3 sets","reps":"5-8","rpe":"RPE 7"},
+   {"weeks":[3,4],"name":"Build","focus":"Heavier strength, more rounds","sets":"4 sets","reps":"4-6","rpe":"RPE 8"},
+   {"weeks":[5,6],"name":"Power","focus":"Fast, explosive, full recovery between sets","sets":"5 sets","reps":"3-5","rpe":"RPE 8"}],
+  "days":[
+   {"name":"Power + Lower","exercises":[["box-jump",4,"5"],["power-clean",5,"3"],["front-squat",4,"5"],["single-leg-romanian-deadlift",3,"8 each"],["sled-push",6,"20m"]]},
+   {"name":"Upper + Engine","exercises":[["push-press",4,"5"],["weighted-pull-up",4,"5"],["landmine-press",3,"8 each","A"],["renegade-row",3,"8 each","A"],["rowing-machine",5,"250m"]]},
+   {"name":"Full Body Circuit","exercises":[["kettlebell-swing",4,"15","A"],["burpee",4,"10","A"],["dumbbell-thruster",4,"10","A"],["farmers-carry",4,"40m"],["cable-woodchop",3,"10 each"],["copenhagen-plank",3,"20s each"]]}]},
+
+ {"id":"home-db-6","name":"6-Week Home Dumbbell","category":"Home","weeks":6,"daysPerWeek":4,"level":"All levels",
+  "summary":"Everything done with a pair of dumbbells, a bench or floor, and your body weight.",
+  "nutrition":"Match calories to your goal; protein 1.6 g per kg or more.",
+  "progression":"When reps get easy, slow the lowering to 3 seconds, then add reps, then heavier dumbbells.",
+  "phases":[
+   {"weeks":[1,3],"name":"Build","focus":"Moderate reps, controlled tempo","sets":"3 sets","reps":"10-15","rpe":"RPE 7-8"},
+   {"weeks":[4,6],"name":"Push","focus":"Supersets and slower eccentrics","sets":"4 sets","reps":"8-15","rpe":"RPE 8-9"}],
+  "days":[
+   {"name":"Upper Push/Pull","exercises":[["dumbbell-bench-press",3,"10-12","A"],["single-arm-dumbbell-row",3,"10-12","A"],["seated-dumbbell-shoulder-press",3,"10-12","B"],["rear-delt-fly-dumbbell",3,"15","B"],["dumbbell-curl",3,"12","C"],["overhead-dumbbell-triceps-extension",3,"12","C"]]},
+   {"name":"Lower","exercises":[["goblet-squat",4,"12"],["dumbbell-romanian-deadlift",3,"10-12"],["bulgarian-split-squat",3,"10 each"],["single-leg-hip-thrust",3,"12 each"],["single-leg-calf-raise",3,"15 each"]]},
+   {"name":"Upper Volume","exercises":[["push-up",4,"max"],["chest-supported-dumbbell-row",3,"12"],["dumbbell-lateral-raise",4,"15","A"],["dumbbell-fly",3,"12","A"],["hammer-curl",3,"12","B"],["diamond-push-up",3,"max","B"]]},
+   {"name":"Full Body + Core","exercises":[["dumbbell-thruster",4,"10"],["renegade-row",3,"8 each"],["reverse-lunge",3,"10 each"],["dead-bug",3,"10 each","A"],["russian-twist",3,"20","A"],["burpee",3,"10"]]}]}
+]

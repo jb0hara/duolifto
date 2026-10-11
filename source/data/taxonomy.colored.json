@@ -1,0 +1,502 @@
+{
+ "groups": [
+  {
+   "id": "chest",
+   "name": "Chest",
+   "hue": 352,
+   "subgroups": [
+    {
+     "id": "upper_chest",
+     "name": "Upper Chest",
+     "muscles": [
+      {
+       "id": "pec_upper",
+       "name": "Pectoralis Major (Clavicular Head)",
+       "color": "#f0adbf"
+      }
+     ],
+     "color": "#cf305b"
+    },
+    {
+     "id": "mid_chest",
+     "name": "Mid Chest",
+     "muscles": [
+      {
+       "id": "pec_mid",
+       "name": "Pectoralis Major (Sternal Head)",
+       "color": "#f0adb9"
+      }
+     ],
+     "color": "#d23e58"
+    },
+    {
+     "id": "lower_chest",
+     "name": "Lower Chest",
+     "muscles": [
+      {
+       "id": "pec_lower",
+       "name": "Pectoralis Major (Costal Head)",
+       "color": "#f0adb3"
+      }
+     ],
+     "color": "#d54c58"
+    },
+    {
+     "id": "side_chest",
+     "name": "Serratus & Pec Minor",
+     "muscles": [
+      {
+       "id": "serratus",
+       "name": "Serratus Anterior",
+       "color": "#ed9797"
+      },
+      {
+       "id": "pec_minor",
+       "name": "Pectoralis Minor",
+       "color": "#f4c2c2"
+      }
+     ],
+     "color": "#d85a5a"
+    }
+   ],
+   "color": "#ab2133"
+  },
+  {
+   "id": "back",
+   "name": "Back",
+   "hue": 212,
+   "subgroups": [
+    {
+     "id": "lats",
+     "name": "Lats",
+     "muscles": [
+      {
+       "id": "lats",
+       "name": "Latissimus Dorsi",
+       "color": "#97caed"
+      },
+      {
+       "id": "teres_major",
+       "name": "Teres Major",
+       "color": "#c2e0f4"
+      }
+     ],
+     "color": "#308fcf"
+    },
+    {
+     "id": "upper_back",
+     "name": "Upper Back",
+     "muscles": [
+      {
+       "id": "rhomboids",
+       "name": "Rhomboids",
+       "color": "#97c3ed"
+      },
+      {
+       "id": "trap_mid",
+       "name": "Middle Trapezius",
+       "color": "#adcff0"
+      },
+      {
+       "id": "trap_lower",
+       "name": "Lower Trapezius",
+       "color": "#c2dcf4"
+      }
+     ],
+     "color": "#3e8ad2"
+    },
+    {
+     "id": "traps",
+     "name": "Traps",
+     "muscles": [
+      {
+       "id": "trap_upper",
+       "name": "Upper Trapezius",
+       "color": "#adc9f0"
+      }
+     ],
+     "color": "#4c86d5"
+    },
+    {
+     "id": "lower_back",
+     "name": "Lower Back",
+     "muscles": [
+      {
+       "id": "erectors",
+       "name": "Erector Spinae",
+       "color": "#97b4ed"
+      },
+      {
+       "id": "ql",
+       "name": "Quadratus Lumborum",
+       "color": "#c2d3f4"
+      }
+     ],
+     "color": "#5a84d8"
+    }
+   ],
+   "color": "#2161ab"
+  },
+  {
+   "id": "shoulders",
+   "name": "Shoulders",
+   "hue": 24,
+   "subgroups": [
+    {
+     "id": "front_delts",
+     "name": "Front Delts",
+     "muscles": [
+      {
+       "id": "delt_front",
+       "name": "Anterior Deltoid",
+       "color": "#f0bfad"
+      }
+     ],
+     "color": "#cf5b30"
+    },
+    {
+     "id": "side_delts",
+     "name": "Side Delts",
+     "muscles": [
+      {
+       "id": "delt_side",
+       "name": "Lateral Deltoid",
+       "color": "#f0c5ad"
+      }
+     ],
+     "color": "#d2733e"
+    },
+    {
+     "id": "rear_delts",
+     "name": "Rear Delts",
+     "muscles": [
+      {
+       "id": "delt_rear",
+       "name": "Posterior Deltoid",
+       "color": "#f0cbad"
+      }
+     ],
+     "color": "#d5894c"
+    },
+    {
+     "id": "rotator_cuff",
+     "name": "Rotator Cuff",
+     "muscles": [
+      {
+       "id": "infraspinatus",
+       "name": "Infraspinatus",
+       "color": "#edc597"
+      },
+      {
+       "id": "teres_minor",
+       "name": "Teres Minor",
+       "color": "#efcda5"
+      },
+      {
+       "id": "supraspinatus",
+       "name": "Supraspinatus",
+       "color": "#f2d5b4"
+      },
+      {
+       "id": "subscapularis",
+       "name": "Subscapularis",
+       "color": "#f4ddc2"
+      }
+     ],
+     "color": "#d89d5a"
+    }
+   ],
+   "color": "#ab5821"
+  },
+  {
+   "id": "arms",
+   "name": "Arms",
+   "hue": 275,
+   "subgroups": [
+    {
+     "id": "biceps",
+     "name": "Biceps",
+     "muscles": [
+      {
+       "id": "bi_long",
+       "name": "Biceps (Long Head)",
+       "color": "#be97ed"
+      },
+      {
+       "id": "bi_short",
+       "name": "Biceps (Short Head)",
+       "color": "#cbadf0"
+      },
+      {
+       "id": "brachialis",
+       "name": "Brachialis",
+       "color": "#d9c2f4"
+      }
+     ],
+     "color": "#7830cf"
+    },
+    {
+     "id": "triceps",
+     "name": "Triceps",
+     "muscles": [
+      {
+       "id": "tri_long",
+       "name": "Triceps (Long Head)",
+       "color": "#c997ed"
+      },
+      {
+       "id": "tri_lat",
+       "name": "Triceps (Lateral Head)",
+       "color": "#d4adf0"
+      },
+      {
+       "id": "tri_med",
+       "name": "Triceps (Medial Head)",
+       "color": "#dfc2f4"
+      }
+     ],
+     "color": "#9845d3"
+    },
+    {
+     "id": "forearms",
+     "name": "Forearms",
+     "muscles": [
+      {
+       "id": "brachiorad",
+       "name": "Brachioradialis",
+       "color": "#d497ed"
+      },
+      {
+       "id": "wrist_flex",
+       "name": "Wrist Flexors",
+       "color": "#ddadf0"
+      },
+      {
+       "id": "wrist_ext",
+       "name": "Wrist Extensors",
+       "color": "#e6c2f4"
+      }
+     ],
+     "color": "#b45ad8"
+    }
+   ],
+   "color": "#7221ab"
+  },
+  {
+   "id": "core",
+   "name": "Core",
+   "hue": 44,
+   "subgroups": [
+    {
+     "id": "abs",
+     "name": "Abs",
+     "muscles": [
+      {
+       "id": "rectus_abs",
+       "name": "Rectus Abdominis",
+       "color": "#edca97"
+      },
+      {
+       "id": "tva",
+       "name": "Transverse Abdominis",
+       "color": "#f4e0c2"
+      }
+     ],
+     "color": "#cf8f30"
+    },
+    {
+     "id": "obliques",
+     "name": "Obliques",
+     "muscles": [
+      {
+       "id": "obl_ext",
+       "name": "External Obliques",
+       "color": "#ede197"
+      },
+      {
+       "id": "obl_int",
+       "name": "Internal Obliques",
+       "color": "#f4eec2"
+      }
+     ],
+     "color": "#d8c75a"
+    }
+   ],
+   "color": "#ab8621"
+  },
+  {
+   "id": "legs",
+   "name": "Legs",
+   "hue": 145,
+   "subgroups": [
+    {
+     "id": "quads",
+     "name": "Quads",
+     "muscles": [
+      {
+       "id": "rect_fem",
+       "name": "Rectus Femoris",
+       "color": "#97edaf"
+      },
+      {
+       "id": "vas_lat",
+       "name": "Vastus Lateralis",
+       "color": "#a5efba"
+      },
+      {
+       "id": "vas_med",
+       "name": "Vastus Medialis",
+       "color": "#b4f2c5"
+      },
+      {
+       "id": "vas_int",
+       "name": "Vastus Intermedius",
+       "color": "#c2f4d0"
+      }
+     ],
+     "color": "#30cf5d"
+    },
+    {
+     "id": "hamstrings",
+     "name": "Hamstrings",
+     "muscles": [
+      {
+       "id": "bf",
+       "name": "Biceps Femoris",
+       "color": "#97edb5"
+      },
+      {
+       "id": "semit",
+       "name": "Semitendinosus",
+       "color": "#adf0c4"
+      },
+      {
+       "id": "semim",
+       "name": "Semimembranosus",
+       "color": "#c2f4d4"
+      }
+     ],
+     "color": "#3bd16f"
+    },
+    {
+     "id": "glutes",
+     "name": "Glutes",
+     "muscles": [
+      {
+       "id": "glute_max",
+       "name": "Gluteus Maximus",
+       "color": "#97edbb"
+      },
+      {
+       "id": "glute_med",
+       "name": "Gluteus Medius",
+       "color": "#a5efc4"
+      },
+      {
+       "id": "glute_min",
+       "name": "Gluteus Minimus",
+       "color": "#b4f2ce"
+      },
+      {
+       "id": "tfl",
+       "name": "Tensor Fasciae Latae",
+       "color": "#c2f4d7"
+      }
+     ],
+     "color": "#45d380"
+    },
+    {
+     "id": "calves",
+     "name": "Calves & Shins",
+     "muscles": [
+      {
+       "id": "gastroc",
+       "name": "Gastrocnemius",
+       "color": "#97edc0"
+      },
+      {
+       "id": "soleus",
+       "name": "Soleus",
+       "color": "#adf0cd"
+      },
+      {
+       "id": "tib_ant",
+       "name": "Tibialis Anterior",
+       "color": "#c2f4da"
+      }
+     ],
+     "color": "#4fd690"
+    },
+    {
+     "id": "hips",
+     "name": "Adductors & Hip Flexors",
+     "muscles": [
+      {
+       "id": "add_mag",
+       "name": "Adductor Magnus",
+       "color": "#97edc6"
+      },
+      {
+       "id": "add_long",
+       "name": "Adductor Longus",
+       "color": "#adf0d2"
+      },
+      {
+       "id": "iliopsoas",
+       "name": "Iliopsoas (Hip Flexor)",
+       "color": "#c2f4de"
+      }
+     ],
+     "color": "#5ad89f"
+    }
+   ],
+   "color": "#21ab5a"
+  }
+ ],
+ "aliases": {
+  "quads": "rect_fem vas_lat vas_med vas_int",
+  "hams": "bf semit semim",
+  "glutes": "glute_max",
+  "gmed": "glute_med glute_min",
+  "calves": "gastroc soleus",
+  "bi": "bi_long bi_short",
+  "tri": "tri_long tri_lat tri_med",
+  "obl": "obl_ext obl_int",
+  "core": "rectus_abs tva obl_ext obl_int",
+  "forearm": "brachiorad wrist_flex wrist_ext",
+  "cuff": "infraspinatus teres_minor supraspinatus subscapularis",
+  "erect": "erectors",
+  "adductors": "add_mag add_long",
+  "upperback": "rhomboids trap_mid trap_lower"
+ },
+ "patterns": {
+  "push_h": "Horizontal Push",
+  "push_v": "Vertical Push",
+  "pull_h": "Horizontal Pull",
+  "pull_v": "Vertical Pull",
+  "squat": "Squat",
+  "hinge": "Hinge",
+  "lunge": "Lunge",
+  "carry": "Carry",
+  "core": "Core",
+  "iso": "Isolation",
+  "olympic": "Olympic",
+  "conditioning": "Conditioning",
+  "plyo": "Plyometric"
+ },
+ "equipment": {
+  "barbell": "Barbell",
+  "dumbbell": "Dumbbell",
+  "cable": "Cable",
+  "machine": "Machine",
+  "bodyweight": "Bodyweight",
+  "kettlebell": "Kettlebell",
+  "band": "Band",
+  "smith": "Smith Machine",
+  "ez-bar": "EZ Bar",
+  "trap-bar": "Trap Bar",
+  "landmine": "Landmine",
+  "sled": "Sled",
+  "other": "Other"
+ }
+}

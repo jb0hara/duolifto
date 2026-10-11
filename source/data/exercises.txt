@@ -1,0 +1,269 @@
+# Exercise database source. One exercise per line:
+# Name | equipment | pattern | c=compound/i=isolation | primary muscles | secondary muscles | extra keywords
+# Muscle codes and shorthand aliases are defined in data/taxonomy.json. Run src/build.py after editing.
+
+## CHEST
+Barbell Bench Press | barbell | push_h | c | pec_mid | pec_upper pec_lower delt_front tri | powerlifting, strength, flat
+Incline Barbell Bench Press | barbell | push_h | c | pec_upper | delt_front tri pec_mid | incline
+Decline Barbell Bench Press | barbell | push_h | c | pec_lower | pec_mid tri delt_front | decline
+Close-Grip Bench Press | barbell | push_h | c | tri pec_mid | delt_front pec_upper | triceps builder
+Paused Bench Press | barbell | push_h | c | pec_mid | delt_front tri | powerlifting, strength, pause
+Floor Press | barbell | push_h | c | tri pec_mid | delt_front | lockout, partial
+Dumbbell Bench Press | dumbbell | push_h | c | pec_mid | pec_upper delt_front tri | flat
+Incline Dumbbell Press | dumbbell | push_h | c | pec_upper | delt_front tri | incline
+Decline Dumbbell Press | dumbbell | push_h | c | pec_lower | pec_mid tri | decline
+Neutral-Grip Dumbbell Press | dumbbell | push_h | c | pec_mid tri | delt_front | shoulder friendly
+Single-Arm Dumbbell Bench Press | dumbbell | push_h | c | pec_mid | core delt_front tri | unilateral, anti-rotation
+Smith Machine Bench Press | smith | push_h | c | pec_mid | delt_front tri | machine-friendly
+Smith Machine Incline Press | smith | push_h | c | pec_upper | delt_front tri | incline
+Machine Chest Press | machine | push_h | c | pec_mid | delt_front tri | beginner, machine-friendly
+Incline Machine Press | machine | push_h | c | pec_upper | delt_front tri | incline, beginner
+Hammer Strength Decline Press | machine | push_h | c | pec_lower | tri | decline
+Push-Up | bodyweight | push_h | c | pec_mid | delt_front tri core serratus | home, no equipment, beginner, calisthenics
+Incline Push-Up | bodyweight | push_h | c | pec_lower | delt_front tri | home, beginner, easy
+Decline Push-Up | bodyweight | push_h | c | pec_upper | delt_front tri | home, calisthenics
+Diamond Push-Up | bodyweight | push_h | c | tri | pec_mid delt_front | home, calisthenics, triceps
+Deficit Push-Up | bodyweight | push_h | c | pec_mid | delt_front tri | home, stretch
+Archer Push-Up | bodyweight | push_h | c | pec_mid | tri delt_front core | home, advanced, unilateral, calisthenics
+Clap Push-Up | bodyweight | plyo | c | pec_mid | tri delt_front | explosive, power, plyometric, home
+Weighted Chest Dip | bodyweight | push_v | c | pec_lower | tri delt_front | dip, calisthenics
+Chest Dip | bodyweight | push_v | c | pec_lower | tri delt_front | dip, calisthenics, home
+Dumbbell Fly | dumbbell | iso | i | pec_mid | pec_upper delt_front | stretch, fly
+Incline Dumbbell Fly | dumbbell | iso | i | pec_upper | delt_front | stretch, fly, incline
+Cable Fly (Mid) | cable | iso | i | pec_mid | delt_front | fly, crossover, pump
+Low-to-High Cable Fly | cable | iso | i | pec_upper | delt_front | fly, crossover, upper chest
+High-to-Low Cable Fly | cable | iso | i | pec_lower | pec_mid | fly, crossover, lower chest
+Pec Deck | machine | iso | i | pec_mid | delt_front | fly, beginner, machine-friendly, pump
+Svend Press | other | iso | i | pec_mid | delt_front | plate, squeeze, inner chest
+Dumbbell Pullover | dumbbell | iso | i | lats pec_lower | serratus tri_long | stretch, ribcage
+Landmine Press | landmine | push_v | c | pec_upper delt_front | tri serratus core | shoulder friendly, unilateral
+Plate Press-Out | other | iso | i | pec_upper | delt_front | plate, squeeze
+Scapular Push-Up | bodyweight | iso | i | serratus | pec_minor | prehab, scapula, warm-up, home
+
+## BACK
+Conventional Deadlift | barbell | hinge | c | erect glutes hams | lats trap_upper upperback quads forearm adductors core | powerlifting, strength, posterior chain, full body
+Sumo Deadlift | barbell | hinge | c | glutes adductors quads | hams erect trap_upper forearm | powerlifting, strength
+Trap Bar Deadlift | trap-bar | hinge | c | quads glutes | hams erect trap_upper forearm | beginner, strength, athletic
+Deficit Deadlift | barbell | hinge | c | erect glutes hams | quads lats forearm | strength, off the floor
+Rack Pull | barbell | hinge | c | erect trap_upper upperback | glutes hams forearm | lockout, partial, thickness
+Barbell Row | barbell | pull_h | c | lats upperback | delt_rear bi brachialis erect | thickness, bent-over
+Pendlay Row | barbell | pull_h | c | upperback lats | delt_rear bi erect | explosive, strength, thickness
+Yates Row | barbell | pull_h | c | lats | upperback bi delt_rear | underhand
+Seal Row | barbell | pull_h | c | upperback lats | delt_rear bi | chest supported, strict
+T-Bar Row | landmine | pull_h | c | upperback lats | delt_rear bi erect | thickness
+Chest-Supported T-Bar Row | machine | pull_h | c | upperback | lats delt_rear bi | chest supported, machine-friendly
+Single-Arm Dumbbell Row | dumbbell | pull_h | c | lats | upperback delt_rear bi | unilateral, home
+Chest-Supported Dumbbell Row | dumbbell | pull_h | c | upperback | lats delt_rear bi | chest supported, incline
+Meadows Row | landmine | pull_h | c | lats upperback | delt_rear bi forearm | unilateral
+Kroc Row | dumbbell | pull_h | c | lats | upperback forearm bi | unilateral, high rep, grip
+Seated Cable Row | cable | pull_h | c | upperback lats | delt_rear bi | beginner
+Wide-Grip Cable Row | cable | pull_h | c | upperback delt_rear | lats bi | width, upper back
+Single-Arm Cable Row | cable | pull_h | c | lats | upperback bi | unilateral
+Machine Row | machine | pull_h | c | upperback lats | delt_rear bi | machine-friendly, beginner
+Inverted Row | bodyweight | pull_h | c | upperback lats | delt_rear bi core | home, calisthenics, beginner, australian pull-up
+Pull-Up | bodyweight | pull_v | c | lats | upperback bi brachialis core | width, calisthenics, home
+Weighted Pull-Up | bodyweight | pull_v | c | lats | upperback bi brachialis | width, strength, calisthenics
+Chin-Up | bodyweight | pull_v | c | lats bi | upperback brachialis | calisthenics, underhand, home
+Neutral-Grip Pull-Up | bodyweight | pull_v | c | lats | brachialis brachiorad bi upperback | calisthenics, shoulder friendly
+Assisted Pull-Up | machine | pull_v | c | lats | upperback bi | beginner, machine-friendly
+Lat Pulldown | cable | pull_v | c | lats | upperback bi teres_major | width, beginner
+Close-Grip Lat Pulldown | cable | pull_v | c | lats | bi brachialis upperback | v-bar, width
+Single-Arm Lat Pulldown | cable | pull_v | c | lats | teres_major bi | unilateral, width
+Straight-Arm Pulldown | cable | iso | i | lats | teres_major tri_long | lat isolation, pump
+Machine Pullover | machine | iso | i | lats | teres_major pec_lower | lat isolation, stretch
+Face Pull | cable | pull_h | c | delt_rear upperback | infraspinatus teres_minor trap_upper | posture, prehab, shoulder health
+Barbell Shrug | barbell | iso | i | trap_upper | trap_mid forearm | traps, neck
+Dumbbell Shrug | dumbbell | iso | i | trap_upper | trap_mid forearm | traps
+Trap Bar Shrug | trap-bar | iso | i | trap_upper | trap_mid forearm | traps
+Prone Y-Raise | dumbbell | iso | i | trap_lower | delt_rear supraspinatus | posture, prehab, incline
+Back Extension | machine | hinge | c | erect | glutes hams | lower back, hyperextension, 45 degree
+Reverse Hyperextension | machine | hinge | c | glutes erect | hams | lower back, decompression
+Good Morning | barbell | hinge | c | hams erect | glutes adductors | posterior chain
+Superman | bodyweight | core | i | erect | glutes delt_rear | home, no equipment, beginner, lower back
+Bird Dog | bodyweight | core | i | erect tva | glutes delt_front | home, rehab, beginner, stability
+Renegade Row | dumbbell | pull_h | c | lats core | upperback tri obl | anti-rotation, home, full body
+
+## SHOULDERS
+Overhead Press | barbell | push_v | c | delt_front | delt_side tri trap_upper core | strength, standing, military press
+Seated Barbell Shoulder Press | barbell | push_v | c | delt_front | delt_side tri | strength
+Push Press | barbell | push_v | c | delt_front | tri quads glutes delt_side core | explosive, power, athletic
+Behind-the-Neck Press | barbell | push_v | c | delt_side delt_front | tri trap_upper | advanced, mobility
+Seated Dumbbell Shoulder Press | dumbbell | push_v | c | delt_front | delt_side tri | beginner
+Standing Dumbbell Shoulder Press | dumbbell | push_v | c | delt_front | delt_side tri core | stability
+Arnold Press | dumbbell | push_v | c | delt_front delt_side | tri | rotation
+Single-Arm Dumbbell Press | dumbbell | push_v | c | delt_front | delt_side tri obl | unilateral, anti-lateral flexion
+Machine Shoulder Press | machine | push_v | c | delt_front | delt_side tri | beginner, machine-friendly
+Smith Machine Shoulder Press | smith | push_v | c | delt_front | delt_side tri | machine-friendly
+Z Press | barbell | push_v | c | delt_front | tri core delt_side | strict, core, seated floor
+Pike Push-Up | bodyweight | push_v | c | delt_front | tri pec_upper | home, calisthenics
+Handstand Push-Up | bodyweight | push_v | c | delt_front | tri trap_upper core | advanced, calisthenics, home
+Dumbbell Lateral Raise | dumbbell | iso | i | delt_side | supraspinatus trap_upper | width, capped delts
+Cable Lateral Raise | cable | iso | i | delt_side | supraspinatus | width, constant tension, unilateral
+Machine Lateral Raise | machine | iso | i | delt_side | supraspinatus | width, machine-friendly
+Lean-Away Lateral Raise | dumbbell | iso | i | delt_side | supraspinatus | width, unilateral, stretch
+Upright Row | barbell | pull_v | c | delt_side trap_upper | bi delt_front | width, traps
+Cable Upright Row | cable | pull_v | c | delt_side trap_upper | bi | width
+Dumbbell Front Raise | dumbbell | iso | i | delt_front | pec_upper | front delts
+Plate Front Raise | other | iso | i | delt_front | pec_upper trap_upper | plate
+Cable Front Raise | cable | iso | i | delt_front | pec_upper | front delts
+Rear Delt Fly (Dumbbell) | dumbbell | iso | i | delt_rear | upperback | bent-over, posture
+Reverse Pec Deck | machine | iso | i | delt_rear | upperback | posture, machine-friendly
+Cable Rear Delt Fly | cable | iso | i | delt_rear | upperback | crossover, posture
+Band Pull-Apart | band | iso | i | delt_rear upperback | infraspinatus | posture, warm-up, prehab, home
+External Rotation (Cable) | cable | iso | i | infraspinatus teres_minor | delt_rear | rotator cuff, prehab, shoulder health
+Side-Lying External Rotation | dumbbell | iso | i | infraspinatus teres_minor | delt_rear | rotator cuff, prehab, rehab
+Internal Rotation (Cable) | cable | iso | i | subscapularis | pec_mid | rotator cuff, prehab
+Cuban Press | dumbbell | push_v | c | infraspinatus delt_side | supraspinatus teres_minor delt_rear | rotator cuff, prehab, warm-up
+Full Can Raise | dumbbell | iso | i | supraspinatus | delt_side delt_front | rotator cuff, prehab
+Overhead Plate Halo | other | iso | i | delt_front delt_side | core cuff | warm-up, mobility
+
+## ARMS
+Barbell Curl | barbell | iso | i | bi | brachialis brachiorad | biceps, mass
+EZ-Bar Curl | ez-bar | iso | i | bi | brachialis brachiorad | biceps, wrist friendly
+Dumbbell Curl | dumbbell | iso | i | bi | brachialis brachiorad | biceps, home
+Incline Dumbbell Curl | dumbbell | iso | i | bi_long | bi_short brachialis | biceps, stretch, long head
+Hammer Curl | dumbbell | iso | i | brachialis brachiorad | bi_long | forearm, neutral grip, arm thickness
+Cross-Body Hammer Curl | dumbbell | iso | i | brachialis | brachiorad bi | neutral grip
+Preacher Curl | ez-bar | iso | i | bi_short | brachialis | biceps, peak, strict
+Machine Preacher Curl | machine | iso | i | bi_short | brachialis | biceps, machine-friendly
+Spider Curl | dumbbell | iso | i | bi_short | brachialis | biceps, peak, shortened
+Concentration Curl | dumbbell | iso | i | bi_short | brachialis | biceps, peak, unilateral
+Cable Curl | cable | iso | i | bi | brachialis | biceps, constant tension, pump
+Bayesian Cable Curl | cable | iso | i | bi_long | bi_short | biceps, stretch, unilateral
+Reverse Curl | ez-bar | iso | i | brachiorad brachialis | wrist_ext | forearm, overhand
+Zottman Curl | dumbbell | iso | i | bi brachiorad | brachialis wrist_ext | forearm
+Drag Curl | barbell | iso | i | bi_long | brachialis | biceps
+Chin-Up Hold | bodyweight | iso | i | bi | lats forearm | isometric, grip
+Triceps Pushdown (Rope) | cable | iso | i | tri_lat | tri_med tri_long | triceps, pump
+Triceps Pushdown (Bar) | cable | iso | i | tri_lat tri_med | tri_long | triceps, heavy
+Single-Arm Cable Pushdown | cable | iso | i | tri_lat | tri_med | triceps, unilateral
+Overhead Cable Triceps Extension | cable | iso | i | tri_long | tri_lat tri_med | triceps, stretch, long head
+Overhead Dumbbell Triceps Extension | dumbbell | iso | i | tri_long | tri_lat tri_med | triceps, stretch, long head, home
+Skull Crusher | ez-bar | iso | i | tri_long tri_med | tri_lat | triceps, lying extension
+Dumbbell Skull Crusher | dumbbell | iso | i | tri_long | tri_med tri_lat | triceps
+JM Press | barbell | push_h | c | tri | pec_mid | triceps, strength
+Triceps Kickback | dumbbell | iso | i | tri_lat | tri_long tri_med | triceps, shortened
+Bench Dip | bodyweight | push_v | c | tri | delt_front pec_lower | triceps, home, beginner
+Triceps Dip | bodyweight | push_v | c | tri | pec_lower delt_front | triceps, calisthenics, upright
+Wrist Curl | dumbbell | iso | i | wrist_flex | | forearm, grip
+Reverse Wrist Curl | dumbbell | iso | i | wrist_ext | brachiorad | forearm
+Behind-the-Back Wrist Curl | barbell | iso | i | wrist_flex | | forearm, grip
+Wrist Roller | other | iso | i | wrist_flex wrist_ext | brachiorad | forearm, grip
+Dead Hang | bodyweight | iso | i | wrist_flex | lats | grip, isometric, home, decompression
+Plate Pinch | other | iso | i | wrist_flex | | grip, isometric
+
+## CORE
+Plank | bodyweight | core | i | tva rectus_abs | obl delt_front glutes | home, isometric, beginner, anti-extension
+Side Plank | bodyweight | core | i | obl | tva gmed | home, isometric, anti-lateral flexion
+Copenhagen Plank | bodyweight | core | i | adductors obl | tva | isometric, groin, athletic
+Crunch | bodyweight | core | i | rectus_abs | obl | home, beginner, upper abs
+Cable Crunch | cable | core | i | rectus_abs | obl | weighted abs
+Machine Crunch | machine | core | i | rectus_abs | obl | machine-friendly
+Decline Sit-Up | bodyweight | core | i | rectus_abs iliopsoas | obl | abs
+Hanging Leg Raise | bodyweight | core | i | rectus_abs iliopsoas | obl forearm | lower abs, calisthenics
+Hanging Knee Raise | bodyweight | core | i | rectus_abs iliopsoas | obl | lower abs, beginner
+Toes-to-Bar | bodyweight | core | i | rectus_abs iliopsoas | lats obl forearm | advanced, crossfit
+Captain's Chair Leg Raise | machine | core | i | rectus_abs iliopsoas | obl | lower abs
+Lying Leg Raise | bodyweight | core | i | rectus_abs iliopsoas | tva | lower abs, home
+Reverse Crunch | bodyweight | core | i | rectus_abs | obl | lower abs, home
+Ab Wheel Rollout | other | core | i | rectus_abs tva | lats obl delt_front | anti-extension
+Dead Bug | bodyweight | core | i | tva rectus_abs | obl | home, beginner, rehab, anti-extension
+Hollow Body Hold | bodyweight | core | i | rectus_abs tva | iliopsoas | gymnastics, isometric, home
+V-Up | bodyweight | core | i | rectus_abs | iliopsoas obl | home
+Bicycle Crunch | bodyweight | core | i | obl rectus_abs | iliopsoas | home, rotation
+Russian Twist | bodyweight | core | i | obl | rectus_abs | rotation, home
+Pallof Press | cable | core | i | obl tva | rectus_abs | anti-rotation, stability
+Cable Woodchop | cable | core | i | obl | rectus_abs tva delt_front | rotation, athletic
+Landmine Rotation | landmine | core | i | obl | delt_front tva glutes | rotation, athletic
+Suitcase Carry | dumbbell | carry | c | obl ql | forearm trap_upper tva | anti-lateral flexion, unilateral, grip
+Farmer's Carry | dumbbell | carry | c | forearm trap_upper | core quads glutes ql | grip, full body, conditioning
+Mountain Climber | bodyweight | conditioning | c | rectus_abs iliopsoas | delt_front quads | home, cardio, hiit
+Stir the Pot | other | core | i | rectus_abs tva | obl | stability ball, anti-extension
+Dragon Flag | bodyweight | core | i | rectus_abs | obl tva lats | advanced, calisthenics
+L-Sit | bodyweight | core | i | rectus_abs iliopsoas | tri quads | gymnastics, isometric, advanced
+Side Bend (Dumbbell) | dumbbell | core | i | obl | ql | lateral flexion
+
+## LEGS
+Back Squat | barbell | squat | c | quads glutes | adductors hams erect core | powerlifting, strength, high bar
+Low-Bar Back Squat | barbell | squat | c | glutes quads | adductors hams erect | powerlifting, strength
+Front Squat | barbell | squat | c | quads | glutes core erect trap_mid | upright, athletic
+Paused Squat | barbell | squat | c | quads glutes | adductors erect | strength, pause
+Box Squat | barbell | squat | c | glutes quads | hams adductors erect | powerlifting
+Safety Bar Squat | other | squat | c | quads glutes | erect upperback | back friendly
+Zercher Squat | barbell | squat | c | quads glutes | upperback core bi | advanced
+Goblet Squat | dumbbell | squat | c | quads glutes | core adductors | beginner, home
+Hack Squat | machine | squat | c | quads | glutes adductors | machine-friendly, quad focus
+Pendulum Squat | machine | squat | c | quads | glutes | machine-friendly, quad focus
+Smith Machine Squat | smith | squat | c | quads glutes | adductors | machine-friendly
+Leg Press | machine | squat | c | quads glutes | adductors hams | beginner, machine-friendly
+Single-Leg Leg Press | machine | squat | c | quads glutes | adductors | unilateral, machine-friendly
+Belt Squat | machine | squat | c | quads glutes | adductors | back friendly
+Bodyweight Squat | bodyweight | squat | c | quads glutes | adductors | home, beginner, no equipment, warm-up
+Pistol Squat | bodyweight | squat | c | quads glutes | gmed core calves | unilateral, calisthenics, advanced, home
+Sissy Squat | bodyweight | squat | i | rect_fem vas_med vas_lat | | quad focus, home
+Jump Squat | bodyweight | plyo | c | quads glutes | calves | explosive, plyometric, home, athletic
+Box Jump | bodyweight | plyo | c | quads glutes | calves hams | explosive, plyometric, athletic
+Bulgarian Split Squat | dumbbell | lunge | c | quads glutes | adductors gmed hams | unilateral, home
+Walking Lunge | dumbbell | lunge | c | quads glutes | adductors hams gmed | unilateral
+Reverse Lunge | dumbbell | lunge | c | glutes quads | hams adductors | unilateral, knee friendly
+Barbell Lunge | barbell | lunge | c | quads glutes | adductors hams core | unilateral
+Bodyweight Lunge | bodyweight | lunge | c | quads glutes | hams | home, beginner, unilateral
+Step-Up | dumbbell | lunge | c | quads glutes | gmed hams | unilateral, home
+Lateral Lunge | dumbbell | lunge | c | adductors glutes | quads gmed | unilateral, frontal plane, athletic
+Curtsy Lunge | dumbbell | lunge | c | glutes gmed | quads adductors | unilateral, glute focus
+Leg Extension | machine | iso | i | quads | | quad focus, beginner, machine-friendly
+Single-Leg Leg Extension | machine | iso | i | quads | | unilateral, quad focus
+Romanian Deadlift | barbell | hinge | c | hams glutes | erect adductors forearm | posterior chain, stretch, rdl
+Dumbbell Romanian Deadlift | dumbbell | hinge | c | hams glutes | erect forearm | posterior chain, rdl, home
+Single-Leg Romanian Deadlift | dumbbell | hinge | c | hams glutes | gmed erect | unilateral, balance, rdl
+Stiff-Leg Deadlift | barbell | hinge | c | hams | glutes erect | posterior chain
+Kettlebell Swing | kettlebell | hinge | c | glutes hams | erect core delt_front forearm | explosive, conditioning, home, hiit
+Lying Leg Curl | machine | iso | i | hams | gastroc | hamstring curl, machine-friendly
+Seated Leg Curl | machine | iso | i | hams | gastroc | hamstring curl, stretch, machine-friendly
+Nordic Hamstring Curl | bodyweight | iso | i | hams | gastroc | eccentric, injury prevention, home, athletic
+Glute-Ham Raise | machine | iso | c | hams | glutes gastroc erect | ghr, athletic
+Stability Ball Leg Curl | other | iso | i | hams | glutes core | home
+Barbell Hip Thrust | barbell | hinge | c | glutes | hams adductors quads | glute focus, booty
+Machine Hip Thrust | machine | hinge | c | glutes | hams | glute focus, machine-friendly
+Single-Leg Hip Thrust | bodyweight | hinge | c | glutes | hams gmed | unilateral, home, glute focus
+Glute Bridge | bodyweight | hinge | c | glutes | hams | home, beginner, glute focus
+Cable Pull-Through | cable | hinge | c | glutes hams | erect | glute focus, hinge
+Cable Glute Kickback | cable | iso | i | glutes | hams | glute focus, unilateral
+Hip Abduction Machine | machine | iso | i | gmed | tfl | glute med, side glutes, machine-friendly
+Banded Lateral Walk | band | iso | i | gmed | tfl | glute med, warm-up, home
+Clamshell | band | iso | i | gmed | | glute med, rehab, home
+Frog Pump | bodyweight | iso | i | glutes | gmed | glute focus, home, pump
+Hip Adduction Machine | machine | iso | i | adductors | | inner thigh, groin, machine-friendly
+Standing Calf Raise | machine | iso | i | gastroc | soleus | calves
+Seated Calf Raise | machine | iso | i | soleus | gastroc | calves, bent knee
+Leg Press Calf Raise | machine | iso | i | gastroc | soleus | calves
+Single-Leg Calf Raise | bodyweight | iso | i | gastroc | soleus | calves, unilateral, home
+Donkey Calf Raise | machine | iso | i | gastroc | soleus | calves, stretch
+Tibialis Raise | bodyweight | iso | i | tib_ant | | shins, knee health, home
+Hanging Hip Flexor Raise | bodyweight | iso | i | iliopsoas | rectus_abs rect_fem | hip flexors
+Cable Hip Flexion | cable | iso | i | iliopsoas rect_fem | | hip flexors, sprinting, athletic
+Sled Push | sled | conditioning | c | quads glutes | calves delt_front tri core | conditioning, athletic, knee friendly
+Sled Pull (Backwards) | sled | conditioning | c | quads | vas_med calves | conditioning, knee health
+
+## FULL BODY / OLYMPIC / CONDITIONING
+Power Clean | barbell | olympic | c | glutes hams trap_upper | quads erect delt_front calves forearm | explosive, power, olympic lifting, athletic, full body
+Hang Clean | barbell | olympic | c | glutes hams trap_upper | quads erect delt_front | explosive, power, olympic lifting, full body
+Power Snatch | barbell | olympic | c | glutes hams trap_upper delt_side | quads erect delt_front tri | explosive, olympic lifting, full body, advanced
+Clean and Jerk | barbell | olympic | c | glutes quads delt_front | hams trap_upper tri erect core | olympic lifting, full body, advanced
+Thruster | barbell | squat | c | quads glutes delt_front | tri core | conditioning, crossfit, full body
+Dumbbell Thruster | dumbbell | squat | c | quads glutes delt_front | tri core | conditioning, full body, home
+Kettlebell Clean and Press | kettlebell | olympic | c | glutes delt_front | hams tri core | full body, home
+Kettlebell Snatch | kettlebell | olympic | c | glutes hams delt_front | trap_upper core | explosive, conditioning, full body
+Turkish Get-Up | kettlebell | core | c | core delt_front | glutes quads tri cuff | stability, full body, mobility
+Man Maker | dumbbell | conditioning | c | pec_mid lats quads | delt_front tri core glutes | full body, conditioning, home
+Burpee | bodyweight | conditioning | c | quads pec_mid | delt_front tri core calves | cardio, hiit, home, no equipment, full body
+Wall Ball | other | conditioning | c | quads glutes delt_front | tri core | crossfit, conditioning, full body
+Battle Ropes | other | conditioning | c | delt_front delt_side | core forearm bi | cardio, hiit, conditioning
+Rowing Machine | machine | conditioning | c | lats quads | upperback hams glutes bi core | cardio, erg, full body
+Assault Bike | machine | conditioning | c | quads | glutes hams delt_front | cardio, hiit, conditioning
+Ski Erg | machine | conditioning | c | lats tri | core delt_front | cardio, conditioning
+Bear Crawl | bodyweight | conditioning | c | delt_front core | quads tri | home, cardio, stability
+Jumping Jacks | bodyweight | conditioning | c | calves gmed | delt_side | cardio, warm-up, home
+Jump Rope | other | conditioning | c | calves | quads delt_side forearm | cardio, footwork, home
+Sandbag Carry | other | carry | c | core upperback | quads glutes bi | strongman, full body
+Tire Flip | other | hinge | c | glutes hams quads | erect delt_front tri | strongman, full body, explosive

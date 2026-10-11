@@ -1,0 +1,64 @@
+{
+  "groups": [
+    {"id": "chest", "name": "Chest", "hue": 352, "subgroups": [
+      {"id": "upper_chest", "name": "Upper Chest", "muscles": [["pec_upper", "Pectoralis Major (Clavicular Head)"]]},
+      {"id": "mid_chest", "name": "Mid Chest", "muscles": [["pec_mid", "Pectoralis Major (Sternal Head)"]]},
+      {"id": "lower_chest", "name": "Lower Chest", "muscles": [["pec_lower", "Pectoralis Major (Costal Head)"]]},
+      {"id": "side_chest", "name": "Serratus & Pec Minor", "muscles": [["serratus", "Serratus Anterior"], ["pec_minor", "Pectoralis Minor"]]}
+    ]},
+    {"id": "back", "name": "Back", "hue": 212, "subgroups": [
+      {"id": "lats", "name": "Lats", "muscles": [["lats", "Latissimus Dorsi"], ["teres_major", "Teres Major"]]},
+      {"id": "upper_back", "name": "Upper Back", "muscles": [["rhomboids", "Rhomboids"], ["trap_mid", "Middle Trapezius"], ["trap_lower", "Lower Trapezius"]]},
+      {"id": "traps", "name": "Traps", "muscles": [["trap_upper", "Upper Trapezius"]]},
+      {"id": "lower_back", "name": "Lower Back", "muscles": [["erectors", "Erector Spinae"], ["ql", "Quadratus Lumborum"]]}
+    ]},
+    {"id": "shoulders", "name": "Shoulders", "hue": 24, "subgroups": [
+      {"id": "front_delts", "name": "Front Delts", "muscles": [["delt_front", "Anterior Deltoid"]]},
+      {"id": "side_delts", "name": "Side Delts", "muscles": [["delt_side", "Lateral Deltoid"]]},
+      {"id": "rear_delts", "name": "Rear Delts", "muscles": [["delt_rear", "Posterior Deltoid"]]},
+      {"id": "rotator_cuff", "name": "Rotator Cuff", "muscles": [["infraspinatus", "Infraspinatus"], ["teres_minor", "Teres Minor"], ["supraspinatus", "Supraspinatus"], ["subscapularis", "Subscapularis"]]}
+    ]},
+    {"id": "arms", "name": "Arms", "hue": 275, "subgroups": [
+      {"id": "biceps", "name": "Biceps", "muscles": [["bi_long", "Biceps (Long Head)"], ["bi_short", "Biceps (Short Head)"], ["brachialis", "Brachialis"]]},
+      {"id": "triceps", "name": "Triceps", "muscles": [["tri_long", "Triceps (Long Head)"], ["tri_lat", "Triceps (Lateral Head)"], ["tri_med", "Triceps (Medial Head)"]]},
+      {"id": "forearms", "name": "Forearms", "muscles": [["brachiorad", "Brachioradialis"], ["wrist_flex", "Wrist Flexors"], ["wrist_ext", "Wrist Extensors"]]}
+    ]},
+    {"id": "core", "name": "Core", "hue": 44, "subgroups": [
+      {"id": "abs", "name": "Abs", "muscles": [["rectus_abs", "Rectus Abdominis"], ["tva", "Transverse Abdominis"]]},
+      {"id": "obliques", "name": "Obliques", "muscles": [["obl_ext", "External Obliques"], ["obl_int", "Internal Obliques"]]}
+    ]},
+    {"id": "legs", "name": "Legs", "hue": 145, "subgroups": [
+      {"id": "quads", "name": "Quads", "muscles": [["rect_fem", "Rectus Femoris"], ["vas_lat", "Vastus Lateralis"], ["vas_med", "Vastus Medialis"], ["vas_int", "Vastus Intermedius"]]},
+      {"id": "hamstrings", "name": "Hamstrings", "muscles": [["bf", "Biceps Femoris"], ["semit", "Semitendinosus"], ["semim", "Semimembranosus"]]},
+      {"id": "glutes", "name": "Glutes", "muscles": [["glute_max", "Gluteus Maximus"], ["glute_med", "Gluteus Medius"], ["glute_min", "Gluteus Minimus"], ["tfl", "Tensor Fasciae Latae"]]},
+      {"id": "calves", "name": "Calves & Shins", "muscles": [["gastroc", "Gastrocnemius"], ["soleus", "Soleus"], ["tib_ant", "Tibialis Anterior"]]},
+      {"id": "hips", "name": "Adductors & Hip Flexors", "muscles": [["add_mag", "Adductor Magnus"], ["add_long", "Adductor Longus"], ["iliopsoas", "Iliopsoas (Hip Flexor)"]]}
+    ]}
+  ],
+  "aliases": {
+    "quads": "rect_fem vas_lat vas_med vas_int",
+    "hams": "bf semit semim",
+    "glutes": "glute_max",
+    "gmed": "glute_med glute_min",
+    "calves": "gastroc soleus",
+    "bi": "bi_long bi_short",
+    "tri": "tri_long tri_lat tri_med",
+    "obl": "obl_ext obl_int",
+    "core": "rectus_abs tva obl_ext obl_int",
+    "forearm": "brachiorad wrist_flex wrist_ext",
+    "cuff": "infraspinatus teres_minor supraspinatus subscapularis",
+    "erect": "erectors",
+    "adductors": "add_mag add_long",
+    "upperback": "rhomboids trap_mid trap_lower"
+  },
+  "patterns": {
+    "push_h": "Horizontal Push", "push_v": "Vertical Push", "pull_h": "Horizontal Pull", "pull_v": "Vertical Pull",
+    "squat": "Squat", "hinge": "Hinge", "lunge": "Lunge", "carry": "Carry", "core": "Core",
+    "iso": "Isolation", "olympic": "Olympic", "conditioning": "Conditioning", "plyo": "Plyometric"
+  },
+  "equipment": {
+    "barbell": "Barbell", "dumbbell": "Dumbbell", "cable": "Cable", "machine": "Machine", "bodyweight": "Bodyweight",
+    "kettlebell": "Kettlebell", "band": "Band", "smith": "Smith Machine", "ez-bar": "EZ Bar", "trap-bar": "Trap Bar",
+    "landmine": "Landmine", "sled": "Sled", "other": "Other"
+  }
+}

@@ -237,6 +237,9 @@ details summary { cursor: pointer; }
 .mv .bone.far { opacity: .35; }
 .mv .headc { fill: var(--fg); }
 .mv .floor { stroke: var(--line); stroke-width: 2; }
+.mv .pad { fill: none; stroke: var(--line); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+.benchtag { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; background: var(--surface-2); border-radius: 999px; padding: 4px 10px 4px 8px; align-self: flex-start; }
+.benchtag svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; }
 .mv .pr { fill: var(--line); } .mv .pr-l { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
 .mv .plate { fill: var(--surface); stroke: var(--fg); stroke-width: 2.5; } .mv .hub { fill: var(--fg); }
 .mv .cable { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
@@ -374,8 +377,15 @@ const PROPS = {
   low: '<rect x="40" y="100" width="40" height="8" rx="2" class="pr"/><rect x="56" y="108" width="6" height="42" class="pr"/>',
   dipbar: '<line x1="80" y1="100" x2="124" y2="100" class="pr-l"/><line x1="122" y1="100" x2="122" y2="150" class="pr-l"/>',
   step: '<rect x="80" y="142" width="40" height="8" rx="1" class="pr"/>',
+  incline: '<path d="M80 94 L130 122 L152 122" class="pad"/><line x1="132" y1="124" x2="132" y2="150" class="pr-l"/><line x1="92" y1="104" x2="92" y2="150" class="pr-l"/>',
+  decline: '<path d="M74 130 L126 110" class="pad"/><line x1="96" y1="124" x2="96" y2="150" class="pr-l"/><line x1="126" y1="112" x2="126" y2="150" class="pr-l"/><circle cx="152" cy="124" r="5" class="pr"/>',
+  prone: '<path d="M78 104 L126 132" class="pad"/><line x1="98" y1="118" x2="98" y2="150" class="pr-l"/><line x1="122" y1="132" x2="122" y2="150" class="pr-l"/>',
+  upright: '<path d="M88 70 L92 124 L126 124" class="pad"/><line x1="106" y1="126" x2="106" y2="150" class="pr-l"/>',
+  preacher: '<path d="M104 100 L132 124" class="pad"/><line x1="118" y1="114" x2="118" y2="150" class="pr-l"/><path d="M70 124 L104 124" class="pad"/><line x1="86" y1="126" x2="86" y2="150" class="pr-l"/>',
+  declinesit: '<path d="M58 142 L136 108" class="pad"/><line x1="128" y1="112" x2="128" y2="150" class="pr-l"/><circle cx="150" cy="114" r="5" class="pr"/>',
   hyper: '<line x1="96" y1="106" x2="150" y2="140" class="pr-l"/><line x1="122" y1="124" x2="122" y2="150" class="pr-l"/>',
 };
+const INC = { s: [90, 86], hp: [122, 110], k: [148, 118], a: [150, 150] };
 const DIAGRAMS = {
   squat: { props: [], cable: null, frames: [side({ e: [88, 64], w: [96, 50] }), side({ hp: [86, 118], k: [122, 128], s: [104, 80], e: [94, 94], w: [102, 80] })], load: 's' },
   hinge: { frames: [side({ w: [102, 94] }), side({ hp: [86, 92], k: [104, 122], s: [118, 66], e: [118, 88], w: [118, 110] })] },
@@ -413,6 +423,16 @@ const DIAGRAMS = {
   back_extension: { props: ['hyper'], frames: [{ hp: [100, 102], k: [124, 116], a: [148, 132], s: [86, 138], e: [90, 126], w: [96, 122] }, { hp: [100, 102], k: [124, 116], a: [148, 132], s: [66, 80], e: [72, 94], w: [80, 90] }] },
   kickback: { cable: [20, 140], frames: [{ s: [122, 88], hp: [92, 96], e: [128, 108], w: [132, 124], k: [96, 122], a: [96, 150], k2: [98, 124], a2: [92, 150] }, { s: [122, 88], hp: [92, 96], e: [128, 108], w: [132, 124], k: [96, 122], a: [96, 150], k2: [64, 100], a2: [40, 94] }] },
   abduction: { frames: [front({}), front({ k2: [124, 118], a2: [140, 146] })] },
+  bench_incline: { props: ['incline'], frames: [Object.assign({}, INC, { e: [90, 64], w: [90, 42] }), Object.assign({}, INC, { e: [76, 102], w: [86, 86] })] },
+  bench_decline: { props: ['decline'], frames: [{ s: [84, 122], hp: [118, 102], k: [142, 98], a: [150, 120], e: [84, 100], w: [84, 78] }, { s: [84, 122], hp: [118, 102], k: [142, 98], a: [150, 120], e: [72, 124], w: [82, 108] }] },
+  fly_lying: { props: ['bench'], frames: [Object.assign({}, LYING, { e: [80, 84], w: [80, 62] }), Object.assign({}, LYING, { e: [76, 104], w: [74, 124] })] },
+  fly_incline: { props: ['incline'], frames: [Object.assign({}, INC, { e: [90, 64], w: [90, 42] }), Object.assign({}, INC, { e: [84, 106], w: [80, 126] })] },
+  row_chest: { props: ['prone'], frames: [{ s: [84, 94], hp: [118, 114], k: [140, 124], a: [148, 150], e: [86, 116], w: [88, 138] }, { s: [84, 94], hp: [118, 114], k: [140, 124], a: [148, 150], e: [104, 90], w: [96, 110] }] },
+  press_seated: { props: ['upright'], frames: [{ hp: [98, 118], s: [96, 78], k: [126, 120], a: [128, 150], e: [110, 92], w: [108, 72] }, { hp: [98, 118], s: [96, 78], k: [126, 120], a: [128, 150], e: [100, 54], w: [100, 32] }] },
+  curl_incline: { props: ['incline'], frames: [Object.assign({}, INC, { e: [88, 110], w: [86, 132] }), Object.assign({}, INC, { e: [88, 110], w: [106, 98] })] },
+  curl_preacher: { props: ['preacher'], frames: [{ hp: [90, 120], s: [94, 80], k: [118, 122], a: [120, 150], e: [118, 104], w: [136, 120] }, { hp: [90, 120], s: [94, 80], k: [118, 122], a: [120, 150], e: [118, 104], w: [112, 82] }] },
+  bench_dip: { props: ['low'], frames: [{ s: [84, 62], e: [78, 82], w: [72, 100], hp: [90, 102], k: [118, 118], a: [146, 148] }, { s: [86, 86], e: [66, 82], w: [72, 100], hp: [90, 126], k: [118, 130], a: [146, 148] }] },
+  situp_decline: { props: ['declinesit'], frames: [{ s: [70, 132], hp: [106, 116], k: [128, 98], a: [148, 110], e: [80, 124], w: [74, 120] }, { s: [92, 78], hp: [106, 116], k: [128, 98], a: [148, 110], e: [98, 96], w: [92, 90] }] },
   cardio: { frames: [front({}), front({ e: [70, 34], w: [62, 12], e2: [130, 34], w2: [138, 12], k: [80, 120], a: [72, 150], k2: [120, 120], a2: [128, 150] })] },
 };
 function stick(p, equip, d) {
@@ -437,10 +457,25 @@ function movementDiagram(e, key) {
   if (d.hold) return `<div class="mvrow one">${frame(d.frames[0], 'Hold this position')}</div>`;
   return `<div class="mvrow">${frame(d.frames[0], '1 · Start')}<svg class="mvarrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6"/></svg>${frame(d.frames[1], '2 · Finish')}</div>`;
 }
+const DIAGRAM_OVERRIDE = {};
+[['bench_incline', 'incline-barbell-bench-press incline-dumbbell-press smith-machine-incline-press incline-machine-press'],
+ ['bench_decline', 'decline-barbell-bench-press decline-dumbbell-press hammer-strength-decline-press'],
+ ['fly_lying', 'dumbbell-fly'], ['fly_incline', 'incline-dumbbell-fly'],
+ ['row_chest', 'seal-row chest-supported-t-bar-row chest-supported-dumbbell-row'],
+ ['press_seated', 'seated-barbell-shoulder-press seated-dumbbell-shoulder-press arnold-press'],
+ ['curl_incline', 'incline-dumbbell-curl'], ['curl_preacher', 'preacher-curl machine-preacher-curl spider-curl'],
+ ['bench_dip', 'bench-dip'], ['situp_decline', 'decline-sit-up']].forEach(([k, ids]) => ids.split(' ').forEach(id => DIAGRAM_OVERRIDE[id] = k));
+const BENCH_LABEL = { bench_press: 'Flat bench', lying_ext: 'Flat bench', fly_lying: 'Flat bench', bench_incline: 'Incline bench, about 30-45°', bench_decline: 'Decline bench, about 15-30°, feet hooked', fly_incline: 'Incline bench, about 30°', row_chest: 'Bench with your chest on the pad', press_seated: 'Upright bench, back supported (about 80-90°)', curl_incline: 'Incline bench, about 45-60°', curl_preacher: 'Preacher bench, upper arms on the pad', bench_dip: 'Flat bench behind you', situp_decline: 'Decline bench, feet hooked under the pads' };
+function benchLabel(e, key) {
+  if (e.equipment === 'machine' || e.equipment === 'cable') return '';
+  if (e.id === 'seal-row') return 'Flat bench raised high, chest on the pad';
+  if (e.id === 'spider-curl') return 'Incline bench, chest on the pad, arms hanging';
+  return BENCH_LABEL[key] || '';
+}
 function howToCard(e) {
   const h = HOWTO[e.id]; if (!h) return '';
   return `<div class="card stack" style="gap:12px"><div class="label">How to do it</div>
-    ${movementDiagram(e, h.diagram)}
+    ${(() => { const key = DIAGRAM_OVERRIDE[e.id] || h.diagram, bl = benchLabel(e, key); return (bl ? `<div class="benchtag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15h18M6 15v5M18 15v5M5 11h9"/></svg>${esc(bl)}</div>` : '') + movementDiagram(e, key); })()}
     ${h.setup ? `<div><strong>Setup.</strong> ${esc(h.setup)}</div>` : ''}
     <ol class="steps">${h.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
     ${h.cues?.length ? `<div><div class="label" style="margin-bottom:4px">Coaching cues</div><ul class="cues">${h.cues.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>` : ''}

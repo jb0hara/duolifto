@@ -1313,7 +1313,18 @@ function parseProgramText(text) {
   const mins = mm ? +mm[1] : hh ? +hh[1] * 60 : /\bhalf an hour\b/.test(t) ? 30 : /\ban hour\b/.test(t) ? 60 : /\b(quick|short) (sessions?|workouts?)\b/.test(t) ? 30 : null;
   if (mins) o.minutesRaw = mins;
   if (/\b(shorter|quicker)\b/.test(t)) o.minutesDelta = -15; if (/\blonger\b/.test(t)) o.minutesDelta = 15;
-  if (/\bfull[- ]?body\b/.test(t)) o.split = 'full'; else if (/\bupper[ /-]*(and |\/ ?)?lower\b/.test(t)) o.split = 'ul';
+  // explicit weekly layout, e.g. "2 sessions of full body, one lower and one upper"
+  const TH_W = [[/full|total/, 'F'], [/upper/, 'U'], [/lower/, 'L'], [/push/, 'P'], [/pull/, 'PU'], [/leg/, 'LG'], [/glute|booty/, 'G'], [/arm/, 'A'], [/cardio|conditioning|hiit/, 'C'], [/chest/, 'BC'], [/back/, 'BB'], [/shoulder/, 'BS']];
+  const LRE = /\b(\d|one|two|three|four|five|six|a|an|single)\s*(?:x\s*)?((?:sessions?|days?|workouts?)\s*(?:of\s*|on\s*|for\s*)?(?:the\s*)?)?(full[- ]?body|total body|upper(?: body)?|lower(?: body)?|push|pull|legs?|glutes?|booty|arms?|cardio|conditioning|hiit|chest|back|shoulders?)\b(\s*(?:body\s*)?(?:sessions?|days?|workouts?))?/g;
+  const lay = []; let lm;
+  while ((lm = LRE.exec(t))) {
+    const c = /^\d$/.test(lm[1]) ? +lm[1] : NUMW[lm[1]] || 1;
+    if (!(c >= 2 || lm[2] || lm[4])) continue;
+    const th = TH_W.find(([re]) => re.test(lm[3]))[1];
+    for (let i = 0; i < Math.min(c, 7); i++) lay.push(th);
+  }
+  if (lay.length >= 2) o.layout = lay;
+  if (o.layout) {} else if (/\bfull[- ]?body\b/.test(t)) o.split = 'full'; else if (/\bupper[ /-]*(and |\/ ?)?lower\b/.test(t)) o.split = 'ul';
   else if (/\bpush[ ,/-]*pull[ ,/-]*(and )?legs?\b|\bppl\b/.test(t)) o.split = 'ppl'; else if (/\bbro split\b|\bbody ?part split\b|\bone (muscle|body ?part)( group)? (a|per) day\b/.test(t)) o.split = 'bro';
   if (/\b(an? |dedicated |own )?arms? days?\b/.test(t)) o.themes.push('A');
   if (/\b(an? |dedicated |own )?glutes? days?\b|\bbooty days?\b/.test(t)) o.themes.push('G');
@@ -1370,12 +1381,19 @@ function resolveSpec(text, sel, focusSel, prev) {
   const add = (k, arr) => { s[k] = [...new Set((s[k] || []).concat(arr || []))]; };
   if (focusSel && focusSel.length) s.focus = [...new Set(focusSel)]; else add('focus', o.focus);
   ['avoid', 'acts', 'exclude', 'deny', 'include', 'themes', 'flags'].forEach(k => add(k, o[k]));
+  if (o.layout) { s.layout = o.layout; s.split = null; s.themes = []; }
   if (o.exclude.length) s.include = s.include.filter(id => !o.exclude.some(x => EX[id].name.toLowerCase().includes(x)));
   if (o.superset) s.superset = true;
   if (o.reshuffle) s.seed = (s.seed * 7 + 13) % 100000;
   s.level = s.level || (s.flags.includes('older') ? 'beginner' : 'intermediate');
   s.goal = s.goal || (s.sport ? 'fitness' : s.level === 'beginner' ? 'general' : s.focus.length ? 'muscle' : 'general');
   // guardrails
+  if (s.layout && o.layout) {
+    const L = s.layout.length, max = s.level === 'beginner' ? 4 : 6;
+    if (L > max) { guard.push(`You listed ${L} sessions a week. I kept ${max}${s.level === 'beginner' ? ': as a beginner, 3-4 sessions give faster progress with less risk of burning out' : ': more than 6 a week adds fatigue faster than results'}, keeping the same mix of session types as closely as possible.`); const keep = []; const pool = s.layout.slice(); while (keep.length < max) { const cnt = {}; pool.forEach(x => cnt[x] = (cnt[x] || 0) + 1); const kc = {}; keep.forEach(x => kc[x] = (kc[x] || 0) + 1); const nx = Object.keys(cnt).sort((a, c) => (cnt[c] - (kc[c] || 0) * 2) - (cnt[a] - (kc[a] || 0) * 2))[0]; keep.push(nx); pool.splice(pool.indexOf(nx), 1); } s.layout = keep; }
+    if (o.daysRaw && o.daysRaw !== L && o.daysRaw <= 7) guard.push(`You said ${o.daysRaw} days but listed ${L} sessions, so I followed the sessions you listed.`);
+    o.daysRaw = s.layout.length;
+  }
   let days = pick('days', o.daysRaw);
   if (days != null) {
     days = +days;
@@ -1450,6 +1468,17 @@ function splitPlan(s) {
   const N = s.days, fb = s.focus.flatMap(f => FOCUS_BK[f] || []), lowF = fb.length && fb.every(b => BK[b].lower), upF = fb.length && fb.every(b => !BK[b].lower && b !== 'core');
   const light = ['tone', 'fitness', 'general'].includes(s.goal) || s.level === 'beginner';
   let split = s.split, why = '';
+  if (s.layout && s.layout.length >= 2) {
+    const left = s.layout.slice(), seq = []; let prev = null;
+    const region = th => !THEME[th] ? 'none' : th === 'F' ? 'all' : THEME[th].b.some(b => BK[b].lower) ? (THEME[th].b.some(b => !BK[b].lower && b !== 'core') ? 'all' : 'low') : 'up';
+    const sc = th => (th !== prev ? 2 : 0) + (region(th) === 'all' || region(th) !== region(prev) ? 1 : 0);
+    while (left.length) { const cnt = {}; left.forEach(x => cnt[x] = (cnt[x] || 0) + 1); const opts = Object.keys(cnt).sort((a, c) => sc(c) - sc(a) || cnt[c] - cnt[a] || s.layout.indexOf(a) - s.layout.indexOf(c)); prev = opts[0]; seq.push(prev); left.splice(left.indexOf(prev), 1); }
+    const cnt = {}; s.layout.forEach(x => cnt[x] = (cnt[x] || 0) + 1);
+    const desc = Object.entries(cnt).map(([th, n]) => `${n} ${THEME[th].name.toLowerCase()}`).join(', ').replace(/, ([^,]*)$/, ' and $1');
+    const freq = ['chest', 'back', 'quads', 'hams'].map(b => seq.filter(th => THEME[th].b.includes(b)).length), fmin = Math.min(...freq), fmax = Math.max(...freq);
+    why = `You asked for ${desc} session${s.layout.length > 1 ? 's' : ''} a week, so that's the week. I ordered them ${seq.map(th => THEME[th].name).join(', ')} so the same muscles get time to recover between sessions${fmin >= 2 ? `, and every major muscle is still trained ${fmin === fmax ? fmin : fmin + '-' + fmax} times a week` : fmin === 1 ? '. Some muscles are only trained once a week with this mix, so those sessions carry extra volume' : ''}.`;
+    return { seq, label: `custom split (${desc})`, why };
+  }
   if (!split) {
     if (N <= 3 && (light || N === 2)) split = 'full';
     else if (N === 3) split = lowF || upF ? 'ul' : s.level === 'advanced' && s.goal === 'muscle' ? 'ppl' : 'full';
@@ -1490,7 +1519,7 @@ function buildCustomProgram(s) {
   const pool = cpPool(s), plan = splitPlan(s), N = plan.seq.length, why = [];
   const sport = SPORTS.find(x => x[0] === s.sport);
   // 1. weekly hard sets per bucket
-  const base = { muscle: [8, 12, 15], strength: [8, 10, 12], tone: [6, 9, 10], fitness: [5, 7, 8], general: [5, 7, 8] }[s.goal][['beginner', 'intermediate', 'advanced'].indexOf(s.level)];
+  const base = { muscle: [8, 12, 15], strength: [8, 10, 12], tone: [6, 9, 10], fitness: [5, 7, 8], general: [6, 9, 10] }[s.goal][['beginner', 'intermediate', 'advanced'].indexOf(s.level)];
   const fb = new Set(s.focus.flatMap(f => FOCUS_BK[f] || [])), want = {};
   if (sport && !fb.size) Object.entries(sport[3]).forEach(([b, m]) => { if (m >= 1.2) fb.add(b); });
   Object.entries(BK).forEach(([b, d]) => {
@@ -1534,7 +1563,7 @@ function buildCustomProgram(s) {
     const bs = Object.keys(d.sets).sort((a, c) => (fb.has(c) - fb.has(a)) || ((BK[c].big || 0) - (BK[a].big || 0)) || PRI.indexOf(a) - PRI.indexOf(c));
     const dayUsed = new Set(), items = [];
     bs.forEach((b, bi) => {
-      const sets = d.sets[b], nEx = sets <= 4 ? 1 : sets <= 8 ? 2 : 3;
+      const sets = d.sets[b], nEx = Math.max(1, Math.min(3, Math.round(sets / 3.2)));
       const exp = Object.values(dayB).slice(0, di).filter(x => x.sets[b]).length;
       for (let j = 0; j < nEx; j++) {
         const C = BK[b].slots.filter(x => x.k === 'c'), I = BK[b].slots.filter(x => x.k === 'i');
@@ -1664,7 +1693,7 @@ async function claudeProgram(s, base, change) {
   const prompt = `You are an expert, evidence-based strength coach inside a gym app. ${change ? 'Revise this person\'s program to reflect the change they asked for, keeping everything else that still fits.' : 'Design an original multi-week program for this person, built around exactly what they asked for. Do not copy a generic template: choose the split, exercises, order, volume and progression to fit their goal, schedule, equipment, focus areas, sport, likes, dislikes and limitations.'}
 
 What they said: "${s.text}"
-${change ? `Change requested now: "${change}"\n` : ''}Settings already worked out from their words and answers (these already respect the safety limits, so keep to them): goal ${s.goal}; ${s.days} sessions a week; ${s.weeks} weeks; ${s.level}; equipment ${s.equip}; about ${s.minutes} minutes a session${s.split ? '; split they asked for: ' + s.split : ''}${s.focus.length ? '; focus: ' + s.focus.map(f => FOCUS_NAME[f] || f).join(', ') : ''}${s.sport ? '; sport: ' + s.sport : ''}${s.liftTarget ? `; lift target: ${EX[s.liftTarget.lift].name} ${s.liftTarget.w} ${unit()}` : ''}${s.avoid.length ? '; must be kind to: ' + s.avoid.join(', ') : ''}${s.include.length ? '; exercises they want in: ' + s.include.join(', ') : ''}${s.exclude.length ? '; avoid exercises named like: ' + s.exclude.join(', ') : ''}${s.themes.length ? '; dedicated days they asked for: ' + s.themes.map(x => THEME[x].name).join(', ') : ''}.
+${change ? `Change requested now: "${change}"\n` : ''}Settings already worked out from their words and answers (these already respect the safety limits, so keep to them): goal ${s.goal}; ${s.days} sessions a week; ${s.weeks} weeks; ${s.level}; equipment ${s.equip}; about ${s.minutes} minutes a session${s.split ? '; split they asked for: ' + s.split : ''}${s.focus.length ? '; focus: ' + s.focus.map(f => FOCUS_NAME[f] || f).join(', ') : ''}${s.sport ? '; sport: ' + s.sport : ''}${s.liftTarget ? `; lift target: ${EX[s.liftTarget.lift].name} ${s.liftTarget.w} ${unit()}` : ''}${s.avoid.length ? '; must be kind to: ' + s.avoid.join(', ') : ''}${s.include.length ? '; exercises they want in: ' + s.include.join(', ') : ''}${s.exclude.length ? '; avoid exercises named like: ' + s.exclude.join(', ') : ''}${s.themes.length ? '; dedicated days they asked for: ' + s.themes.map(x => THEME[x].name).join(', ') : ''}${s.layout ? '; EXACT weekly session layout they asked for (keep these session types and this count): ' + s.layout.map(x => THEME[x].name).join(', ') : ''}.
 ${s.guard.length ? 'Limits I applied to their request (mention these kindly in the note): ' + s.guard.join(' ') : ''}
 
 Evidence-based rules you must follow:

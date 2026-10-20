@@ -1218,12 +1218,15 @@ function progDetail(id) {
    </div>`);
 }
 function progBody(p, running) {
-  return `    <div class="card"><div class="label" style="margin-bottom:8px">Phases · ${p.weeks} weeks</div>${phaseBar(p, 0)}<div style="margin-top:10px">${p.phases.map(ph => `<div class="list-row" style="align-items:flex-start"><div style="min-width:0"><strong>Wk ${ph.weeks[0]}${ph.weeks[1] > ph.weeks[0] ? '-' + ph.weeks[1] : ''} · ${esc(ph.name)}</strong><div class="small muted">${esc(ph.focus)}</div></div><div class="rec" style="text-align:right">${esc(ph.sets)} × ${esc(ph.reps)}<div class="small muted" style="font-family:var(--font-body);font-weight:500">${esc(ph.rpe)}</div></div></div>`).join('')}</div></div>
+  return `${p.why?.length ? `<div class="card"><div class="label">How it's built</div><ul class="cues" style="margin:6px 0 0">${p.why.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
+    <div class="card"><div class="label" style="margin-bottom:8px">Phases · ${p.weeks} weeks</div>${phaseBar(p, 0)}<div style="margin-top:10px">${p.phases.map(ph => `<div class="list-row" style="align-items:flex-start"><div style="min-width:0"><strong>Wk ${ph.weeks[0]}${ph.weeks[1] > ph.weeks[0] ? '-' + ph.weeks[1] : ''} · ${esc(ph.name)}</strong><div class="small muted">${esc(ph.focus)}</div></div><div class="rec" style="text-align:right">${esc(ph.sets)} × ${esc(ph.reps)}<div class="small muted" style="font-family:var(--font-body);font-weight:500">${esc(ph.rpe)}</div></div></div>`).join('')}</div></div>
     <div class="card"><div class="label">Weekly plan · ${p.daysPerWeek} days</div>${p.days.map((d, di) => { const labels = ssLabels(d.exercises.map((x, k) => ({ link: !!(x[3] && d.exercises[k + 1] && d.exercises[k + 1][3] === x[3]) }))); return `<div style="margin-top:12px"><div class="row between"><strong>Day ${di + 1} · ${esc(d.name)}</strong>${running ? `<button class="btn sm" data-act="loadProgDay" data-day="${di}">Load</button>` : ''}</div><div class="dayex">${d.exercises.map((x, k) => `<div><span class="ssl">${labels[k]}</span><span><span class="dotc" style="background:${G[EX[x[0]].primaryGroup].color};margin-right:6px"></span>${esc(EX[x[0]].name)}</span><span class="rec">${x[1]} × ${esc(x[2])}</span></div>`).join('')}</div></div>`; }).join('')}<div class="small muted" style="margin-top:10px">Matching letters (A1, A2) are supersets. Sets and reps shift with each phase.</div></div>
     ${p.extras?.length ? `<div class="card"><div class="label">Alongside your sessions</div><ul class="cues" style="margin:6px 0 0">${p.extras.map(x => `<li>${esc(x)}</li>`).join('')}</ul><div class="small muted" style="margin-top:8px">Log these with Log activity so they count toward your week.</div></div>` : ''}
     <div class="card"><div class="label">How to progress</div><div>${esc(p.progression)}</div><div class="label" style="margin-top:10px">Nutrition</div><div>${esc(p.nutrition)}</div></div>`;
 }
 // ---------- custom program builder ----------
+// Designs a program from the request: weekly sets per muscle, training frequency, split, exercise choice and phases,
+// all kept inside evidence-based limits (2-6 sessions a week, 10-20ish hard sets per muscle, a deload every block).
 const CP_OPTS = {
   goal: [['auto', 'Not sure'], ['muscle', 'Build muscle'], ['strength', 'Get stronger'], ['tone', 'Lean & tone'], ['fitness', 'Fitness'], ['general', 'General health']],
   days: [['auto', 'Auto'], [2, '2'], [3, '3'], [4, '4'], [5, '5'], [6, '6']],
@@ -1231,253 +1234,459 @@ const CP_OPTS = {
   level: [['auto', 'Auto'], ['beginner', 'Beginner'], ['intermediate', 'Intermediate'], ['advanced', 'Advanced']],
   equip: [['auto', 'Auto'], ['gym', 'Full gym'], ['dumbbells', 'Dumbbells & bench'], ['home', 'Home kit'], ['bodyweight', 'No equipment']],
   minutes: [['auto', 'Auto'], [30, '30 min'], [45, '45 min'], [60, '60 min'], [75, '75 min']],
+  split: [['auto', 'Let me choose'], ['full', 'Full body'], ['ul', 'Upper / lower'], ['ppl', 'Push / pull / legs'], ['bro', 'One muscle group a day']],
 };
-const CP_LABEL = { goal: 'Main goal', days: 'Days a week', weeks: 'Weeks', level: 'Experience', equip: 'Equipment', minutes: 'Session length' };
-const CP_FOCUS = [['s:glutes', 'Glutes'], ['legs', 'Legs'], ['g:chest', 'Chest'], ['g:back', 'Back'], ['g:shoulders', 'Shoulders'], ['arms', 'Arms'], ['g:core', 'Core']];
-const FOCUS_T = { legs: ['s:quads', 's:hamstrings'], arms: ['s:biceps', 's:triceps'] };
+const CP_LABEL = { goal: 'Main goal', days: 'Days a week', weeks: 'Weeks', level: 'Experience', equip: 'Equipment', minutes: 'Session length', split: 'Split' };
+const CP_FOCUS = [['glutes', 'Glutes'], ['legs', 'Legs'], ['chest', 'Chest'], ['back', 'Back'], ['delts', 'Shoulders'], ['arms', 'Arms'], ['core', 'Core']];
 const EQUIP_ALLOW = { dumbbells: ['dumbbell', 'bodyweight', 'band', 'kettlebell'], home: ['dumbbell', 'bodyweight', 'band', 'kettlebell'], bodyweight: ['bodyweight', 'band'] };
 const GOAL_INFO = {
-  muscle: { title: 'Muscle Builder', phrase: 'building muscle', style: 'hypertrophy' },
-  strength: { title: 'Strength Builder', phrase: 'getting stronger', style: 'strength' },
-  tone: { title: 'Lean & Tone', phrase: 'leaning out and toning up', style: 'endurance' },
-  fitness: { title: 'Fitness Builder', phrase: 'fitness and conditioning', style: 'endurance' },
-  general: { title: 'Total Fitness', phrase: 'all-round health and strength', style: 'hypertrophy' },
+  muscle: { title: 'Muscle Builder', fword: 'Builder', phrase: 'building muscle', style: 'hypertrophy' },
+  strength: { title: 'Strength Block', fword: 'Strength', phrase: 'getting stronger', style: 'strength' },
+  tone: { title: 'Lean & Tone', fword: 'Sculpt', phrase: 'leaning out and toning up', style: 'endurance' },
+  fitness: { title: 'Fitness Builder', fword: 'Conditioning', phrase: 'fitness and conditioning', style: 'endurance' },
+  general: { title: 'Total Fitness', fword: 'Foundations', phrase: 'all-round health and strength', style: 'hypertrophy' },
 };
-const CP_ACTS = [[/\bpilates\b/, 'Pilates'], [/\byoga\b/, 'yoga'], [/\b(run|runs|running|jog|jogging)\b/, 'running'], [/\b(walk|walks|walking|steps)\b/, 'walking'], [/\b(swim|swimming)\b/, 'swimming'], [/\b(cycle|cycling|bike|spin)\b/, 'cycling']];
-const NUMW = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, one: 1 };
+// Training buckets: each owns muscles and an ordered list of exercise slots (1st, 2nd, 3rd exercise for that bucket in a session)
+const SLT = (t, pat, k) => ({ t, pat, k });
+const BK = {
+  chest: { name: 'Chest', big: 1, slots: [SLT('g:chest', ['push_h'], 'c'), SLT('s:upper_chest', ['push_h'], 'c'), SLT('g:chest', ['iso'], 'i'), SLT('g:chest', ['push_v', 'push_h'], 'c')] },
+  back: { name: 'Back', big: 1, slots: [SLT('s:lats', ['pull_v'], 'c'), SLT('s:upper_back', ['pull_h'], 'c'), SLT('s:lats', ['iso', 'pull_v'], 'i'), SLT('s:upper_back', ['pull_h'], 'c')] },
+  delts: { name: 'Shoulders', big: 1, slots: [SLT('g:shoulders', ['push_v'], 'c'), SLT('s:side_delts', ['iso'], 'i'), SLT('s:side_delts', ['iso', 'pull_v'], 'i')] },
+  quads: { name: 'Quads', big: 1, lower: 1, slots: [SLT('s:quads', ['squat'], 'c'), SLT('s:quads', ['squat'], 'c'), SLT('s:quads', ['iso'], 'i'), SLT('s:quads', ['lunge'], 'c')] },
+  hams: { name: 'Hamstrings', big: 1, lower: 1, slots: [SLT('s:hamstrings', ['hinge'], 'c'), SLT('s:hamstrings', ['iso'], 'i'), SLT('s:hamstrings', ['hinge'], 'c')] },
+  glutes: { name: 'Glutes', big: 1, lower: 1, slots: [SLT('s:glutes', ['hinge'], 'c'), SLT('s:glutes', ['lunge'], 'c'), SLT('s:glutes', ['iso'], 'i'), SLT('s:glutes', ['iso', 'hinge'], 'i')] },
+  rear: { name: 'Rear delts', slots: [SLT('s:rear_delts', ['iso', 'pull_h'], 'i'), SLT('s:rear_delts', ['iso'], 'i')] },
+  biceps: { name: 'Biceps', slots: [SLT('s:biceps', ['iso'], 'i'), SLT('s:biceps', ['iso'], 'i'), SLT('s:biceps', ['iso'], 'i')] },
+  triceps: { name: 'Triceps', slots: [SLT('s:triceps', ['iso'], 'i'), SLT('s:triceps', ['iso', 'push_v', 'push_h'], 'i'), SLT('s:triceps', ['iso'], 'i')] },
+  calves: { name: 'Calves', lower: 1, slots: [SLT('s:calves', ['iso'], 'i'), SLT('s:calves', ['iso'], 'i')] },
+  core: { name: 'Core', slots: [SLT('g:core', ['core'], 'i'), SLT('s:obliques', ['core', 'carry'], 'i'), SLT('g:core', ['core'], 'i')] },
+};
+const FOCUS_BK = { glutes: ['glutes'], legs: ['quads', 'hams', 'glutes'], chest: ['chest'], back: ['back'], delts: ['delts', 'rear'], arms: ['biceps', 'triceps'], core: ['core'], quads: ['quads'], hams: ['hams'], calves: ['calves'], biceps: ['biceps'], triceps: ['triceps'], lats: ['back'], upperback: ['back', 'rear'] };
+const FOCUS_SING = { glutes: 'Glute', legs: 'Leg', chest: 'Chest', back: 'Back', delts: 'Shoulder', arms: 'Arm', core: 'Core', quads: 'Quad', hams: 'Hamstring', calves: 'Calf', biceps: 'Bicep', triceps: 'Tricep', lats: 'Lat', upperback: 'Upper Back' };
+const FOCUS_NAME = { glutes: 'glutes', legs: 'legs', chest: 'chest', back: 'back', delts: 'shoulders', arms: 'arms', core: 'core', quads: 'quads', hams: 'hamstrings', calves: 'calves', biceps: 'biceps', triceps: 'triceps', lats: 'lats', upperback: 'upper back' };
+// Session themes: which buckets a day trains
+const THEME = {
+  F: { name: 'Full Body', b: ['quads', 'chest', 'back', 'hams', 'glutes', 'delts', 'biceps', 'triceps', 'rear', 'calves', 'core'] },
+  U: { name: 'Upper', b: ['chest', 'back', 'delts', 'rear', 'biceps', 'triceps'] },
+  L: { name: 'Lower', b: ['quads', 'hams', 'glutes', 'calves', 'core'] },
+  P: { name: 'Push', b: ['chest', 'delts', 'triceps'] },
+  PU: { name: 'Pull', b: ['back', 'rear', 'biceps'] },
+  LG: { name: 'Legs', b: ['quads', 'hams', 'glutes', 'calves', 'core'] },
+  G: { name: 'Glutes & Hamstrings', b: ['glutes', 'hams', 'core'] },
+  A: { name: 'Arms & Shoulders', b: ['biceps', 'triceps', 'delts', 'rear'] },
+  C: { name: 'Conditioning & Core', b: ['core'], cond: 1 },
+  BC: { name: 'Chest & Triceps', b: ['chest', 'triceps'] }, BB: { name: 'Back & Biceps', b: ['back', 'biceps', 'rear'] },
+  BS: { name: 'Shoulders & Core', b: ['delts', 'rear', 'core'] }, BA: { name: 'Arms', b: ['biceps', 'triceps', 'calves'] },
+};
+const CP_ACTS = [[/\bpilates\b/, 'Pilates'], [/\byoga\b/, 'yoga'], [/\b(run|runs|running|runner|jog|jogging|5k|10k|marathon)\b/, 'running'], [/\b(walk|walks|walking|steps)\b/, 'walking'], [/\b(swim|swimming)\b/, 'swimming'], [/\b(cycle|cycling|bike|spin)\b/, 'cycling']];
+const SPORTS = [
+  ['running', /\b(runner|running|marathon|5k|10k|half marathon|triathlon)\b/, "Runner's Strength", { quads: 1.1, hams: 1.2, glutes: 1.2, calves: 1.6, core: 1.3, chest: 0.6, back: 0.8, delts: 0.6, biceps: 0.4, triceps: 0.4 }, 'Runners get the most from heavy-ish single-leg work, calves and a strong core: it improves running economy and lowers injury risk without adding bulk.'],
+  ['field', /\b(football|soccer|rugby|basketball|netball|hockey|afl|sprint|sprinting|athlete|athletic)\b/, 'Athlete Power', { quads: 1.2, hams: 1.3, glutes: 1.2, core: 1.2, biceps: 0.5, triceps: 0.5 }, 'Field sports need power, so lower-body days start with a jump or explosive lift while you are fresh, and hamstrings get extra work to protect against strains.'],
+  ['climbing', /\b(climb|climbing|bouldering)\b/, "Climber's Strength", { back: 1.4, biceps: 1.2, core: 1.3, chest: 0.6, quads: 0.6, calves: 0.4 }, 'Climbing is mostly pulling and core tension, so the back, arms and core get priority while pushing work stays enough to keep your shoulders balanced.'],
+  ['rotational', /\b(golf|tennis|padel|squash|cricket|baseball|boxing|mma|martial|kickboxing)\b/, 'Rotational Power', { core: 1.6, glutes: 1.2, back: 1.1, biceps: 0.5, triceps: 0.5 }, 'Your sport is driven by rotation from the hips and trunk, so there is extra core and anti-rotation work plus strong glutes.'],
+  ['swimming', /\b(swimmer|swimming|surf|surfing)\b/, "Swimmer's Strength", { back: 1.3, delts: 1.1, rear: 1.4, core: 1.2, quads: 0.8 }, 'Swimming leans hard on the lats and the back of the shoulder, so those get extra work to keep your shoulders healthy and strong in the water.'],
+];
+const KEY_LIFTS = [[/\bhip thrusts?\b/, 'barbell-hip-thrust'], [/\bbench( press)?\b/, 'barbell-bench-press'], [/\b(back )?squats?\b/, 'back-squat'], [/\bdeadlifts?\b/, 'conventional-deadlift'], [/\bpull[- ]?ups?\b/, 'pull-up'], [/\bchin[- ]?ups?\b/, 'chin-up'], [/\b(overhead press|ohp|military press)\b/, 'overhead-press'], [/\b(rdls?|romanian deadlifts?)\b/, 'romanian-deadlift'], [/\blunges?\b/, 'walking-lunge'], [/\b(kettlebell )?swings?\b/, 'kettlebell-swing'], [/\b(bulgarian|split squats?)\b/, 'bulgarian-split-squat'], [/\bleg press\b/, 'leg-press'], [/\b(lat )?pulldowns?\b/, 'lat-pulldown'], [/\bdips\b/, 'chest-dip'], [/\bpush[- ]?ups?\b/, 'push-up'], [/\bpower cleans?\b|\bcleans\b/, 'power-clean'], [/\bglute bridges?\b/, 'glute-bridge'], [/\bfront squats?\b/, 'front-squat']];
+const NUMW = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
 const stemWord = w => w.replace(/(ss)es$/, '$1').replace(/(ch|sh|x)es$/, '$1').replace(/([^s])s$/, '$1');
 function parseProgramText(text) {
-  const t = ' ' + String(text || '').toLowerCase().replace(/[’']/g, "'") + ' ', o = { focus: [], avoid: [], acts: [], exclude: [], deny: [] };
-  if (/\b(tone|toning|toned|lean|leaner|fat|cut|cutting|shred|shredded|lose weight|weight loss|slim|definition|defined)\b/.test(t)) o.goal = 'tone';
+  const t = ' ' + String(text || '').toLowerCase().replace(/[’']/g, "'") + ' ', o = { focus: [], avoid: [], acts: [], exclude: [], deny: [], include: [], themes: [], flags: [] };
+  if (/\b(tone|toning|toned|lean|leaner|fat|cut|cutting|shred|shredded|lose weight|weight loss|slim|definition|defined|six ?pack)\b/.test(t)) o.goal = 'tone';
   else if (/\b(strength|stronger|strong|powerlifting|heavy|1rm|max)\b/.test(t)) o.goal = 'strength';
-  else if (/\b(muscle|size|bulk|bulking|grow|growth|hypertrophy|mass|bigger|bodybuilding)\b/.test(t)) o.goal = 'muscle';
+  else if (/\b(muscle|size|bulk|bulking|grow|growth|hypertrophy|mass|bigger|bodybuilding|aesthetic|huge|jacked|swole|gains|big)\b/.test(t)) o.goal = 'muscle';
   else if (/\b(fitness|fitter|conditioning|cardio|endurance|athletic|hiit|stamina|sport|sports)\b/.test(t)) o.goal = 'fitness';
   else if (/\b(health|healthy|general|active|longevity|mobility|feel better)\b/.test(t)) o.goal = 'general';
-  const dm = t.match(/\b([1-7]|one|two|three|four|five|six|seven)\s*(?:x\s*)?(?:days?|sessions?|times|workouts?)\b/) || t.match(/\b([1-7])\s*x\s*(?:a|per)\s*week\b/);
-  if (dm) o.days = Math.max(2, Math.min(6, NUMW[dm[1]] || +dm[1]));
-  const wm = t.match(/\b(\d{1,2})\s*-?\s*weeks?\b/), mo = t.match(/\b([1-4]|one|two|three|four)\s*-?\s*months?\b/);
-  if (wm) o.weeks = Math.max(3, Math.min(16, +wm[1])); else if (mo) o.weeks = Math.max(4, Math.min(16, (NUMW[mo[1]] || +mo[1]) * 4));
-  if (/\b(beginner|new to|never (lifted|trained|been)|first time|just starting|starting out|novice)\b/.test(t)) o.level = 'beginner';
-  else if (/\b(advanced|experienced|years of)\b/.test(t)) o.level = 'advanced';
+  const dm = t.match(/\b(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten)\s*(?:x\s*)?(?:days?|sessions?|times|workouts?)\s*(?:a|per|each|every)?\s*week\b/) || t.match(/\b(\d{1,2}|two|three|four|five|six|seven)\s*(?:days?|sessions?|workouts?)\b/) || t.match(/\b(\d{1,2})\s*x\s*(?:a|per)\s*week\b/);
+  if (dm) o.daysRaw = NUMW[dm[1]] || +dm[1];
+  if (/\bevery ?day\b|\bdaily\b(?! walk)/.test(t) && !o.daysRaw) o.daysRaw = 7;
+  if (/\btwice a day\b|\b(two|2) sessions a day\b|\bdoubles\b/.test(t)) o.flags.push('doubles');
+  const wm = t.match(/\b(\d{1,2})\s*-?\s*weeks?\b/), mo = t.match(/\b(\d{1,2}|one|two|three|four|five|six)\s*-?\s*months?\b/);
+  if (wm) o.weeksRaw = +wm[1]; else if (mo) o.weeksRaw = (NUMW[mo[1]] || +mo[1]) * 4;
+  if (/\b(beginner|new to|never (lifted|trained|been)|first time|just starting|starting out|novice|haven't trained)\b/.test(t)) o.level = 'beginner';
+  else if (/\b(advanced|experienced|years of|competitive)\b/.test(t)) o.level = 'advanced';
   else if (/\bintermediate\b/.test(t)) o.level = 'intermediate';
   if (/\b(no equipment|bodyweight|body weight|calisthenics)\b/.test(t)) o.equip = 'bodyweight';
   else if (/\b(dumbbells? only|only dumbbells?|just dumbbells?|only have dumbbells?)\b/.test(t)) o.equip = 'dumbbells';
   else if (/\b(at home|home|garage)\b/.test(t)) o.equip = 'home';
   else if (/\bgym\b/.test(t)) o.equip = 'gym';
   const mm = t.match(/\b(\d{2,3})\s*-?\s*(?:m|min|mins|minutes?)\b/), hh = t.match(/\b(\d(?:\.\d)?)\s*(?:h|hr|hrs|hours?)\b/);
-  let mins = mm ? +mm[1] : hh ? +hh[1] * 60 : /\bhalf an hour\b/.test(t) ? 30 : /\ban hour\b/.test(t) ? 60 : null;
+  const mins = mm ? +mm[1] : hh ? +hh[1] * 60 : /\bhalf an hour\b/.test(t) ? 30 : /\ban hour\b/.test(t) ? 60 : /\b(quick|short) (sessions?|workouts?)\b/.test(t) ? 30 : null;
+  if (mins) o.minutesRaw = mins;
   if (/\b(shorter|quicker)\b/.test(t)) o.minutesDelta = -15; if (/\blonger\b/.test(t)) o.minutesDelta = 15;
-  if (mins) o.minutes = [30, 45, 60, 75, 90].reduce((b, v) => Math.abs(v - mins) < Math.abs(b - mins) ? v : b, 60);
-  const P = parseCoach(text);
-  if (P.targets.length && P.targets.length < 6) o.focus = P.targets.filter(x => x !== 's:forearms' || /forearm|grip/.test(t));
-  if (/\bknee/.test(t) && /\b(bad|pain|sore|injur|friendly|issue|problem|dodgy|weak)/.test(t)) o.avoid.push('knee');
-  if (/\b(lower )?back\b/.test(t) && /\b(bad|pain|sore|injur|friendly|issue|problem|dodgy)/.test(t)) o.avoid.push('back');
-  if (/\bshoulder/.test(t) && /\b(bad|pain|sore|injur|friendly|issue|problem|dodgy)/.test(t)) o.avoid.push('shoulder');
-  if (/\bno (jumping|jumps|impact|plyo)|low impact\b/.test(t)) o.avoid.push('impact');
+  if (/\bfull[- ]?body\b/.test(t)) o.split = 'full'; else if (/\bupper[ /-]*(and |\/ ?)?lower\b/.test(t)) o.split = 'ul';
+  else if (/\bpush[ ,/-]*pull[ ,/-]*(and )?legs?\b|\bppl\b/.test(t)) o.split = 'ppl'; else if (/\bbro split\b|\bbody ?part split\b|\bone (muscle|body ?part)( group)? (a|per) day\b/.test(t)) o.split = 'bro';
+  if (/\b(an? |dedicated |own )?arms? days?\b/.test(t)) o.themes.push('A');
+  if (/\b(an? |dedicated |own )?glutes? days?\b|\bbooty days?\b/.test(t)) o.themes.push('G');
+  if (/\b(cardio|conditioning|hiit) days?\b/.test(t)) o.themes.push('C');
+  if (/\b(two|2) leg days\b/.test(t)) o.flags.push('twoLeg');
+  const F = (re, f) => { if (re.test(t)) o.focus.push(f); };
+  F(/\bglutes?\b|\bbooty\b|\bbum\b|\bbutt\b|\bpeach\b/, 'glutes'); F(/(?<!pull[ ,/&-]{0,3}(and )?)\b(legs?|lower body|thighs?)\b(?! days?)/, 'legs'); F(/\bquads?\b/, 'quads'); F(/\bhamstrings?\b|\bhams\b/, 'hams'); F(/\bcalf\b|\bcalves\b/, 'calves');
+  F(/\bchest\b|\bpecs?\b/, 'chest'); F(/\bback\b(?! (pain|injury|issue|problem))|\bv-?taper\b|\bwings\b/, 'back'); F(/\blats?\b|\bv-?taper\b/, 'lats'); F(/\bshoulders?\b(?! (pain|injury|issue|problem))|\bdelts?\b|\bv-?taper\b/, 'delts');
+  F(/\barms?\b(?! days?)|\bguns\b/, 'arms'); F(/\bbiceps?\b|\bbis\b/, 'biceps'); F(/\btriceps?\b|\btris\b/, 'triceps'); F(/\bcore\b|\babs\b|\babdominals?\b|\bsix ?pack\b|\bstomach\b|\bbelly\b/, 'core'); F(/\bupper back\b/, 'upperback');
+  if (/\bupper body\b/.test(t)) o.focus.push('chest', 'back', 'delts', 'arms');
+  if (/\b(posture|desk job|hunch|rounded shoulders|sit all day)\b/.test(t)) { o.focus.push('upperback', 'glutes', 'core'); o.flags.push('posture'); }
+  if (/\b(full body|whole body|total body|everything|all over|balanced)\b/.test(t) && o.focus.length > 4) o.focus = [];
+  const bad = '(bad|pain|sore|injur\\w*|friendly|issue|problem|dodgy|weak|surgery|replacement|arthritis)';
+  if (new RegExp(`\\bknees?\\b[^.]{0,25}\\b${bad}|\\b${bad}[^.]{0,25}\\bknees?\\b`).test(t)) o.avoid.push('knee');
+  if (new RegExp(`\\b(lower )?back\\b[^.]{0,25}\\b${bad}|\\b${bad}[^.]{0,25}\\b(lower )?back\\b`).test(t)) { o.avoid.push('back'); o.focus = o.focus.filter(f => f !== 'back' || /\bback (muscles|width|thickness)\b/.test(t)); }
+  if (new RegExp(`\\bshoulders?\\b[^.]{0,25}\\b${bad}|\\b${bad}[^.]{0,25}\\bshoulders?\\b`).test(t)) { o.avoid.push('shoulder'); o.focus = o.focus.filter(f => f !== 'delts'); }
+  if (/\bno (jumping|jumps|impact|plyo\w*)\b|\blow[- ]impact\b|\bjoint[- ]friendly\b/.test(t)) o.avoid.push('impact');
+  if (/\b(pregnan\w*|postpartum|post-partum|postnatal|after (having )?(a )?baby)\b/.test(t)) { o.flags.push('pregnancy'); o.avoid.push('impact'); }
+  if (/\b(older|senior|retired|over (50|60|65|70)|in my (50|60|70)s|(5|6|7)\ds?\b year)/.test(t)) { o.flags.push('older'); o.avoid.push('impact'); }
+  SPORTS.forEach(([id, re]) => { if (!o.sport && re.test(t)) o.sport = id; });
+  if (o.sport === 'running' && !/\b(runner|marathon|5k|10k|training for|race)\b/.test(t)) o.sport = null;
   CP_ACTS.forEach(([re, n]) => { if (re.test(t)) o.acts.push(n); });
   if (/\bsuper ?sets?\b|\bcircuits?\b/.test(t)) o.superset = true;
   if (/\b(different exercises|mix it up|shuffle|something different|new exercises)\b/.test(t)) o.reshuffle = true;
   if (/\b(easier|too hard|less intense)\b/.test(t)) o.level = 'beginner';
-  const NEG = /\b(?:no|without|remove|swap(?: out)?|replace|skip|drop|hate|avoid|don't (?:like|want|do)|can't do|not)\s+(?:the\s+|any\s+|doing\s+|more\s+)?([a-z][a-z\- ]{2,30}?)(?=[,.;!?]|\s*$|\s+(?:and|or|but|with|for|please|because|on|in|anymore)\b)/g;
+  const lt = t.match(/\b(bench|squat|deadlift|overhead press|ohp)\w*\s*(?:of\s*)?(\d{2,3})\s*(kg|kgs|lb|lbs|pounds|kilos)?\b/);
+  if (lt) { o.liftTarget = { lift: { bench: 'barbell-bench-press', squat: 'back-squat', deadlift: 'conventional-deadlift', 'overhead press': 'overhead-press', ohp: 'overhead-press' }[lt[1]], w: +lt[2] }; if (!o.goal) o.goal = 'strength'; }
+  if (/\b(first|a|one|my first|do a|do my first|get a) pull[- ]?up\b|\bunassisted pull[- ]?up\b/.test(t)) { o.flags.push('firstPullup'); o.focus.push('back'); }
+  const NEG = /\b(?:no|without|remove|swap(?: out)?|replace|skip|drop|hate|avoid|don't (?:like|want|do)|can't do|not)\s+(?:the\s+|any\s+|doing\s+|more\s+)?([a-z][a-z\- ]{2,30}?)(?=[,.;!?]|\s*$|\s+(?:and|or|but|with|for|please|because|on|in|anymore|as)\b)/g;
+  const negSpans = [];
   let n; while ((n = NEG.exec(t))) {
-    const ph = n[1].trim();
+    const ph = n[1].trim(); negSpans.push(ph);
     const eq = Object.keys(TAX.equipment).find(k => ph.startsWith(k.replace('-', ' ')) || ph.startsWith(k) || ph.startsWith(TAX.equipment[k].toLowerCase()));
     if (eq) { o.deny.push(eq); continue; }
     const stem = ph.split(/\s+/).map(stemWord).join(' ');
     if (stem.length > 2 && EXERCISES.some(e => e.name.toLowerCase().includes(stem))) o.exclude.push(stem);
   }
+  const negText = negSpans.join(' | ');
+  KEY_LIFTS.forEach(([re, id]) => { if (re.test(t) && !re.test(negText) && EX[id]) o.include.push(id); });
+  EXERCISES.forEach(e => { const nm = e.name.toLowerCase(); if (nm.length > 8 && t.includes(nm) && !negText.includes(nm)) o.include.push(e.id); });
+  if (o.flags.includes('firstPullup')) o.include = o.include.filter(id => !['pull-up', 'chin-up'].includes(id)).concat('assisted-pull-up');
+  if (o.liftTarget) { o.include.push(o.liftTarget.lift); o.focus.push(...({ 'barbell-bench-press': ['chest', 'triceps'], 'back-squat': ['quads', 'glutes'], 'conventional-deadlift': ['hams', 'back'], 'overhead-press': ['delts', 'triceps'] }[o.liftTarget.lift] || [])); }
+  o.include = [...new Set(o.include)];
+  o.focus = [...new Set(o.focus)];
   return o;
 }
 function resolveSpec(text, sel, focusSel, prev) {
-  const o = parseProgramText(text), s = prev ? JSON.parse(JSON.stringify(prev)) : { focus: [], avoid: [], acts: [], exclude: [], deny: [], seed: (Date.now() % 100000) + 7 };
-  ['goal', 'days', 'weeks', 'level', 'equip', 'minutes'].forEach(k => { if (sel && sel[k] !== 'auto' && sel[k] != null) s[k] = sel[k]; else if (o[k] != null) s[k] = o[k]; });
-  if (o.minutesDelta) s.minutes = Math.max(30, Math.min(90, (s.minutes || 60) + o.minutesDelta));
-  const add = (k, arr) => { s[k] = [...new Set((s[k] || []).concat(arr))]; };
-  add('focus', focusSel && focusSel.length ? focusSel.flatMap(f => FOCUS_T[f] || [f]) : o.focus.flatMap(f => FOCUS_T[f] || [f]));
-  add('avoid', o.avoid); add('acts', o.acts); add('exclude', o.exclude); add('deny', o.deny);
+  const o = parseProgramText(text), s = prev ? JSON.parse(JSON.stringify(prev)) : { focus: [], avoid: [], acts: [], exclude: [], deny: [], include: [], themes: [], flags: [], seed: (Date.now() % 100000) + 7 };
+  const guard = [];
+  const pick = (k, raw) => sel && sel[k] !== 'auto' && sel[k] != null ? sel[k] : raw != null ? raw : prev ? s[k] : null;
+  ['goal', 'level', 'equip', 'split'].forEach(k => { const v = pick(k, o[k]); if (v != null) s[k] = v; });
+  if (o.sport) s.sport = o.sport;
+  if (o.liftTarget) s.liftTarget = o.liftTarget;
+  const add = (k, arr) => { s[k] = [...new Set((s[k] || []).concat(arr || []))]; };
+  if (focusSel && focusSel.length) s.focus = [...new Set(focusSel)]; else add('focus', o.focus);
+  ['avoid', 'acts', 'exclude', 'deny', 'include', 'themes', 'flags'].forEach(k => add(k, o[k]));
+  if (o.exclude.length) s.include = s.include.filter(id => !o.exclude.some(x => EX[id].name.toLowerCase().includes(x)));
   if (o.superset) s.superset = true;
   if (o.reshuffle) s.seed = (s.seed * 7 + 13) % 100000;
-  s.level = s.level || 'intermediate';
-  s.goal = s.goal || (s.level === 'beginner' ? 'general' : 'muscle');
-  s.days = s.days || (s.level === 'beginner' ? 3 : 4);
-  s.weeks = s.weeks || (s.level === 'beginner' ? 6 : s.goal === 'fitness' || s.goal === 'general' ? 6 : 8);
+  s.level = s.level || (s.flags.includes('older') ? 'beginner' : 'intermediate');
+  s.goal = s.goal || (s.sport ? 'fitness' : s.level === 'beginner' ? 'general' : s.focus.length ? 'muscle' : 'general');
+  // guardrails
+  let days = pick('days', o.daysRaw);
+  if (days != null) {
+    days = +days;
+    const begOver = s.level === 'beginner' && days > 4;
+    if (begOver) guard.push(`You asked for ${days} sessions a week. As a beginner, 3-4 full-body sessions give faster progress with far less risk of burning out or getting hurt, so I set 4. Fill other days with walks or yoga if you want to move more.`);
+    else if (days > 7) guard.push(`You asked for ${days} sessions a week. I've set ${s.level === 'beginner' ? 4 : 6}: muscles need around 48 hours to recover between hard sessions, and more than 6 a week adds fatigue faster than it adds results.`);
+    else if (days === 7) guard.push('Training 7 days a week leaves no full rest day, so I set 6. Use the 7th day for a walk, yoga or stretching instead.');
+    if (days < 2) guard.push('One session a week can maintain fitness but rarely builds it, so I set 2. Twice a week is the minimum the research supports for progress.');
+    days = Math.max(2, Math.min(6, days));
+    if (begOver) days = 4;
+  }
+  s.days = days || s.days || (s.sport ? 3 : s.level === 'beginner' ? 3 : 4);
+  if (s.flags.includes('doubles')) guard.push('Two sessions a day is only worth it for full-time athletes. I kept one session a day so you recover properly.');
+  let wk = pick('weeks', o.weeksRaw);
+  if (wk != null) { wk = +wk; if (wk > 16) guard.push(`A ${wk}-week program would go stale. Bodies adapt to a plan in 4-12 weeks, so I built a ${s.goal === 'strength' ? 12 : 10}-week block. When it ends, build the next one from where you are.`); if (wk < 3) guard.push('Under 3 weeks is too short to see progress, so I made it 4.'); wk = wk > 16 ? (s.goal === 'strength' ? 12 : 10) : Math.max(4, wk); }
+  s.weeks = wk || s.weeks || (s.liftTarget ? 10 : s.level === 'beginner' ? 6 : s.goal === 'fitness' || s.goal === 'general' ? 6 : 8);
+  let mins = pick('minutes', o.minutesRaw);
+  if (mins != null) { mins = +mins; if (mins > 105) guard.push(`${mins}-minute sessions are longer than they need to be. Effort drops off after about an hour and a half, so I capped them at 90 minutes.`); if (mins < 20) guard.push('Sessions shorter than 20 minutes leave little room for real work, so I set 20.'); mins = Math.max(20, Math.min(90, mins)); }
+  s.minutes = mins || s.minutes || (s.level === 'beginner' ? 45 : 60);
+  if (s.level === 'beginner' && s.minutes > 60) { const asked = mins && o.minutesRaw > 90 ? o.minutesRaw : s.minutes; if (asked !== s.minutes) guard.splice(guard.findIndex(g => g.includes('capped them at 90')), 1); guard.push(`As a beginner, sessions of about an hour are plenty, so I kept them to 60 minutes rather than ${asked}. Quality beats length while you learn the lifts.`); s.minutes = 60; }
+  if (o.minutesDelta) s.minutes = Math.max(20, Math.min(90, s.minutes + o.minutesDelta));
   s.equip = s.equip || 'gym';
-  s.minutes = s.minutes || (s.level === 'beginner' ? 45 : 60);
+  if (s.liftTarget && s.equip !== 'gym') s.liftTarget = null;
+  if (s.flags.includes('pregnancy')) guard.push("Because you mentioned pregnancy or recovering after a baby, I've kept everything low impact with no heavy ab work. Please get the all-clear from your doctor or physio first.");
+  s.guard = guard;
   s.text = [prev?.text, text].filter(Boolean).join(' / ').slice(-600);
   return s;
-}
-const SL = (t, k) => ({ t, k });
-const DAY_T = {
-  fullA: ['Full Body A', [SL('s:quads', 'c'), SL('g:chest', 'c'), SL('g:back', 'c'), SL('s:hamstrings', 'c'), SL('g:shoulders', 'i'), SL('g:core', 'i'), SL('s:biceps', 'i'), SL('s:triceps', 'i')]],
-  fullB: ['Full Body B', [SL('s:hamstrings', 'c'), SL('s:lats', 'c'), SL('g:shoulders', 'c'), SL('s:quads', 'c'), SL('g:chest', 'i'), SL('g:core', 'i'), SL('s:rear_delts', 'i'), SL('s:calves', 'i')]],
-  fullC: ['Full Body C', [SL('s:glutes', 'c'), SL('s:upper_chest', 'c'), SL('s:upper_back', 'c'), SL('s:quads', 'c'), SL('s:side_delts', 'i'), SL('g:core', 'i'), SL('s:hamstrings', 'i'), SL('s:biceps', 'i')]],
-  upperA: ['Upper A', [SL('g:chest', 'c'), SL('s:lats', 'c'), SL('g:shoulders', 'c'), SL('s:upper_back', 'c'), SL('s:side_delts', 'i'), SL('s:triceps', 'i'), SL('s:biceps', 'i'), SL('s:rear_delts', 'i')]],
-  upperB: ['Upper B', [SL('s:upper_back', 'c'), SL('s:upper_chest', 'c'), SL('s:lats', 'c'), SL('g:shoulders', 'c'), SL('g:chest', 'i'), SL('s:biceps', 'i'), SL('s:triceps', 'i'), SL('g:core', 'i')]],
-  lowerA: ['Lower A', [SL('s:quads', 'c'), SL('s:hamstrings', 'c'), SL('s:quads', 'c'), SL('s:hamstrings', 'i'), SL('s:calves', 'i'), SL('g:core', 'i'), SL('s:glutes', 'i')]],
-  lowerB: ['Lower B', [SL('s:hamstrings', 'c'), SL('s:glutes', 'c'), SL('s:quads', 'c'), SL('s:quads', 'i'), SL('s:hamstrings', 'i'), SL('s:calves', 'i'), SL('g:core', 'i')]],
-  push: ['Push', [SL('g:chest', 'c'), SL('g:shoulders', 'c'), SL('s:upper_chest', 'c'), SL('s:side_delts', 'i'), SL('s:triceps', 'i'), SL('g:chest', 'i'), SL('s:triceps', 'i')]],
-  pull: ['Pull', [SL('s:lats', 'c'), SL('s:upper_back', 'c'), SL('g:back', 'c'), SL('s:rear_delts', 'i'), SL('s:biceps', 'i'), SL('s:biceps', 'i'), SL('s:traps', 'i')]],
-  legs: ['Legs', [SL('s:quads', 'c'), SL('s:hamstrings', 'c'), SL('s:quads', 'c'), SL('s:hamstrings', 'i'), SL('s:glutes', 'i'), SL('s:calves', 'i'), SL('g:core', 'i')]],
-};
-const LOWER_T = ['s:quads', 's:hamstrings', 's:glutes', 's:calves', 's:hips'];
-const isLowerT = x => LOWER_T.includes(x) || (x.startsWith('m:') && LOWER_T.includes('s:' + M[x.slice(2)]?.sub));
-function chooseSplit(s) {
-  const lowFocus = s.focus.length && s.focus.every(isLowerT), light = ['tone', 'fitness', 'general'].includes(s.goal) || s.level === 'beginner';
-  if (s.days <= 2) return { label: 'full-body split', days: ['fullA', 'fullB'] };
-  if (s.days === 3) return s.level === 'advanced' && s.goal === 'muscle' ? { label: 'push/pull/legs split', days: ['push', 'pull', 'legs'] } : { label: 'full-body split', days: ['fullA', 'fullB', 'fullC'] };
-  if (s.days === 4) return lowFocus ? { label: 'lower/upper split with an extra lower-body day', days: ['lowerA', 'upperA', 'lowerB', 'fullC'] } : { label: 'upper/lower split', days: ['upperA', 'lowerA', 'upperB', 'lowerB'] };
-  if (s.days === 5) return light ? { label: 'full-body and upper/lower mix', days: ['fullA', 'upperA', 'lowerA', 'fullB', 'fullC'] } : { label: 'upper/lower plus push/pull/legs', days: ['upperA', 'lowerA', 'push', 'pull', 'legs'] };
-  return { label: 'push/pull/legs, twice a week', days: ['push', 'pull', 'legs', 'push', 'pull', 'legs'] };
 }
 function cpPool(s) {
   const allow = EQUIP_ALLOW[s.equip] ? new Set(EQUIP_ALLOW[s.equip]) : null, deny = new Set(s.deny);
   return EXERCISES.filter(e => (!allow || allow.has(e.equipment)) && !deny.has(e.equipment) && !s.exclude.some(x => e.name.toLowerCase().includes(x)));
 }
-function cpScore(e, ms, k, s, used, rand) {
-  const hitP = e.primary.filter(m => ms.includes(m)).length; if (!hitP) return -Infinity;
-  let sc = Math.min(hitP, 3) + (ms.includes(e.primary[0]) ? 3 : 0);
-  sc += k !== 'i' ? (e.type === 'compound' ? 4 : -5) : (e.type === 'isolation' ? 3 : 0);
-  if (k !== 'i' && s.goal === 'strength') { if (['barbell', 'trap-bar'].includes(e.equipment)) sc += 2; if (e.tags.includes('unilateral')) sc -= 2; }
-  if (k === 'main' && s.goal === 'strength' && e.tags.includes('powerlifting')) sc += 3;
-  if (k === 'main' && e.tags.includes('unilateral')) sc -= 2;
-  if (/thruster|tire flip|clean|snatch|man maker|wall ball/i.test(e.name)) sc -= k === 'main' ? 8 : s.goal === 'fitness' ? 1 : 5;
-  if (s.level === 'beginner' && /nordic|glute-ham/i.test(e.name)) sc -= 20;
-  if (s.level !== 'advanced' && /weighted|nordic|pistol|dragon|handstand|archer|clap|deficit|l-sit|toes-to-bar/i.test(e.name)) sc -= s.level === 'beginner' ? 7 : 3;
-  if (k === 'main' && s.goal === 'strength' && ['barbell', 'trap-bar'].includes(e.equipment) && e.type === 'compound') sc += 4;
-  if (k === 'main' && e.type === 'compound') sc += 2;
+function cpScore(e, sl, s, used, rand, main) {
+  const ms = targetMuscles(sl.t), hitP = e.primary.filter(m => ms.includes(m)).length; if (!hitP) return -Infinity;
+  let sc = Math.min(hitP, 3) + (ms.includes(e.primary[0]) ? 4 : 0);
+  if (sl.pat.includes(e.pattern)) sc += sl.pat[0] === e.pattern ? 4 : 2;
+  sc += sl.k !== 'i' ? (e.type === 'compound' ? 4 : -5) : (e.type === 'isolation' ? 3 : 0);
+  if (main && e.type === 'compound') sc += 2;
+  if (sl.k !== 'i' && s.equip === 'gym' && s.level !== 'beginner' && ['bodyweight', 'band'].includes(e.equipment) && !/pull-up|chin-up|dip/i.test(e.name)) sc -= 3;
+  if (e.tags.includes('isometric') && !sl.t.includes('core')) sc -= 4;
+  if (sl.k !== 'i' && s.goal === 'strength') { if (['barbell', 'trap-bar'].includes(e.equipment)) sc += 3; if (e.tags.includes('unilateral')) sc -= 2; }
+  if (main && s.goal === 'strength' && e.tags.includes('powerlifting')) sc += 3;
+  if (main && e.tags.includes('unilateral')) sc -= 2;
+  if (s.sport === 'running' && e.tags.includes('unilateral')) sc += 2.5;
   if (['conditioning', 'olympic', 'plyo', 'carry'].includes(e.pattern)) sc -= 6;
+  if (/thruster|tire flip|clean|snatch|man maker|wall ball/i.test(e.name)) sc -= 6;
   if (e.tags.includes('advanced') && s.level !== 'advanced') sc -= s.level === 'beginner' ? 6 : 2;
+  if (s.level !== 'advanced' && /weighted|nordic|pistol|dragon|handstand|archer|clap|deficit|l-sit|toes-to-bar|glute-ham/i.test(e.name)) sc -= s.level === 'beginner' ? 20 : 3;
   if (s.level === 'beginner' && (e.tags.includes('beginner') || e.equipment === 'machine')) sc += 1.5;
-  if (e.tags.some(x => ['prehab', 'warm-up', 'rehab', 'mobility'].includes(x))) sc -= 5;
-  if (s.avoid.includes('knee') && ['squat', 'lunge', 'plyo'].includes(e.pattern) && !e.tags.includes('knee friendly')) sc -= 4;
-  if (s.avoid.includes('back') && (['hinge', 'olympic'].includes(e.pattern) || /barbell (row|squat)|back squat|good morning/i.test(e.name)) && !/hip thrust|glute bridge|back extension|pull-through/i.test(e.name)) sc -= 5;
-  if (s.avoid.includes('shoulder') && ['push_v'].includes(e.pattern) && !e.tags.includes('shoulder friendly')) sc -= 4;
-  if (s.avoid.includes('impact') && e.pattern === 'plyo') sc -= 8;
-  if (s.focus.some(f => targetMuscles(f).includes(e.primary[0]))) sc += 0.5;
-  sc -= (used[e.id] || 0) * 3;
+  if (e.tags.some(x => ['prehab', 'warm-up', 'rehab', 'mobility'].includes(x))) sc -= sl.t === 's:rear_delts' || s.flags.includes('posture') ? 0.5 : 5;
+  if (s.avoid.includes('knee') && ['squat', 'lunge', 'plyo'].includes(e.pattern) && !e.tags.includes('knee friendly') && !/box squat|goblet|leg press|step-up|reverse lunge/i.test(e.name)) sc -= 5;
+  if (s.avoid.includes('back') && (['hinge', 'olympic'].includes(e.pattern) || /barbell (row|squat)|back squat|good morning|bent/i.test(e.name)) && !/hip thrust|glute bridge|back extension|pull-through|chest-supported|single-leg|dumbbell romanian/i.test(e.name)) sc -= 6;
+  if (s.avoid.includes('shoulder') && (['push_v'].includes(e.pattern) || /dip|behind-the-neck|upright/i.test(e.name)) && !e.tags.includes('shoulder friendly') && !/landmine/i.test(e.name)) sc -= 5;
+  if (s.flags.includes('pregnancy') && /crunch|sit-up|v-up|leg raise|toes|dragon|rollout|hollow|bicycle/i.test(e.name)) sc -= 20;
+  if (s.flags.includes('firstPullup')) { if (/assisted pull|lat pulldown|inverted row|chin-up hold|dead hang/i.test(e.name)) sc += 4; else if (/^(neutral-grip |weighted )?(pull|chin)-up$/i.test(e.name)) sc -= 8; }
+  sc -= (used[e.id] || 0) * 3.5;
   return sc + rand() * 2.5;
 }
 const GOAL_REPS = {
-  strength: { main: [4, '4-6'], c: [3, '6-8'], i: [3, '10-12'] }, muscle: { main: [4, '6-8'], c: [3, '8-12'], i: [3, '10-15'] },
-  tone: { main: [3, '10-12'], c: [3, '10-12'], i: [3, '12-15'] }, fitness: { main: [3, '8-10'], c: [3, '10-12'], i: [2, '12-15'] }, general: { main: [3, '8-10'], c: [3, '10-12'], i: [2, '12-15'] },
+  strength: { main: [4, '3-5'], c: [3, '5-8'], i: [3, '10-12'] }, muscle: { main: [4, '6-8'], c: [3, '8-12'], i: [3, '10-15'] },
+  tone: { main: [3, '8-12'], c: [3, '10-12'], i: [3, '12-15'] }, fitness: { main: [3, '6-10'], c: [3, '10-12'], i: [2, '12-15'] }, general: { main: [3, '8-10'], c: [3, '10-12'], i: [2, '12-15'] },
 };
 function cpReps(e, k, s) {
-  let [sets, reps] = GOAL_REPS[s.goal][k] || GOAL_REPS[s.goal].i;
-  if (s.level === 'beginner') sets = Math.min(sets, 3);
+  let reps = (GOAL_REPS[s.goal][k] || GOAL_REPS[s.goal].i)[1];
   const rec = parseRec(e.rec[GOAL_INFO[s.goal].style] || e.rec.default);
-  if (/\d\s*(s|m)\b|sec|on \/|each/.test(rec.reps) && !/^\d+(-\d+)?$/.test(rec.reps)) return [Math.min(sets, 4), rec.reps];
+  if (/\d\s*(s|m)\b|sec|on \/|each/.test(rec.reps) && !/^\d+(-\d+)?$/.test(rec.reps)) return rec.reps;
+  if (e.type === 'isolation' && k !== 'i' && /^[3-5]-/.test(reps)) reps = '8-10';
   if (e.tags.includes('unilateral') && /^\d+(-\d+)?$/.test(reps)) reps += ' each';
-  return [sets, reps];
+  return reps;
+}
+function splitPlan(s) {
+  const N = s.days, fb = s.focus.flatMap(f => FOCUS_BK[f] || []), lowF = fb.length && fb.every(b => BK[b].lower), upF = fb.length && fb.every(b => !BK[b].lower && b !== 'core');
+  const light = ['tone', 'fitness', 'general'].includes(s.goal) || s.level === 'beginner';
+  let split = s.split, why = '';
+  if (!split) {
+    if (N <= 3 && (light || N === 2)) split = 'full';
+    else if (N === 3) split = lowF || upF ? 'ul' : s.level === 'advanced' && s.goal === 'muscle' ? 'ppl' : 'full';
+    else if (N === 4) split = s.goal === 'fitness' || s.level === 'beginner' ? 'full' : 'ul';
+    else if (N === 5) split = light ? 'mix' : 'phul';
+    else split = light ? 'ul' : 'ppl';
+  }
+  let seq;
+  if (split === 'full') { seq = Array(N).fill('F'); why = 'Full-body sessions hit every muscle each time you train, so even on ' + N + ' days a week each muscle is worked ' + N + ' times. That frequency is ideal for ' + (s.level === 'beginner' ? 'learning the lifts and building a base.' : 'your goal.'); }
+  else if (split === 'ul') { seq = N === 2 ? ['U', 'L'] : N === 3 ? (upF ? ['U', 'L', 'U'] : lowF ? ['L', 'U', 'L'] : ['U', 'L', 'F']) : N === 4 ? ['U', 'L', 'U', 'L'] : N === 5 ? (upF ? ['U', 'L', 'U', 'L', 'U'] : ['L', 'U', 'L', 'U', 'L']) : ['U', 'L', 'U', 'L', 'U', 'L']; why = 'An upper/lower split trains every muscle about twice a week, which research links to better results than once a week, while giving each half of the body time to recover.'; }
+  else if (split === 'ppl') { seq = N === 2 ? ['U', 'L'] : N === 3 ? ['P', 'PU', 'LG'] : N === 4 ? ['P', 'PU', 'LG', lowF ? 'LG' : 'U'] : N === 5 ? ['P', 'PU', 'LG', 'U', 'L'] : ['P', 'PU', 'LG', 'P', 'PU', 'LG']; why = N === 6 ? 'Push/pull/legs twice a week trains every muscle twice, with lots of room for volume.' : N === 3 ? 'Push/pull/legs on 3 days trains each muscle once a week. That works, but full body or upper/lower would hit muscles twice and usually gives better results.' : 'Push/pull/legs with extra upper and lower days keeps most muscles at twice a week.'; }
+  else if (split === 'bro') { seq = N <= 3 ? ['BC', 'BB', 'LG'] : N === 4 ? ['BC', 'BB', 'LG', 'BS'] : N === 5 ? ['BC', 'BB', 'LG', 'BS', 'BA'] : ['BC', 'BB', 'LG', 'BS', 'BA', 'LG']; seq = seq.slice(0, N); why = 'You asked for one muscle group a day, so that is the shape. Research favours training each muscle twice a week, so I gave every day enough volume to make each once-a-week session count' + (N === 6 ? ', with a second leg day.' : '.'); }
+  else if (split === 'phul') { seq = ['U', 'L', 'P', 'PU', 'LG']; why = 'Upper and lower days early in the week, then push, pull and legs, so every muscle is trained twice across 5 sessions.'; }
+  else { seq = ['F', 'U', 'L', 'F', s.goal === 'fitness' ? 'C' : 'F']; why = 'A mix of full-body and upper/lower days spreads the work so no muscle is hammered two days running.'; }
+  const LOW = ['L', 'LG', 'G'], UP = ['U', 'P', 'PU', 'BC', 'BB', 'BS', 'BA', 'A'];
+  const swapFor = th => {
+    const cnt = arr => seq.filter(x => arr.includes(x)).length, last = arr => Math.max(...arr.map(x => seq.lastIndexOf(x)));
+    if (th === 'G') return cnt(LOW) >= 2 ? last(['L', 'LG']) : seq.lastIndexOf('F') > 0 ? seq.lastIndexOf('F') : -1;
+    if (th === 'A' && cnt(LOW) >= 2 && !lowF) return last(['L', 'LG']);
+    if (th === 'A') return seq.lastIndexOf('U') >= 0 && cnt(UP) >= 2 ? seq.lastIndexOf('U') : seq.lastIndexOf('F') > 0 ? seq.lastIndexOf('F') : cnt(UP) >= 3 ? last(['P', 'PU', 'U']) : -1;
+    if (th === 'C') return seq.lastIndexOf('F') > 0 ? seq.lastIndexOf('F') : cnt(UP) >= 2 ? last(['U']) : -1;
+    if (th === 'LG') return cnt(UP) >= 2 ? last(['U', 'F']) : -1;
+    return -1;
+  };
+  if (fb.includes('glutes') && N >= 4 && split !== 'bro' && !seq.includes('G') && !s.themes.includes('G')) { const i = swapFor('G'); if (i > 0 && seq.filter(x => ['L', 'LG', 'F'].includes(x)).length >= 2) seq[i] = 'G'; }
+  if (s.flags.includes('twoLeg') && seq.filter(x => LOW.includes(x)).length < 2 && N >= 3) { const i = swapFor('LG'); if (i >= 0) seq[i] = 'LG'; }
+  const skipped = [];
+  s.themes.forEach(th => { if (seq.includes(th)) return; const i = N >= 3 ? swapFor(th) : -1; if (i >= 0) seq[i] = th; else skipped.push(th); });
+  const done = s.themes.filter(x => !skipped.includes(x));
+  if (N >= 4 && seq.filter(x => LOW.includes(x) || x === 'F').length === 1 && !lowF) why += ' Legs get one big session a week to make room for that.';
+  if (done.length) why += ` I included the ${done.map(x => THEME[x].name.toLowerCase()).join(' and ')} day you asked for.`;
+  if (skipped.length) why += ` With ${N} days there wasn't room for a separate ${skipped.map(x => THEME[x].name.toLowerCase()).join(' or ')} day without losing a key session, so that work is spread through the week instead.`;
+  const label = { full: 'full-body split', ul: 'upper/lower split', ppl: 'push/pull/legs split', bro: 'body-part split', phul: 'upper/lower and push/pull/legs hybrid', mix: 'full-body and upper/lower mix' }[split];
+  return { seq, label, why };
 }
 function buildCustomProgram(s) {
   let rnd = s.seed || 1; const rand = () => (rnd = (rnd * 16807) % 2147483647) / 2147483647;
-  const pool = cpPool(s), split = chooseSplit(s), used = {};
-  const n = s.minutes <= 30 ? 4 : s.minutes <= 45 ? 5 : s.minutes <= 60 ? 6 : s.minutes <= 75 ? 7 : 8;
-  const finisher = s.goal === 'fitness' || (s.goal === 'tone' && s.minutes >= 45);
-  const pairIso = s.superset || ['tone', 'fitness'].includes(s.goal) || s.minutes <= 45;
-  const counts = {};
-  const days = split.days.map(key => {
-    const [base, tmpl] = DAY_T[key]; counts[base] = (counts[base] || 0) + 1;
-    let slots = tmpl.slice();
-    const isFull = key.startsWith('full'), lower = slots.some(x => isLowerT(x.t)), upper = slots.some(x => !isLowerT(x.t) && x.t !== 'g:core');
-    const allM = new Set(slots.flatMap(x => targetMuscles(x.t))), cM = new Set(slots.filter(x => x.k === 'c').flatMap(x => targetMuscles(x.t)));
-    const fs = s.focus.filter(f => isFull || targetMuscles(f).some(m => allM.has(m))).slice(0, 3);
-    fs.forEach((f, j) => {
-      const hasC = (isFull || targetMuscles(f).some(m => cM.has(m))) && pool.some(e => e.type === 'compound' && targetMuscles(f).includes(e.primary[0]));
-      if (hasC && j < 2) slots.splice(1 + j, 0, SL(f, 'c'));
-      const firstI = slots.findIndex(x => x.k === 'i'); slots.splice(firstI < 0 ? slots.length : firstI, 0, SL(f, 'i'));
-    });
-    slots = slots.slice(0, finisher ? n - 1 : n);
-    slots.sort((a, b) => (a.k === b.k ? 0 : a.k === 'c' ? -1 : 1));
-    if (slots[0]) slots[0] = { ...slots[0], k: 'main' };
-    const dayUsed = new Set(), items = [];
-    slots.forEach(sl => {
-      const ms = targetMuscles(sl.t); let best = null, bs = -Infinity;
-      pool.forEach(e => { if (dayUsed.has(e.id)) return; const sc = cpScore(e, ms, sl.k === 'main' ? 'main' : sl.k, s, used, rand); if (sc > bs) { bs = sc; best = e; } });
-      if (!best) return;
-      dayUsed.add(best.id); used[best.id] = (used[best.id] || 0) + 1;
-      const [sets, reps] = cpReps(best, sl.k === 'main' ? 'main' : sl.k, s);
-      items.push({ id: best.id, sets, reps, iso: sl.k === 'i' });
-    });
-    let letter = 0; const L = () => String.fromCharCode(65 + letter++);
-    if (pairIso) { for (let i = 0; i + 1 < items.length; i++) if (items[i].iso && items[i + 1].iso && !items[i].ss) { const l = L(); items[i].ss = l; items[i + 1].ss = l; i++; } }
-    if (finisher) {
-      const cond = pool.filter(e => ['conditioning', 'plyo'].includes(e.pattern) && !dayUsed.has(e.id) && !(s.avoid.includes('impact') || s.avoid.includes('knee') ? e.pattern === 'plyo' || /jump|burpee/i.test(e.name) : false) && !(s.level === 'beginner' && e.tags.includes('advanced')));
-      const pick = cond.map(e => [e, rand() - (used[e.id] || 0) * 0.5]).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]);
-      const l = L();
-      pick.forEach(e => { const r = parseRec(e.rec.endurance || e.rec.default); used[e.id] = (used[e.id] || 0) + 1; items.push({ id: e.id, sets: s.goal === 'fitness' ? 4 : 3, reps: r.reps.slice(0, 16), ss: pick.length > 1 ? l : null }); });
+  const pool = cpPool(s), plan = splitPlan(s), N = plan.seq.length, why = [];
+  const sport = SPORTS.find(x => x[0] === s.sport);
+  // 1. weekly hard sets per bucket
+  const base = { muscle: [8, 12, 15], strength: [8, 10, 12], tone: [6, 9, 10], fitness: [5, 7, 8], general: [5, 7, 8] }[s.goal][['beginner', 'intermediate', 'advanced'].indexOf(s.level)];
+  const fb = new Set(s.focus.flatMap(f => FOCUS_BK[f] || [])), want = {};
+  if (sport && !fb.size) Object.entries(sport[3]).forEach(([b, m]) => { if (m >= 1.2) fb.add(b); });
+  Object.entries(BK).forEach(([b, d]) => {
+    let v = base * (d.big ? 1 : 0.6);
+    if (sport && sport[3][b]) v *= sport[3][b];
+    if (fb.has(b)) v = Math.min(s.level === 'beginner' ? 14 : 20, v * (fb.size >= 3 ? 1.4 : 1.6) + 2); else if (fb.size && ['muscle', 'tone'].includes(s.goal)) v *= 0.8;
+    if (b === 'rear' && (s.flags.includes('posture') || s.sport === 'swimming')) v += 3;
+    if (b === 'core' && s.flags.includes('pregnancy')) v = Math.min(v, 4);
+    want[b] = Math.max(d.big ? 4 : 2, Math.round(v));
+  });
+  // 2. sessions a bucket appears in, and sets per session
+  const rate = { strength: 1 / 3.5, muscle: 1 / 3, tone: 1 / 2.4, fitness: 1 / 2.6, general: 1 / 3 }[s.goal];
+  const finisher = s.goal === 'fitness' || (s.goal === 'tone' && s.minutes >= 40) || s.sport === 'field' || s.sport === 'rotational';
+  const cap = Math.max(8, Math.min(s.level === 'beginner' ? 18 : 30, Math.floor((s.minutes - 6 - (finisher ? 6 : 0)) * rate)));
+  const tot = Object.keys(BK).reduce((a, b) => a + (plan.seq.some(th => THEME[th].b.includes(b)) ? want[b] : 0), 0), capW = cap * N * 0.85;
+  if (tot < capW * 0.8) { const f = Math.min(1.6, capW * 0.85 / tot), hi = { muscle: 20, strength: 16, tone: 16, fitness: 12, general: 14 }[s.goal]; Object.keys(want).forEach(b => { want[b] = Math.min(BK[b].big ? (fb.has(b) ? 22 : hi) : 12, Math.round(want[b] * f)); }); }
+  const dayB = plan.seq.map(th => ({ th, sets: {}, total: 0 }));
+  Object.keys(BK).forEach(b => {
+    const elig = dayB.map((d, i) => THEME[d.th].b.includes(b) ? i : -1).filter(i => i >= 0); if (!elig.length) return;
+    const fullish = plan.seq.filter(x => x === 'F').length >= 2;
+    const n = Math.min(elig.length, Math.max(1, Math.round(want[b] / (BK[b].big ? 4.5 : 3.5)), BK[b].big && fullish ? Math.min(Math.floor(want[b] / 2), Math.ceil(elig.length * 0.6)) : 1));
+    const chosen = elig.slice().sort((a, c) => dayB[a].total - dayB[c].total || a - c).slice(0, n).sort((a, c) => a - c);
+    const per = want[b] / n;
+    chosen.forEach((i, k) => { const v = Math.max(2, Math.round(per + (k < (want[b] % n) ? 0.4 : 0))); dayB[i].sets[b] = v; dayB[i].total += v; });
+  });
+  let trimmed = 0;
+  dayB.forEach(d => {
+    let guard = 80;
+    while (d.total > cap && guard--) {
+      const ks = Object.keys(d.sets), by = f => ks.filter(f).sort((a, c) => d.sets[c] - d.sets[a]);
+      const b = by(x => !fb.has(x) && !BK[x].big && d.sets[x] > 2)[0] || by(x => !fb.has(x) && BK[x].big && d.sets[x] > 2)[0] || by(x => !fb.has(x) && !BK[x].big)[0] || by(x => d.sets[x] > 3)[0];
+      if (!b) break; trimmed++;
+      if (d.sets[b] > 2) { d.sets[b]--; d.total--; } else { d.total -= d.sets[b]; delete d.sets[b]; }
     }
-    const name = (counts[base] > 1 || split.days.filter(d => DAY_T[d][0] === base).length > 1) && !/ [ABC]$/.test(base) ? `${base} ${counts[base]}` : base;
+  });
+  // 3. exercises
+  const used = {}, forced = new Set(s.include.filter(id => pool.some(e => e.id === id))), placed = new Set(), missing = s.include.filter(id => !forced.has(id));
+  const bucketOf = e => Object.keys(BK).find(b => BK[b].slots.some(sl => targetMuscles(sl.t).includes(e.primary[0])));
+  const days = dayB.map((d, di) => {
+    const PRI = ['quads', 'chest', 'back', 'glutes', 'hams', 'delts', 'triceps', 'biceps', 'rear', 'calves', 'core'];
+    const bs = Object.keys(d.sets).sort((a, c) => (fb.has(c) - fb.has(a)) || ((BK[c].big || 0) - (BK[a].big || 0)) || PRI.indexOf(a) - PRI.indexOf(c));
+    const dayUsed = new Set(), items = [];
+    bs.forEach((b, bi) => {
+      const sets = d.sets[b], nEx = sets <= 4 ? 1 : sets <= 8 ? 2 : 3;
+      const exp = Object.values(dayB).slice(0, di).filter(x => x.sets[b]).length;
+      for (let j = 0; j < nEx; j++) {
+        const C = BK[b].slots.filter(x => x.k === 'c'), I = BK[b].slots.filter(x => x.k === 'i');
+        const ord = C.length ? [C[exp % C.length], I[exp % I.length] || C[(exp + 1) % C.length], C[(exp + 1) % C.length]] : [I[exp % I.length], I[(exp + 1) % I.length], I[(exp + 2) % I.length]];
+        const sl = ord[j] || ord[0];
+        let best = null;
+        const want1 = [...forced].find(id => !placed.has(id) && !dayUsed.has(id) && bucketOf(EX[id]) === b && (j === 0 || EX[id].type === 'isolation'));
+        const lift = s.liftTarget && bucketOf(EX[s.liftTarget.lift]) === b && j === 0 && !dayUsed.has(s.liftTarget.lift) ? s.liftTarget.lift : null;
+        if (lift && forced.has(lift)) best = EX[lift];
+        else if (want1) { best = EX[want1]; placed.add(want1); }
+        else { let bsc = -Infinity; pool.forEach(e => { if (dayUsed.has(e.id)) return; const sc = cpScore(e, sl, s, used, rand, bi === 0 && j === 0); if (sc > bsc) { bsc = sc; best = e; } }); }
+        if (!best) continue;
+        dayUsed.add(best.id); used[best.id] = (used[best.id] || 0) + 1; if (forced.has(best.id)) placed.add(best.id);
+        const k = items.length === 0 && best.type === 'compound' ? 'main' : best.type === 'compound' ? 'c' : 'i';
+        const share = Math.max(2, Math.min(5, Math.round(sets / nEx + (j === 0 && sets % nEx ? 0.5 : 0))));
+        items.push({ id: best.id, sets: k === 'main' ? Math.max(share, s.level === 'beginner' ? 3 : 4) : share, reps: cpReps(best, k, s), b, iso: best.type !== 'compound', focus: fb.has(b) });
+      }
+    });
+    // power opener for athletes
+    if (s.sport === 'field' && THEME[d.th].b.includes('quads')) { const pw = pool.filter(e => ['plyo', 'olympic'].includes(e.pattern) && G[M[e.primary[0]].group] && M[e.primary[0]].group === 'legs' || ['olympic'].includes(e.pattern)).filter(e => ['plyo', 'olympic'].includes(e.pattern) && !dayUsed.has(e.id) && !(s.level === 'beginner' && e.pattern === 'olympic')).sort((a, c) => (used[a.id] || 0) - (used[c.id] || 0) || rand() - 0.5)[0]; if (pw) { used[pw.id] = (used[pw.id] || 0) + 1; dayUsed.add(pw.id); items.unshift({ id: pw.id, sets: 3, reps: pw.pattern === 'olympic' ? '3' : '5', b: 'power', iso: false }); } }
+    // order: compounds first (focus first), then isolations (focus first)
+    const head = items[0]?.b === 'power' ? [items.shift()] : [];
+    items.sort((a, c) => (a.iso - c.iso) || ((c.focus ? 1 : 0) - (a.focus ? 1 : 0)));
+    items.unshift(...head);
+    let letter = 0; const L = () => String.fromCharCode(65 + letter++);
+    if (s.superset || ['tone', 'fitness'].includes(s.goal) || s.minutes <= 45) {
+      const iso = items.filter(x => x.iso);
+      for (let i = 0; i < iso.length; i++) { if (iso[i].ss) continue; const mate = iso.slice(i + 1).find(x => !x.ss && x.b !== iso[i].b) || iso.slice(i + 1).find(x => !x.ss); if (!mate) break; const l = L(); iso[i].ss = l; mate.ss = l; items.splice(items.indexOf(mate), 1); items.splice(items.indexOf(iso[i]) + 1, 0, mate); }
+    }
+    if (finisher || THEME[d.th].cond) {
+      const cond = pool.filter(e => ['conditioning', 'plyo'].includes(e.pattern) && !dayUsed.has(e.id) && !(s.avoid.length && (e.pattern === 'plyo' || /jump|burpee|man maker/i.test(e.name))) && !(s.level === 'beginner' && (e.tags.includes('advanced') || /clap|box jump|man maker|burpee/i.test(e.name))));
+      const pick = cond.map(e => [e, rand() - (used[e.id] || 0) * 0.6]).sort((a, c) => c[1] - a[1]).slice(0, THEME[d.th].cond ? 4 : 2).map(x => x[0]);
+      const l = L();
+      pick.forEach(e => { used[e.id] = (used[e.id] || 0) + 1; items.push({ id: e.id, sets: s.goal === 'fitness' || THEME[d.th].cond ? 4 : 3, reps: parseRec(e.rec.endurance || e.rec.default).reps.slice(0, 16), ss: pick.length > 1 ? l : null }); });
+    }
+    const top = Object.keys(d.sets).filter(b => fb.has(b)).map(b => BK[b].name);
+    let name = THEME[d.th].name;
+    if (top.length && ['L', 'U'].includes(d.th) && plan.seq.filter(x => x === d.th).length > 1 && top.length < Object.keys(d.sets).length) name += ` · ${top.slice(0, 2).map(x => FOCUS_SING[Object.keys(FOCUS_NAME).find(k => FOCUS_NAME[k] === x.toLowerCase())] || x).join(' & ')} focus`;
     return { name, exercises: items.map(x => x.ss ? [x.id, x.sets, x.reps, x.ss] : [x.id, x.sets, x.reps]) };
   });
-  // phases
-  const W = s.weeks, deload = W >= 6 ? 1 : 0, nW = W - deload;
+  const seen = {}; days.forEach(d => { seen[d.name] = (seen[d.name] || 0) + 1; });
+  const cnt = {}; days.forEach(d => { if (seen[d.name] > 1) { cnt[d.name] = (cnt[d.name] || 0) + 1; d.name += ' ' + String.fromCharCode(64 + cnt[d.name]); } });
+  // 4. phases
+  const W = s.weeks, LT = s.liftTarget, u = unit();
+  const deload = W >= 6 && !LT ? 1 : 0, test = LT ? 1 : 0, nW = W - deload - test;
+  const fNames = [...fb].filter(b => BK[b].big || ['biceps', 'triceps', 'core', 'calves'].includes(b)).map(b => BK[b].name.toLowerCase());
+  const fTxt = fNames.length ? fNames.slice(0, 2).join(' and ') : '';
   const PH = {
     strength: [['Base', 'Build volume and groove your technique', '3-4 sets', '6-8', 'RPE 7'], ['Strength', 'Heavier main lifts, fewer reps', '4 sets', '4-6', 'RPE 8'], ['Peak', 'Heaviest sets of the block', '3-4 sets', '2-4', 'RPE 8-9']],
-    muscle: [['Accumulation', 'Build volume with clean form', '3 sets', '10-12', 'RPE 7-8'], ['Intensification', 'Heavier, add a set to the big lifts', '3-4 sets', '6-10', 'RPE 8-9'], ['Overreach', 'Push the last set of each exercise close to failure', '4 sets', '6-10', 'RPE 9']],
-    tone: [['Tone', 'Learn the moves, rest about 60s', '3 sets', '12-15', 'RPE 7'], ['Define', 'Shorter rests and an extra round', '3-4 sets', '12-15', 'RPE 8'], ['Finish', 'Heaviest weights you can hold for the range', '4 sets', '10-12', 'RPE 8-9']],
+    muscle: [['Accumulation', 'Build volume with clean form', '3 sets', '10-12', 'RPE 7-8'], ['Intensification', fTxt ? `Heavier, and add a set to your ${fTxt} exercises` : 'Heavier, add a set to the big lifts', '3-4 sets', '6-10', 'RPE 8-9'], ['Overreach', 'Push the last set of each exercise close to failure', '4 sets', '6-10', 'RPE 9']],
+    tone: [['Tone', 'Learn the moves, rest about 60s', '3 sets', '12-15', 'RPE 7'], ['Define', fTxt ? `Shorter rests and an extra round of ${fTxt} work` : 'Shorter rests and an extra round', '3-4 sets', '12-15', 'RPE 8'], ['Finish', 'Heaviest weights you can hold for the range', '4 sets', '10-12', 'RPE 8-9']],
     fitness: [['Base', 'Build your engine and technique', '3 sets', '10-12', 'RPE 7'], ['Build', 'More rounds, less rest', '3-4 sets', '8-12', 'RPE 8'], ['Push', 'Best efforts on every finisher', '4 sets', '8-12', 'RPE 8-9']],
     general: [['Learn', 'Get comfortable with every movement', '2-3 sets', '10-12', 'RPE 6-7'], ['Build', 'Add weight steadily', '3 sets', '8-12', 'RPE 7-8'], ['Progress', 'Slightly heavier, same good form', '3 sets', '8-10', 'RPE 8']],
   }[s.goal];
   let k = nW >= 7 ? 3 : nW >= 3 ? 2 : 1; if (s.level === 'beginner') k = Math.min(k, 2);
   const phases = []; let w = 1;
-  for (let i = 0; i < k; i++) { const len = Math.floor(nW / k) + (i < nW % k ? 1 : 0); const p = PH[i]; phases.push({ weeks: [w, w + len - 1], name: p[0], focus: p[1], sets: p[2], reps: p[3], rpe: s.level === 'beginner' && i === 0 ? 'RPE 6-7' : p[4] }); w += len; }
+  for (let i = 0; i < k; i++) {
+    const len = Math.floor(nW / k) + (i < nW % k ? 1 : 0), p = PH[i];
+    let focus = p[1];
+    if (LT) { const lo = [0.72, 0.8, 0.88][i], hi = [0.78, 0.87, 0.95][i]; focus = `${EX[LT.lift].name}: sets of ${['5-6', '3-5', '2-3'][i]} at about ${Math.round(LT.w * lo / 2.5) * 2.5}-${Math.round(LT.w * hi / 2.5) * 2.5} ${u}`; }
+    phases.push({ weeks: [w, w + len - 1], name: p[0], focus, sets: p[2], reps: LT ? ['5-6', '3-5', '2-3'][i] : p[3], rpe: s.level === 'beginner' && i === 0 ? 'RPE 6-7' : p[4] });
+    w += len;
+  }
   if (deload) phases.push({ weeks: [W, W], name: 'Deload', focus: 'Half the sets, same weights, let your body recover', sets: '2 sets', reps: '8-10', rpe: 'RPE 6' });
+  if (test) phases.push({ weeks: [W, W], name: 'Taper & test', focus: `Light early in the week, then work up to ${LT.w} ${u} on the ${EX[LT.lift].name.toLowerCase()}`, sets: '2-3 sets', reps: '1-3', rpe: 'RPE 6, then max' });
+  // 5. text
   const gi = GOAL_INFO[s.goal];
-  const fset = new Set(s.focus), legsAll = fset.has('s:quads') && fset.has('s:hamstrings');
-  const focusNames = [...new Set((legsAll ? ['Legs'] : []).concat(s.focus.filter(f => !(legsAll && ['s:quads', 's:hamstrings', 's:calves'].includes(f))).map(f => CP_FOCUS.find(c => c[0] === f)?.[1] || targetName(f))))];
+  const fLabel = s.focus.filter(f => FOCUS_SING[f] && !(f === 'lats' && s.focus.includes('back')) && !(['biceps', 'triceps'].includes(f) && s.focus.includes('arms')) && !(['quads', 'hams'].includes(f) && s.focus.includes('legs'))).slice(0, 2).map(f => FOCUS_SING[f]).join(' & ');
+  const name = s.flags.includes('firstPullup') && !LT ? `${W}-Week First Pull-Up Plan` : LT ? `${W}-Week ${EX[LT.lift].name.replace(/^Barbell |^Conventional /, '')} ${LT.w} ${u} Plan` : sport ? `${W}-Week ${sport[2]}` : fLabel ? `${W}-Week ${fLabel} ${gi.fword}` : `${W}-Week ${gi.title}`;
   const equipPhrase = { gym: 'a full gym', dumbbells: 'dumbbells, a bench and your body weight', home: 'dumbbells, kettlebells, bands and your body weight', bodyweight: 'just your body weight and a band' }[s.equip];
-  const avoidNote = s.avoid.length ? ` Exercises are chosen to be kind to your ${s.avoid.filter(a => a !== 'impact').join(' and ') || 'joints'}${s.avoid.includes('impact') ? ', with no jumping' : ''}.` : '';
+  const avoidNote = s.avoid.filter(a => a !== 'impact').length ? ` Exercises are chosen to be kind to your ${s.avoid.filter(a => a !== 'impact').join(' and ')}.` : s.avoid.includes('impact') ? ' Everything is low impact.' : '';
+  const art = w => /^[aeiou]/.test(w) ? 'an' : 'a';
+  const sched = { 2: 'Mon, Thu', 3: 'Mon, Wed, Fri', 4: 'Mon, Tue, Thu, Fri', 5: 'Mon, Tue, Wed, Fri, Sat', 6: 'Mon to Sat, with Sunday off' }[N];
+  why.push(...s.guard);
+  why.push(plan.why);
+  if (fb.size) { const fbig = [...fb].map(b => `${BK[b].name.toLowerCase()} about ${want[b]}`).slice(0, 3).join(', '); why.push(`Your focus areas get the most work: ${fbig} hard sets a week, split across sessions and done first while you're fresh. Around 10-20 weekly sets is where research sees the most growth.`); }
+  const others = Object.keys(BK).filter(b => !fb.has(b) && BK[b].big).map(b => want[b]);
+  if (others.length) why.push(`Other big muscle groups get ${Math.min(...others) === Math.max(...others) ? Math.min(...others) : Math.min(...others) + '-' + Math.max(...others)} sets a week${fb.size ? ', enough to keep them progressing without taking recovery away from your focus areas' : ''}.`);
+  if (trimmed > N * 2) why.push(`To fit ${s.minutes}-minute sessions, I trimmed sets from the lowest-priority muscles first.`);
+  why.push({ muscle: 'Most sets are 6-15 reps taken close to failure (1-3 reps left in the tank), the range with the strongest evidence for growth.', strength: 'Main lifts use 3-6 reps at high effort. Accessories stay at 8-12 reps to build the muscle that supports strength.', tone: "Moderate weights for 10-15 reps with short rests and supersets keep your heart rate up while still building muscle, which is what 'toned' really is.", fitness: 'Strength work comes first while you are fresh, then a conditioning finisher builds your engine.', general: 'Moderate weights for 8-12 reps build strength and muscle with low injury risk. Leave a couple of reps in the tank.' }[s.goal]);
+  if (sport) why.push(sport[4]);
+  if (s.flags.includes('firstPullup')) why.push('For your first pull-up: assisted pull-ups, pulldowns and rows build the strength. Try a strict rep at the end of each phase.');
+  if (s.flags.includes('older')) why.push('Strength training is one of the best things you can do for healthy ageing. Single-leg and balance work is included, and everything progresses gently.');
+  if (s.avoid.some(a => a !== 'impact')) why.push(`I picked joint-friendly options for your ${s.avoid.filter(a => a !== 'impact').join(' and ')}. If anything hurts, stop that exercise and check with a physio.`);
+  if (missing.length) why.push(`${missing.map(id => EX[id].name).join(', ')} need equipment you haven't got, so I used the closest alternatives.`);
+  if (deload) why.push(`Week ${W} is a deload: half the sets so fatigue drops and you start the next block fresh.`);
+  if (LT) why.push(`Percentages are based on your target of ${LT.w} ${u}. If the early weeks feel too easy or hard, adjust them by 2.5-5 ${u}.`);
+  why.push(`Suggested week: ${sched}.`);
   const nutrition = { muscle: 'Eat a small surplus (+200-300 kcal) with 1.6-2.2 g protein per kg body weight.', strength: 'Eat at maintenance or a small surplus. Aim for 1.6-2 g protein per kg and carbs around training.', tone: 'Eat a small deficit (300-400 kcal) and keep protein high at 1.8-2 g per kg so you keep muscle while leaning out.', fitness: 'Eat around maintenance with plenty of carbs on training days. Protein 1.6 g per kg.', general: 'Eat around maintenance, built around protein (about 1.6 g per kg), vegetables and whole foods.' }[s.goal];
-  const progression = { muscle: 'Use double progression: once you hit the top of the rep range on every set, add a little weight and drop back to the bottom of the range.', strength: 'Add 2.5 kg to upper-body lifts and 5 kg to lower-body lifts whenever you complete all sets at the top of the range.', tone: 'Keep rests short. When every round feels comfortable at the top of the range, move to the next weight up.', fitness: 'Each week, finish the finisher faster, add a round, or add a little weight to the main lifts.', general: 'Add a rep or two each week. When you reach the top of the range on every set, go up to the next weight.' }[s.goal] + (s.level === 'beginner' ? ' Leave 2-3 reps in the tank while you learn the movements.' : '');
+  const progression = (LT ? `Follow the weights in each phase for the ${EX[LT.lift].name.toLowerCase()}. ` : '') + { muscle: 'Use double progression: once you hit the top of the rep range on every set, add a little weight and drop back to the bottom of the range.', strength: 'Add 2.5 kg to upper-body lifts and 5 kg to lower-body lifts whenever you complete all sets at the top of the range.', tone: 'Keep rests short. When every round feels comfortable at the top of the range, move up to the next weight.', fitness: 'Each week, finish the finisher faster, add a round, or add a little weight to the main lifts.', general: 'Add a rep or two each week. When you reach the top of the range on every set, go up to the next weight.' }[s.goal] + (s.level === 'beginner' ? ' Leave 2-3 reps in the tank while you learn the movements.' : '');
   const extras = [];
-  const actFreq = { Pilates: '1-2 Pilates sessions a week', yoga: '1-2 yoga sessions a week', running: '1-2 easy runs of 20-40 minutes a week', walking: 'Daily walks, aiming for 8,000-10,000 steps', swimming: '1-2 swims of 20-40 minutes a week', cycling: '1-2 rides of 30-60 minutes a week' };
+  const actFreq = { Pilates: '1-2 Pilates sessions a week', yoga: '1-2 yoga sessions a week', running: s.sport === 'running' ? 'Keep your running plan. Do the hardest leg session at least 48 hours before a long run or race' : '1-2 easy runs of 20-40 minutes a week', walking: 'Daily walks, aiming for 8,000-10,000 steps', swimming: '1-2 swims of 20-40 minutes a week', cycling: '1-2 rides of 30-60 minutes a week' };
   s.acts.forEach(a => actFreq[a] && extras.push(actFreq[a]));
   if (!extras.length) extras.push({ tone: '2-3 walks of 30-45 minutes a week', fitness: '1-2 steady cardio sessions of 20-40 minutes (run, cycle, row or swim)', general: 'A daily walk, aiming for 7,000+ steps', muscle: '1-2 walks or easy cardio sessions for recovery', strength: '1-2 walks or easy cardio sessions for recovery' }[s.goal]);
-  const id = 'custom-' + uid();
   return {
-    id, custom: true, created: today(), spec: s,
-    name: `${W}-Week ${gi.title}${focusNames.length ? ` (${focusNames.slice(0, 3).join(', ')})` : ''}`,
-    category: 'My programs', weeks: W, daysPerWeek: days.length, level: s.level[0].toUpperCase() + s.level.slice(1),
-    summary: `${days.length} days a week on ${/^[aeiou]/.test(split.label) ? 'an' : 'a'} ${split.label}${focusNames.length ? `, with extra work for ${focusNames.join(', ').toLowerCase()}` : ''}. Built for ${gi.phrase} using ${equipPhrase}, about ${s.minutes} minutes a session.${avoidNote}`,
-    nutrition, progression, phases, days, extras,
-    note: `Here's your program: ${/^[aeiou]/.test(split.label) ? 'an' : 'a'} ${split.label}, ${days.length} days a week for ${W} weeks${focusNames.length ? `, with extra ${focusNames.join(' and ').toLowerCase()} work` : ''}. Each phase sets its own sets, reps and effort${deload ? ', and the last week is a deload so you recover' : ''}.`,
+    id: 'custom-' + uid(), custom: true, created: today(), spec: s,
+    name, category: 'My programs', weeks: W, daysPerWeek: N, level: s.level[0].toUpperCase() + s.level.slice(1),
+    summary: `${N} days a week on ${art(plan.label)} ${plan.label}${fNames.length ? `, with extra ${fNames.join(', ')} work` : ''}. Built ${sport ? 'to support your ' + { running: 'running', field: 'sport', climbing: 'climbing', rotational: 'sport', swimming: 'swimming' }[sport[0]] : 'for ' + gi.phrase} using ${equipPhrase}, about ${s.minutes} minutes a session.${avoidNote}`,
+    nutrition, progression, phases, days, extras, why, schedule: sched,
+    note: (s.guard.length ? s.guard[0] + ' ' : '') + `Here's what I built: ${art(plan.label)} ${plan.label}, ${N} days a week for ${W} weeks${fNames.length ? `, with your ${fNames.slice(0, 3).join(', ')} getting the most work` : ''}. "How it's built" below explains each choice.`,
   };
 }
-function cleanProgram(raw, base) {
+function cleanProgram(raw, base, s) {
   if (!raw || !Array.isArray(raw.days)) return null;
-  const days = raw.days.slice(0, 7).map(d => ({ name: String(d?.name || 'Day').slice(0, 40), exercises: (Array.isArray(d?.exercises) ? d.exercises : []).map(x => Array.isArray(x) ? x : [x?.id, x?.sets, x?.reps, x?.superset]).filter(x => EX[x[0]]).slice(0, 12).map(x => { const r = [x[0], Math.max(1, Math.min(8, parseInt(x[1]) || 3)), String(x[2] || '8-12').slice(0, 20)]; if (x[3] && /^[A-H]$/.test(String(x[3]))) r.push(String(x[3])); return r; }) })).filter(d => d.exercises.length >= 2);
+  const pool = new Set(cpPool(s).map(e => e.id));
+  const maxEx = s.minutes <= 30 ? 6 : s.minutes <= 45 ? 7 : s.minutes <= 60 ? 9 : 10;
+  const days = raw.days.slice(0, 6).map(d => ({ name: String(d?.name || 'Day').slice(0, 40), exercises: (Array.isArray(d?.exercises) ? d.exercises : []).map(x => Array.isArray(x) ? x : [x?.id, x?.sets, x?.reps, x?.superset]).filter(x => EX[x[0]] && pool.has(x[0])).slice(0, maxEx).map(x => { const r = [x[0], Math.max(1, Math.min(6, parseInt(x[1]) || 3)), String(x[2] || '8-12').slice(0, 20)]; if (x[3] && /^[A-H]$/.test(String(x[3]))) r.push(String(x[3])); return r; }) })).filter(d => d.exercises.length >= 2);
   if (days.length < 2) return null;
   days.forEach(d => d.exercises.forEach((x, k) => { if (x[3] && !(d.exercises[k - 1]?.[3] === x[3] || d.exercises[k + 1]?.[3] === x[3])) x.length = 3; }));
-  const W = Math.max(2, Math.min(20, parseInt(raw.weeks) || base.weeks));
-  let phases = (Array.isArray(raw.phases) ? raw.phases : []).map(p => ({ weeks: [parseInt(p?.weeks?.[0]) || 0, parseInt(p?.weeks?.[1]) || 0], name: String(p?.name || '').slice(0, 30), focus: String(p?.focus || '').slice(0, 140), sets: String(p?.sets || '3 sets').slice(0, 20), reps: String(p?.reps || '8-12').slice(0, 20), rpe: String(p?.rpe || 'RPE 8').slice(0, 20) })).filter(p => p.name && p.weeks[0] >= 1 && p.weeks[1] >= p.weeks[0]);
+  // weekly volume ceiling: no muscle group above ~25 hard sets a week
+  const vol = {}; days.forEach(d => d.exercises.forEach(x => { const g = EX[x[0]].primary[0]; vol[g] = (vol[g] || 0) + x[1]; }));
+  Object.entries(vol).forEach(([g, v]) => { if (v > 25) { const f = 25 / v; days.forEach(d => d.exercises.forEach(x => { if (EX[x[0]].primary[0] === g) x[1] = Math.max(1, Math.round(x[1] * f)); })); } });
+  const W = Math.max(4, Math.min(16, parseInt(raw.weeks) || base.weeks));
+  let phases = (Array.isArray(raw.phases) ? raw.phases : []).map(p => ({ weeks: [parseInt(p?.weeks?.[0]) || 0, parseInt(p?.weeks?.[1]) || 0], name: String(p?.name || '').slice(0, 30), focus: String(p?.focus || '').slice(0, 160), sets: String(p?.sets || '3 sets').slice(0, 20), reps: String(p?.reps || '8-12').slice(0, 20), rpe: String(p?.rpe || 'RPE 8').slice(0, 24) })).filter(p => p.name && p.weeks[0] >= 1 && p.weeks[1] >= p.weeks[0]);
   const ok = phases.length && phases[0].weeks[0] === 1 && phases[phases.length - 1].weeks[1] === W && phases.every((p, i) => !i || p.weeks[0] === phases[i - 1].weeks[1] + 1);
   if (!ok) phases = base.weeks === W ? base.phases : null;
   if (!phases) return null;
   const str = (v, d, n = 400) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, n) : d);
-  return { ...base, name: str(raw.name, base.name, 60), weeks: W, daysPerWeek: days.length, days, phases, summary: str(raw.summary, base.summary), nutrition: str(raw.nutrition, base.nutrition), progression: str(raw.progression, base.progression), extras: Array.isArray(raw.extras) ? raw.extras.map(x => String(x).slice(0, 120)).filter(Boolean).slice(0, 5) : base.extras, note: str(raw.note, base.note, 500) };
+  const list = (v, d, n, m) => Array.isArray(v) && v.length ? v.map(x => String(x).slice(0, m)).filter(Boolean).slice(0, n) : d;
+  const why = (s.guard || []).concat(list(raw.why, base.why.filter(w => !(s.guard || []).includes(w)), 8, 300));
+  return { ...base, name: str(raw.name, base.name, 60), weeks: W, daysPerWeek: days.length, days, phases, summary: str(raw.summary, base.summary), nutrition: str(raw.nutrition, base.nutrition), progression: str(raw.progression, base.progression), extras: list(raw.extras, base.extras, 5, 140), why, schedule: str(raw.schedule, base.schedule, 80), note: str(raw.note, base.note, 600) };
 }
 async function claudeProgram(s, base, change) {
-  const catalogue = EXERCISES.map(e => `${e.id}|${e.name}|${e.primary.map(m => M[m].name).join(',')}|${TAX.equipment[e.equipment]}|${e.type}`).join('\n');
-  const slim = p => JSON.stringify({ name: p.name, weeks: p.weeks, summary: p.summary, nutrition: p.nutrition, progression: p.progression, phases: p.phases, days: p.days, extras: p.extras });
-  const prompt = `You are an expert strength and conditioning coach inside a gym app. ${change ? 'Revise this training program to reflect the change the person asked for, keeping everything else that still fits.' : 'Shape a complete multi-week training program for this person.'}
+  const pool = cpPool(s);
+  const catalogue = pool.map(e => `${e.id}|${e.name}|${e.primary.map(m => M[m].name).join(',')}|${TAX.equipment[e.equipment]}|${e.type}|${e.pattern}`).join('\n');
+  const slim = p => JSON.stringify({ name: p.name, weeks: p.weeks, summary: p.summary, phases: p.phases, days: p.days, extras: p.extras, schedule: p.schedule });
+  const prompt = `You are an expert, evidence-based strength coach inside a gym app. ${change ? 'Revise this person\'s program to reflect the change they asked for, keeping everything else that still fits.' : 'Design an original multi-week program for this person, built around exactly what they asked for. Do not copy a generic template: choose the split, exercises, order, volume and progression to fit their goal, schedule, equipment, focus areas, sport, likes, dislikes and limitations.'}
 
 What they said: "${s.text}"
-${change ? `Change requested now: "${change}"\n` : ''}Settings (from their answers, follow them unless their words clearly say otherwise): goal ${s.goal}, ${s.days} days a week, ${s.weeks} weeks, ${s.level}, equipment ${s.equip}, about ${s.minutes} minutes a session${s.focus.length ? ', extra focus on ' + s.focus.map(targetName).join(', ') : ''}${s.avoid.length ? ', needs to be friendly to: ' + s.avoid.join(', ') : ''}${s.exclude.length ? ', avoid exercises named like: ' + s.exclude.join(', ') : ''}.
+${change ? `Change requested now: "${change}"\n` : ''}Settings already worked out from their words and answers (these already respect the safety limits, so keep to them): goal ${s.goal}; ${s.days} sessions a week; ${s.weeks} weeks; ${s.level}; equipment ${s.equip}; about ${s.minutes} minutes a session${s.split ? '; split they asked for: ' + s.split : ''}${s.focus.length ? '; focus: ' + s.focus.map(f => FOCUS_NAME[f] || f).join(', ') : ''}${s.sport ? '; sport: ' + s.sport : ''}${s.liftTarget ? `; lift target: ${EX[s.liftTarget.lift].name} ${s.liftTarget.w} ${unit()}` : ''}${s.avoid.length ? '; must be kind to: ' + s.avoid.join(', ') : ''}${s.include.length ? '; exercises they want in: ' + s.include.join(', ') : ''}${s.exclude.length ? '; avoid exercises named like: ' + s.exclude.join(', ') : ''}${s.themes.length ? '; dedicated days they asked for: ' + s.themes.map(x => THEME[x].name).join(', ') : ''}.
+${s.guard.length ? 'Limits I applied to their request (mention these kindly in the note): ' + s.guard.join(' ') : ''}
 
-${change ? 'Current program' : 'A rule-based draft you can improve on'} (JSON):
+Evidence-based rules you must follow:
+- Train each muscle about twice a week where the schedule allows; 2-6 sessions a week, one session a day, never more.
+- Weekly hard sets per muscle: roughly 6-10 for maintenance, 10-20 for growth (focus muscles toward the top), never above 25. Beginners sit at the lower end.
+- Fit the session length: about 2.5-3.5 minutes per set including rest. Put focus muscles and big compound lifts early in the session, isolation work after.
+- Rep ranges suit the goal (strength: main lifts 3-6 reps; muscle: 6-15 near failure; toning: 10-15 with short rests and supersets; fitness: strength then a conditioning finisher).
+- Phases must cover every week from 1 to ${s.weeks} with no gaps; include a deload (or a taper and test week for a lift target) in the final week of blocks of 6+ weeks.
+- Only use exercise ids from the catalogue (already filtered to their equipment). Include exercises they asked for; never include ones they want to avoid.
+- Supersets: give both exercises the same capital letter (A, B...) as the 4th element; otherwise leave it out. Reps are short strings like "8-12", "10 each" or "30s".
+
+${change ? 'Current program' : 'A rule-based draft (only for reference; you should design your own and improve on it)'} (JSON):
 ${slim(base)}
 
-It must be a proper program: a sensible split with balanced weekly volume, compound lifts before isolation work, sets and reps that suit the goal, phases that cover every week from 1 to the last with no gaps, a clear progression rule, and a deload in the final week for blocks of 6 weeks or more. Use only exercise ids from the catalogue and respect the equipment. Supersets: give both exercises the same capital letter (A, B...) as the 4th element; otherwise leave it out. Reps are short strings like "8-12", "10 each" or "30s". Extras are 1-3 short suggestions for activities outside the gym (walks, yoga, Pilates, runs) that fit what they asked for.
+Reply with JSON only: {"note": "two or three friendly sentences on how this program fits what they asked for${change ? ' and what changed' : ''}", "name": "a short, specific name", "weeks": ${s.weeks}, "summary": "...", "nutrition": "...", "progression": "...", "why": ["4-7 short sentences explaining the key choices: split and frequency, weekly sets for their focus, exercise choices, rep ranges, deload, and any limits applied"], "schedule": "e.g. Mon, Wed, Fri", "phases": [{"weeks": [1, 3], "name": "...", "focus": "...", "sets": "3 sets", "reps": "8-12", "rpe": "RPE 7-8"}], "days": [{"name": "...", "exercises": [["id", 3, "8-12", "A"]]}], "extras": ["1-3 activities to do outside the gym"]}
 
-Reply with JSON only, same shape as the draft plus a "note": {"note": "two friendly sentences explaining how this program fits what they asked for${change ? ' and what changed' : ''}", "name": "...", "weeks": 8, "summary": "...", "nutrition": "...", "progression": "...", "phases": [{"weeks": [1, 3], "name": "...", "focus": "...", "sets": "3 sets", "reps": "8-12", "rpe": "RPE 7-8"}], "days": [{"name": "...", "exercises": [["id", 3, "8-12", "A"]]}], "extras": ["..."]}
-
-Catalogue (id|name|primary muscles|equipment|type):
+Catalogue (id|name|primary muscles|equipment|type|pattern):
 ${catalogue}`;
-  const out = await sampleFn.json(prompt, { modelTier: 'default', cache: false });
-  return cleanProgram(out, base);
+  const out = await sampleFn.json(prompt, { modelTier: 'complex', cache: false });
+  return cleanProgram(out, base, s);
 }
-const cpState = () => ui.cp || (ui.cp = { sel: { goal: 'auto', days: 'auto', weeks: 'auto', level: 'auto', equip: 'auto', minutes: 'auto' }, focus: [], text: '', draft: null, busy: false });
+const cpState = () => ui.cp || (ui.cp = { sel: { goal: 'auto', days: 'auto', weeks: 'auto', level: 'auto', equip: 'auto', minutes: 'auto', split: 'auto' }, focus: [], text: '', draft: null, busy: false });
 function cpSheet() {
   const c = cpState();
   openSheet(`<div class="sheet-head"><div><div class="label">Made for you</div><h2>Build my program</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
@@ -1502,7 +1711,7 @@ async function cpGenerate(change) {
   if (change) { prog.id = c.draft.id; }
   if (sampleFn) {
     c.busy = true; cpBusy(change ? 'Updating your program…' : 'Shaping your program…');
-    try { const p = await claudeProgram(spec, change ? { ...c.draft, spec } : prog, change); if (p) prog = { ...p, spec }; } catch (err) { console.warn('program fallback', err); if (err?.code === 'not_granted') sampleFn = null; }
+    try { const p = await claudeProgram(spec, change ? { ...c.draft, spec, why: prog.why } : prog, change); if (p) prog = { ...p, spec }; } catch (err) { console.warn('program fallback', err); if (err?.code === 'not_granted') sampleFn = null; }
     c.busy = false;
     if (!document.querySelector('.scrim')) { c.draft = prog; return; }
   } else if (change) {

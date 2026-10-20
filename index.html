@@ -599,7 +599,7 @@ function ssLabels(items) { const out = []; blocksOf(items).forEach(([i, j], b) =
 const LS_KEY = 'ironlog.v1';
 const STANDALONE = !!window.__STANDALONE__;
 const blankDraft = () => ({ name: '', items: [], programId: null, dayIndex: null });
-const blankState = () => ({ bodyweight: [], goals: [], program: null, programHistory: [], templates: [], draft: blankDraft(), active: null, settings: { unit: 'kg', goalStyle: 'hypertrophy' }, coach: null });
+const blankState = () => ({ bodyweight: [], goals: [], program: null, programHistory: [], templates: [], draft: blankDraft(), active: null, settings: { unit: 'kg', goalStyle: 'hypertrophy' }, coach: null, customPrograms: [], askSave: null });
 let state = blankState();
 let logs = [];
 const Store = { col: null, mode: 'local', queue: Promise.resolve(), timer: null };
@@ -733,10 +733,14 @@ function renderTabs() {
   $('#tabs').innerHTML = TABS.map(([id, label, icon]) => `<button data-act="tab" data-id="${id}" ${ui.tab === id ? 'aria-current="page"' : ''}><svg viewBox="0 0 24 24">${icon}</svg>${label}${id === 'workout' && state.active ? '<span class="dot" aria-label="Workout in progress"></span>' : ''}</button>`).join('');
 }
 function render() {
+  (state.customPrograms || []).forEach(p => PROG[p.id] = p);
   renderTabs();
   $('#view').innerHTML = ({ home: viewHome, exercises: viewExercises, workout: viewWorkout, programs: viewPrograms, progress: viewProgress })[ui.tab]();
   if (ui.tab === 'exercises') renderExList();
   renderTimer();
+  const cur = state.program && PROG[state.program.id];
+  if (cur?.custom && !cur.saved && !cur.declined && !state.askSave && daysBetween(state.program.start, today()) >= cur.weeks * 7) { state.askSave = cur.id; ui.askedSave = false; }
+  if (state.askSave && !ui.askedSave && !document.querySelector('.scrim')) askSaveSheet();
 }
 function go(tab) { ui.tab = tab; try { history.replaceState(null, '', '#' + tab); } catch {} render(); window.scrollTo(0, 0); }
 
@@ -1188,32 +1192,349 @@ function finishSession() {
 // ---------- PROGRAMS ----------
 function viewPrograms() {
   const ps = programStatus();
-  const cats = ['All', ...new Set(PROGRAMS.map(p => p.category))];
+  const LIB = state.customPrograms.filter(p => p.saved).concat(PROGRAMS);
+  const cats = ['All', ...new Set(LIB.map(p => p.category))];
   let h = `<div class="stack">`;
   if (ps) h += `<div class="section-head"><h2>Your program</h2><button class="link small danger" data-act="endProgram">End program</button></div>${programCard(ps, true)}`;
-  h += `<div class="section-head"><h2>Program library</h2><span class="small muted">${PROGRAMS.length} programs</span></div>
+  h += `<div class="section-head"><h2>Program library</h2><span class="small muted">${LIB.length} programs</span></div>
    <div class="chips scroll">${cats.map(c => `<button class="chip ${ui.progCat === c ? 'on' : ''}" aria-pressed="${ui.progCat === c}" data-act="progCat" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>`;
-  h += `<div class="stack" style="gap:10px">${PROGRAMS.filter(p => ui.progCat === 'All' || p.category === ui.progCat).map(p => {
+  h += `<div class="card flat row between" style="flex-wrap:nowrap;gap:12px"><div style="min-width:0"><strong>Nothing quite right?</strong><div class="small muted">Tell the coach what you want and get a full program shaped around you.</div></div><button class="btn primary" style="flex:none;white-space:nowrap" data-act="cpOpen">Build my own</button></div>`;
+  h += `<div class="stack" style="gap:10px">${LIB.filter(p => ui.progCat === 'All' || p.category === ui.progCat).map(p => {
     const gs = {}; p.days.forEach(d => d.exercises.forEach(x => { const g = EX[x[0]].primaryGroup; gs[g] = (gs[g] || 0) + 1; }));
     const tot = Object.values(gs).reduce((a, b) => a + b, 0);
     return `<div class="card progcard" data-act="progDetail" data-id="${p.id}"><div class="row between"><span class="cat muted">${esc(p.category)}</span>${state.program?.id === p.id ? '<span class="pill" style="--c:var(--good);--t:#fff">Running</span>' : `<span class="small muted">${esc(p.level)}</span>`}</div><h3 style="font-size:20px">${esc(p.name)}</h3><div class="small muted">${esc(p.summary)}</div>
       <div class="mix" title="Muscle group balance">${TAX.groups.filter(g => gs[g.id]).map(g => `<i style="flex:${gs[g.id] / tot};background:${g.color}"></i>`).join('')}</div>
       <div class="row small" style="gap:14px"><span><strong class="num" style="font-size:16px">${p.weeks}</strong> weeks</span><span><strong class="num" style="font-size:16px">${p.daysPerWeek}</strong> days/week</span><span><strong class="num" style="font-size:16px">${p.phases.length}</strong> phase${p.phases.length > 1 ? 's' : ''}</span></div></div>`;
   }).join('')}</div>`;
-  if (state.programHistory.length) h += `<div class="section-head"><h2>Past programs</h2></div><div class="card">${state.programHistory.slice().reverse().map(r => `<div class="list-row"><div><strong>${esc(PROG[r.id]?.name || r.id)}</strong><div class="small muted">${fmtD(r.start)} – ${fmtD(r.end)}</div></div><span class="big" style="font-size:18px">${r.done || 0} <small>sessions</small></span></div>`).join('')}</div>`;
+  if (state.programHistory.length) h += `<div class="section-head"><h2>Past programs</h2></div><div class="card">${state.programHistory.slice().reverse().map(r => `<div class="list-row"><div><strong>${esc(r.name || PROG[r.id]?.name || 'Program')}</strong><div class="small muted">${fmtD(r.start)} – ${fmtD(r.end)}</div></div><span class="big" style="font-size:18px">${r.done || 0} <small>sessions</small></span></div>`).join('')}</div>`;
   return h + '</div>';
 }
 function progDetail(id) {
   const p = PROG[id], running = state.program?.id === id;
   openSheet(`<div class="sheet-head"><div><div class="cat muted">${esc(p.category)} · ${esc(p.level)}</div><h2>${esc(p.name)}</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
    <div class="stack"><div>${esc(p.summary)}</div>
-    <div class="card"><div class="label" style="margin-bottom:8px">Phases · ${p.weeks} weeks</div>${phaseBar(p, 0)}<div style="margin-top:10px">${p.phases.map(ph => `<div class="list-row" style="align-items:flex-start"><div style="min-width:0"><strong>Wk ${ph.weeks[0]}${ph.weeks[1] > ph.weeks[0] ? '-' + ph.weeks[1] : ''} · ${esc(ph.name)}</strong><div class="small muted">${esc(ph.focus)}</div></div><div class="rec" style="text-align:right">${esc(ph.sets)} × ${esc(ph.reps)}<div class="small muted" style="font-family:var(--font-body);font-weight:500">${esc(ph.rpe)}</div></div></div>`).join('')}</div></div>
-    <div class="card"><div class="label">Weekly plan · ${p.daysPerWeek} days</div>${p.days.map((d, di) => { const labels = ssLabels(d.exercises.map((x, k) => ({ link: !!(x[3] && d.exercises[k + 1] && d.exercises[k + 1][3] === x[3]) }))); return `<div style="margin-top:12px"><div class="row between"><strong>Day ${di + 1} · ${esc(d.name)}</strong>${running ? `<button class="btn sm" data-act="loadProgDay" data-day="${di}">Load</button>` : ''}</div><div class="dayex">${d.exercises.map((x, k) => `<div><span class="ssl">${labels[k]}</span><span><span class="dotc" style="background:${G[EX[x[0]].primaryGroup].color};margin-right:6px"></span>${esc(EX[x[0]].name)}</span><span class="rec">${x[1]} × ${esc(x[2])}</span></div>`).join('')}</div></div>`; }).join('')}<div class="small muted" style="margin-top:10px">Matching letters (A1, A2) are supersets. Sets and reps shift with each phase.</div></div>
-    ${p.extras?.length ? `<div class="card"><div class="label">Alongside your sessions</div><ul class="cues" style="margin:6px 0 0">${p.extras.map(x => `<li>${esc(x)}</li>`).join('')}</ul><div class="small muted" style="margin-top:8px">Log these with Log activity so they count toward your week.</div></div>` : ''}
-    <div class="card"><div class="label">How to progress</div><div>${esc(p.progression)}</div><div class="label" style="margin-top:10px">Nutrition</div><div>${esc(p.nutrition)}</div></div>
-    ${running ? `<button class="btn block" data-act="closeSheet">This is your current program</button>` : `<div class="field"><label class="label" for="progStart">Start date</label><input type="date" id="progStart" value="${mondayOf(today()) === today() ? today() : today()}"></div><button class="btn primary block" data-act="startProgram" data-id="${id}">${state.program ? 'Switch to this program' : 'Start this program'}</button>${state.program ? `<div class="small muted">This ends ${esc(PROG[state.program.id]?.name || 'your current program')} and saves it to your past programs.</div>` : ''}`}
+    ${progBody(p, running)}
+    ${running ? `<button class="btn block" data-act="closeSheet">This is your current program</button>` : `<div class="field"><label class="label" for="progStart">Start date</label><input type="date" id="progStart" value="${mondayOf(today()) === today() ? today() : today()}"></div><button class="btn primary block" data-act="startProgram" data-id="${id}">${state.program ? 'Switch to this program' : 'Start this program'}</button>${state.program ? `<div class="small muted">This ends ${esc(PROG[state.program.id]?.name || 'your current program')} and saves it to your past programs.</div>` : ''}${p.custom ? `<button class="btn ghost block danger" data-act="delCustom" data-id="${id}">Delete this program</button>` : ''}`}
    </div>`);
 }
+function progBody(p, running) {
+  return `    <div class="card"><div class="label" style="margin-bottom:8px">Phases · ${p.weeks} weeks</div>${phaseBar(p, 0)}<div style="margin-top:10px">${p.phases.map(ph => `<div class="list-row" style="align-items:flex-start"><div style="min-width:0"><strong>Wk ${ph.weeks[0]}${ph.weeks[1] > ph.weeks[0] ? '-' + ph.weeks[1] : ''} · ${esc(ph.name)}</strong><div class="small muted">${esc(ph.focus)}</div></div><div class="rec" style="text-align:right">${esc(ph.sets)} × ${esc(ph.reps)}<div class="small muted" style="font-family:var(--font-body);font-weight:500">${esc(ph.rpe)}</div></div></div>`).join('')}</div></div>
+    <div class="card"><div class="label">Weekly plan · ${p.daysPerWeek} days</div>${p.days.map((d, di) => { const labels = ssLabels(d.exercises.map((x, k) => ({ link: !!(x[3] && d.exercises[k + 1] && d.exercises[k + 1][3] === x[3]) }))); return `<div style="margin-top:12px"><div class="row between"><strong>Day ${di + 1} · ${esc(d.name)}</strong>${running ? `<button class="btn sm" data-act="loadProgDay" data-day="${di}">Load</button>` : ''}</div><div class="dayex">${d.exercises.map((x, k) => `<div><span class="ssl">${labels[k]}</span><span><span class="dotc" style="background:${G[EX[x[0]].primaryGroup].color};margin-right:6px"></span>${esc(EX[x[0]].name)}</span><span class="rec">${x[1]} × ${esc(x[2])}</span></div>`).join('')}</div></div>`; }).join('')}<div class="small muted" style="margin-top:10px">Matching letters (A1, A2) are supersets. Sets and reps shift with each phase.</div></div>
+    ${p.extras?.length ? `<div class="card"><div class="label">Alongside your sessions</div><ul class="cues" style="margin:6px 0 0">${p.extras.map(x => `<li>${esc(x)}</li>`).join('')}</ul><div class="small muted" style="margin-top:8px">Log these with Log activity so they count toward your week.</div></div>` : ''}
+    <div class="card"><div class="label">How to progress</div><div>${esc(p.progression)}</div><div class="label" style="margin-top:10px">Nutrition</div><div>${esc(p.nutrition)}</div></div>`;
+}
+// ---------- custom program builder ----------
+const CP_OPTS = {
+  goal: [['auto', 'Not sure'], ['muscle', 'Build muscle'], ['strength', 'Get stronger'], ['tone', 'Lean & tone'], ['fitness', 'Fitness'], ['general', 'General health']],
+  days: [['auto', 'Auto'], [2, '2'], [3, '3'], [4, '4'], [5, '5'], [6, '6']],
+  weeks: [['auto', 'Auto'], [4, '4'], [6, '6'], [8, '8'], [10, '10'], [12, '12']],
+  level: [['auto', 'Auto'], ['beginner', 'Beginner'], ['intermediate', 'Intermediate'], ['advanced', 'Advanced']],
+  equip: [['auto', 'Auto'], ['gym', 'Full gym'], ['dumbbells', 'Dumbbells & bench'], ['home', 'Home kit'], ['bodyweight', 'No equipment']],
+  minutes: [['auto', 'Auto'], [30, '30 min'], [45, '45 min'], [60, '60 min'], [75, '75 min']],
+};
+const CP_LABEL = { goal: 'Main goal', days: 'Days a week', weeks: 'Weeks', level: 'Experience', equip: 'Equipment', minutes: 'Session length' };
+const CP_FOCUS = [['s:glutes', 'Glutes'], ['legs', 'Legs'], ['g:chest', 'Chest'], ['g:back', 'Back'], ['g:shoulders', 'Shoulders'], ['arms', 'Arms'], ['g:core', 'Core']];
+const FOCUS_T = { legs: ['s:quads', 's:hamstrings'], arms: ['s:biceps', 's:triceps'] };
+const EQUIP_ALLOW = { dumbbells: ['dumbbell', 'bodyweight', 'band', 'kettlebell'], home: ['dumbbell', 'bodyweight', 'band', 'kettlebell'], bodyweight: ['bodyweight', 'band'] };
+const GOAL_INFO = {
+  muscle: { title: 'Muscle Builder', phrase: 'building muscle', style: 'hypertrophy' },
+  strength: { title: 'Strength Builder', phrase: 'getting stronger', style: 'strength' },
+  tone: { title: 'Lean & Tone', phrase: 'leaning out and toning up', style: 'endurance' },
+  fitness: { title: 'Fitness Builder', phrase: 'fitness and conditioning', style: 'endurance' },
+  general: { title: 'Total Fitness', phrase: 'all-round health and strength', style: 'hypertrophy' },
+};
+const CP_ACTS = [[/\bpilates\b/, 'Pilates'], [/\byoga\b/, 'yoga'], [/\b(run|runs|running|jog|jogging)\b/, 'running'], [/\b(walk|walks|walking|steps)\b/, 'walking'], [/\b(swim|swimming)\b/, 'swimming'], [/\b(cycle|cycling|bike|spin)\b/, 'cycling']];
+const NUMW = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, one: 1 };
+const stemWord = w => w.replace(/(ss)es$/, '$1').replace(/(ch|sh|x)es$/, '$1').replace(/([^s])s$/, '$1');
+function parseProgramText(text) {
+  const t = ' ' + String(text || '').toLowerCase().replace(/[’']/g, "'") + ' ', o = { focus: [], avoid: [], acts: [], exclude: [], deny: [] };
+  if (/\b(tone|toning|toned|lean|leaner|fat|cut|cutting|shred|shredded|lose weight|weight loss|slim|definition|defined)\b/.test(t)) o.goal = 'tone';
+  else if (/\b(strength|stronger|strong|powerlifting|heavy|1rm|max)\b/.test(t)) o.goal = 'strength';
+  else if (/\b(muscle|size|bulk|bulking|grow|growth|hypertrophy|mass|bigger|bodybuilding)\b/.test(t)) o.goal = 'muscle';
+  else if (/\b(fitness|fitter|conditioning|cardio|endurance|athletic|hiit|stamina|sport|sports)\b/.test(t)) o.goal = 'fitness';
+  else if (/\b(health|healthy|general|active|longevity|mobility|feel better)\b/.test(t)) o.goal = 'general';
+  const dm = t.match(/\b([1-7]|one|two|three|four|five|six|seven)\s*(?:x\s*)?(?:days?|sessions?|times|workouts?)\b/) || t.match(/\b([1-7])\s*x\s*(?:a|per)\s*week\b/);
+  if (dm) o.days = Math.max(2, Math.min(6, NUMW[dm[1]] || +dm[1]));
+  const wm = t.match(/\b(\d{1,2})\s*-?\s*weeks?\b/), mo = t.match(/\b([1-4]|one|two|three|four)\s*-?\s*months?\b/);
+  if (wm) o.weeks = Math.max(3, Math.min(16, +wm[1])); else if (mo) o.weeks = Math.max(4, Math.min(16, (NUMW[mo[1]] || +mo[1]) * 4));
+  if (/\b(beginner|new to|never (lifted|trained|been)|first time|just starting|starting out|novice)\b/.test(t)) o.level = 'beginner';
+  else if (/\b(advanced|experienced|years of)\b/.test(t)) o.level = 'advanced';
+  else if (/\bintermediate\b/.test(t)) o.level = 'intermediate';
+  if (/\b(no equipment|bodyweight|body weight|calisthenics)\b/.test(t)) o.equip = 'bodyweight';
+  else if (/\b(dumbbells? only|only dumbbells?|just dumbbells?|only have dumbbells?)\b/.test(t)) o.equip = 'dumbbells';
+  else if (/\b(at home|home|garage)\b/.test(t)) o.equip = 'home';
+  else if (/\bgym\b/.test(t)) o.equip = 'gym';
+  const mm = t.match(/\b(\d{2,3})\s*-?\s*(?:m|min|mins|minutes?)\b/), hh = t.match(/\b(\d(?:\.\d)?)\s*(?:h|hr|hrs|hours?)\b/);
+  let mins = mm ? +mm[1] : hh ? +hh[1] * 60 : /\bhalf an hour\b/.test(t) ? 30 : /\ban hour\b/.test(t) ? 60 : null;
+  if (/\b(shorter|quicker)\b/.test(t)) o.minutesDelta = -15; if (/\blonger\b/.test(t)) o.minutesDelta = 15;
+  if (mins) o.minutes = [30, 45, 60, 75, 90].reduce((b, v) => Math.abs(v - mins) < Math.abs(b - mins) ? v : b, 60);
+  const P = parseCoach(text);
+  if (P.targets.length && P.targets.length < 6) o.focus = P.targets.filter(x => x !== 's:forearms' || /forearm|grip/.test(t));
+  if (/\bknee/.test(t) && /\b(bad|pain|sore|injur|friendly|issue|problem|dodgy|weak)/.test(t)) o.avoid.push('knee');
+  if (/\b(lower )?back\b/.test(t) && /\b(bad|pain|sore|injur|friendly|issue|problem|dodgy)/.test(t)) o.avoid.push('back');
+  if (/\bshoulder/.test(t) && /\b(bad|pain|sore|injur|friendly|issue|problem|dodgy)/.test(t)) o.avoid.push('shoulder');
+  if (/\bno (jumping|jumps|impact|plyo)|low impact\b/.test(t)) o.avoid.push('impact');
+  CP_ACTS.forEach(([re, n]) => { if (re.test(t)) o.acts.push(n); });
+  if (/\bsuper ?sets?\b|\bcircuits?\b/.test(t)) o.superset = true;
+  if (/\b(different exercises|mix it up|shuffle|something different|new exercises)\b/.test(t)) o.reshuffle = true;
+  if (/\b(easier|too hard|less intense)\b/.test(t)) o.level = 'beginner';
+  const NEG = /\b(?:no|without|remove|swap(?: out)?|replace|skip|drop|hate|avoid|don't (?:like|want|do)|can't do|not)\s+(?:the\s+|any\s+|doing\s+|more\s+)?([a-z][a-z\- ]{2,30}?)(?=[,.;!?]|\s*$|\s+(?:and|or|but|with|for|please|because|on|in|anymore)\b)/g;
+  let n; while ((n = NEG.exec(t))) {
+    const ph = n[1].trim();
+    const eq = Object.keys(TAX.equipment).find(k => ph.startsWith(k.replace('-', ' ')) || ph.startsWith(k) || ph.startsWith(TAX.equipment[k].toLowerCase()));
+    if (eq) { o.deny.push(eq); continue; }
+    const stem = ph.split(/\s+/).map(stemWord).join(' ');
+    if (stem.length > 2 && EXERCISES.some(e => e.name.toLowerCase().includes(stem))) o.exclude.push(stem);
+  }
+  return o;
+}
+function resolveSpec(text, sel, focusSel, prev) {
+  const o = parseProgramText(text), s = prev ? JSON.parse(JSON.stringify(prev)) : { focus: [], avoid: [], acts: [], exclude: [], deny: [], seed: (Date.now() % 100000) + 7 };
+  ['goal', 'days', 'weeks', 'level', 'equip', 'minutes'].forEach(k => { if (sel && sel[k] !== 'auto' && sel[k] != null) s[k] = sel[k]; else if (o[k] != null) s[k] = o[k]; });
+  if (o.minutesDelta) s.minutes = Math.max(30, Math.min(90, (s.minutes || 60) + o.minutesDelta));
+  const add = (k, arr) => { s[k] = [...new Set((s[k] || []).concat(arr))]; };
+  add('focus', focusSel && focusSel.length ? focusSel.flatMap(f => FOCUS_T[f] || [f]) : o.focus.flatMap(f => FOCUS_T[f] || [f]));
+  add('avoid', o.avoid); add('acts', o.acts); add('exclude', o.exclude); add('deny', o.deny);
+  if (o.superset) s.superset = true;
+  if (o.reshuffle) s.seed = (s.seed * 7 + 13) % 100000;
+  s.level = s.level || 'intermediate';
+  s.goal = s.goal || (s.level === 'beginner' ? 'general' : 'muscle');
+  s.days = s.days || (s.level === 'beginner' ? 3 : 4);
+  s.weeks = s.weeks || (s.level === 'beginner' ? 6 : s.goal === 'fitness' || s.goal === 'general' ? 6 : 8);
+  s.equip = s.equip || 'gym';
+  s.minutes = s.minutes || (s.level === 'beginner' ? 45 : 60);
+  s.text = [prev?.text, text].filter(Boolean).join(' / ').slice(-600);
+  return s;
+}
+const SL = (t, k) => ({ t, k });
+const DAY_T = {
+  fullA: ['Full Body A', [SL('s:quads', 'c'), SL('g:chest', 'c'), SL('g:back', 'c'), SL('s:hamstrings', 'c'), SL('g:shoulders', 'i'), SL('g:core', 'i'), SL('s:biceps', 'i'), SL('s:triceps', 'i')]],
+  fullB: ['Full Body B', [SL('s:hamstrings', 'c'), SL('s:lats', 'c'), SL('g:shoulders', 'c'), SL('s:quads', 'c'), SL('g:chest', 'i'), SL('g:core', 'i'), SL('s:rear_delts', 'i'), SL('s:calves', 'i')]],
+  fullC: ['Full Body C', [SL('s:glutes', 'c'), SL('s:upper_chest', 'c'), SL('s:upper_back', 'c'), SL('s:quads', 'c'), SL('s:side_delts', 'i'), SL('g:core', 'i'), SL('s:hamstrings', 'i'), SL('s:biceps', 'i')]],
+  upperA: ['Upper A', [SL('g:chest', 'c'), SL('s:lats', 'c'), SL('g:shoulders', 'c'), SL('s:upper_back', 'c'), SL('s:side_delts', 'i'), SL('s:triceps', 'i'), SL('s:biceps', 'i'), SL('s:rear_delts', 'i')]],
+  upperB: ['Upper B', [SL('s:upper_back', 'c'), SL('s:upper_chest', 'c'), SL('s:lats', 'c'), SL('g:shoulders', 'c'), SL('g:chest', 'i'), SL('s:biceps', 'i'), SL('s:triceps', 'i'), SL('g:core', 'i')]],
+  lowerA: ['Lower A', [SL('s:quads', 'c'), SL('s:hamstrings', 'c'), SL('s:quads', 'c'), SL('s:hamstrings', 'i'), SL('s:calves', 'i'), SL('g:core', 'i'), SL('s:glutes', 'i')]],
+  lowerB: ['Lower B', [SL('s:hamstrings', 'c'), SL('s:glutes', 'c'), SL('s:quads', 'c'), SL('s:quads', 'i'), SL('s:hamstrings', 'i'), SL('s:calves', 'i'), SL('g:core', 'i')]],
+  push: ['Push', [SL('g:chest', 'c'), SL('g:shoulders', 'c'), SL('s:upper_chest', 'c'), SL('s:side_delts', 'i'), SL('s:triceps', 'i'), SL('g:chest', 'i'), SL('s:triceps', 'i')]],
+  pull: ['Pull', [SL('s:lats', 'c'), SL('s:upper_back', 'c'), SL('g:back', 'c'), SL('s:rear_delts', 'i'), SL('s:biceps', 'i'), SL('s:biceps', 'i'), SL('s:traps', 'i')]],
+  legs: ['Legs', [SL('s:quads', 'c'), SL('s:hamstrings', 'c'), SL('s:quads', 'c'), SL('s:hamstrings', 'i'), SL('s:glutes', 'i'), SL('s:calves', 'i'), SL('g:core', 'i')]],
+};
+const LOWER_T = ['s:quads', 's:hamstrings', 's:glutes', 's:calves', 's:hips'];
+const isLowerT = x => LOWER_T.includes(x) || (x.startsWith('m:') && LOWER_T.includes('s:' + M[x.slice(2)]?.sub));
+function chooseSplit(s) {
+  const lowFocus = s.focus.length && s.focus.every(isLowerT), light = ['tone', 'fitness', 'general'].includes(s.goal) || s.level === 'beginner';
+  if (s.days <= 2) return { label: 'full-body split', days: ['fullA', 'fullB'] };
+  if (s.days === 3) return s.level === 'advanced' && s.goal === 'muscle' ? { label: 'push/pull/legs split', days: ['push', 'pull', 'legs'] } : { label: 'full-body split', days: ['fullA', 'fullB', 'fullC'] };
+  if (s.days === 4) return lowFocus ? { label: 'lower/upper split with an extra lower-body day', days: ['lowerA', 'upperA', 'lowerB', 'fullC'] } : { label: 'upper/lower split', days: ['upperA', 'lowerA', 'upperB', 'lowerB'] };
+  if (s.days === 5) return light ? { label: 'full-body and upper/lower mix', days: ['fullA', 'upperA', 'lowerA', 'fullB', 'fullC'] } : { label: 'upper/lower plus push/pull/legs', days: ['upperA', 'lowerA', 'push', 'pull', 'legs'] };
+  return { label: 'push/pull/legs, twice a week', days: ['push', 'pull', 'legs', 'push', 'pull', 'legs'] };
+}
+function cpPool(s) {
+  const allow = EQUIP_ALLOW[s.equip] ? new Set(EQUIP_ALLOW[s.equip]) : null, deny = new Set(s.deny);
+  return EXERCISES.filter(e => (!allow || allow.has(e.equipment)) && !deny.has(e.equipment) && !s.exclude.some(x => e.name.toLowerCase().includes(x)));
+}
+function cpScore(e, ms, k, s, used, rand) {
+  const hitP = e.primary.filter(m => ms.includes(m)).length; if (!hitP) return -Infinity;
+  let sc = Math.min(hitP, 3) + (ms.includes(e.primary[0]) ? 3 : 0);
+  sc += k !== 'i' ? (e.type === 'compound' ? 4 : -5) : (e.type === 'isolation' ? 3 : 0);
+  if (k !== 'i' && s.goal === 'strength') { if (['barbell', 'trap-bar'].includes(e.equipment)) sc += 2; if (e.tags.includes('unilateral')) sc -= 2; }
+  if (k === 'main' && s.goal === 'strength' && e.tags.includes('powerlifting')) sc += 3;
+  if (k === 'main' && e.tags.includes('unilateral')) sc -= 2;
+  if (/thruster|tire flip|clean|snatch|man maker|wall ball/i.test(e.name)) sc -= k === 'main' ? 8 : s.goal === 'fitness' ? 1 : 5;
+  if (s.level === 'beginner' && /nordic|glute-ham/i.test(e.name)) sc -= 20;
+  if (s.level !== 'advanced' && /weighted|nordic|pistol|dragon|handstand|archer|clap|deficit|l-sit|toes-to-bar/i.test(e.name)) sc -= s.level === 'beginner' ? 7 : 3;
+  if (k === 'main' && s.goal === 'strength' && ['barbell', 'trap-bar'].includes(e.equipment) && e.type === 'compound') sc += 4;
+  if (k === 'main' && e.type === 'compound') sc += 2;
+  if (['conditioning', 'olympic', 'plyo', 'carry'].includes(e.pattern)) sc -= 6;
+  if (e.tags.includes('advanced') && s.level !== 'advanced') sc -= s.level === 'beginner' ? 6 : 2;
+  if (s.level === 'beginner' && (e.tags.includes('beginner') || e.equipment === 'machine')) sc += 1.5;
+  if (e.tags.some(x => ['prehab', 'warm-up', 'rehab', 'mobility'].includes(x))) sc -= 5;
+  if (s.avoid.includes('knee') && ['squat', 'lunge', 'plyo'].includes(e.pattern) && !e.tags.includes('knee friendly')) sc -= 4;
+  if (s.avoid.includes('back') && (['hinge', 'olympic'].includes(e.pattern) || /barbell (row|squat)|back squat|good morning/i.test(e.name)) && !/hip thrust|glute bridge|back extension|pull-through/i.test(e.name)) sc -= 5;
+  if (s.avoid.includes('shoulder') && ['push_v'].includes(e.pattern) && !e.tags.includes('shoulder friendly')) sc -= 4;
+  if (s.avoid.includes('impact') && e.pattern === 'plyo') sc -= 8;
+  if (s.focus.some(f => targetMuscles(f).includes(e.primary[0]))) sc += 0.5;
+  sc -= (used[e.id] || 0) * 3;
+  return sc + rand() * 2.5;
+}
+const GOAL_REPS = {
+  strength: { main: [4, '4-6'], c: [3, '6-8'], i: [3, '10-12'] }, muscle: { main: [4, '6-8'], c: [3, '8-12'], i: [3, '10-15'] },
+  tone: { main: [3, '10-12'], c: [3, '10-12'], i: [3, '12-15'] }, fitness: { main: [3, '8-10'], c: [3, '10-12'], i: [2, '12-15'] }, general: { main: [3, '8-10'], c: [3, '10-12'], i: [2, '12-15'] },
+};
+function cpReps(e, k, s) {
+  let [sets, reps] = GOAL_REPS[s.goal][k] || GOAL_REPS[s.goal].i;
+  if (s.level === 'beginner') sets = Math.min(sets, 3);
+  const rec = parseRec(e.rec[GOAL_INFO[s.goal].style] || e.rec.default);
+  if (/\d\s*(s|m)\b|sec|on \/|each/.test(rec.reps) && !/^\d+(-\d+)?$/.test(rec.reps)) return [Math.min(sets, 4), rec.reps];
+  if (e.tags.includes('unilateral') && /^\d+(-\d+)?$/.test(reps)) reps += ' each';
+  return [sets, reps];
+}
+function buildCustomProgram(s) {
+  let rnd = s.seed || 1; const rand = () => (rnd = (rnd * 16807) % 2147483647) / 2147483647;
+  const pool = cpPool(s), split = chooseSplit(s), used = {};
+  const n = s.minutes <= 30 ? 4 : s.minutes <= 45 ? 5 : s.minutes <= 60 ? 6 : s.minutes <= 75 ? 7 : 8;
+  const finisher = s.goal === 'fitness' || (s.goal === 'tone' && s.minutes >= 45);
+  const pairIso = s.superset || ['tone', 'fitness'].includes(s.goal) || s.minutes <= 45;
+  const counts = {};
+  const days = split.days.map(key => {
+    const [base, tmpl] = DAY_T[key]; counts[base] = (counts[base] || 0) + 1;
+    let slots = tmpl.slice();
+    const isFull = key.startsWith('full'), lower = slots.some(x => isLowerT(x.t)), upper = slots.some(x => !isLowerT(x.t) && x.t !== 'g:core');
+    const allM = new Set(slots.flatMap(x => targetMuscles(x.t))), cM = new Set(slots.filter(x => x.k === 'c').flatMap(x => targetMuscles(x.t)));
+    const fs = s.focus.filter(f => isFull || targetMuscles(f).some(m => allM.has(m))).slice(0, 3);
+    fs.forEach((f, j) => {
+      const hasC = (isFull || targetMuscles(f).some(m => cM.has(m))) && pool.some(e => e.type === 'compound' && targetMuscles(f).includes(e.primary[0]));
+      if (hasC && j < 2) slots.splice(1 + j, 0, SL(f, 'c'));
+      const firstI = slots.findIndex(x => x.k === 'i'); slots.splice(firstI < 0 ? slots.length : firstI, 0, SL(f, 'i'));
+    });
+    slots = slots.slice(0, finisher ? n - 1 : n);
+    slots.sort((a, b) => (a.k === b.k ? 0 : a.k === 'c' ? -1 : 1));
+    if (slots[0]) slots[0] = { ...slots[0], k: 'main' };
+    const dayUsed = new Set(), items = [];
+    slots.forEach(sl => {
+      const ms = targetMuscles(sl.t); let best = null, bs = -Infinity;
+      pool.forEach(e => { if (dayUsed.has(e.id)) return; const sc = cpScore(e, ms, sl.k === 'main' ? 'main' : sl.k, s, used, rand); if (sc > bs) { bs = sc; best = e; } });
+      if (!best) return;
+      dayUsed.add(best.id); used[best.id] = (used[best.id] || 0) + 1;
+      const [sets, reps] = cpReps(best, sl.k === 'main' ? 'main' : sl.k, s);
+      items.push({ id: best.id, sets, reps, iso: sl.k === 'i' });
+    });
+    let letter = 0; const L = () => String.fromCharCode(65 + letter++);
+    if (pairIso) { for (let i = 0; i + 1 < items.length; i++) if (items[i].iso && items[i + 1].iso && !items[i].ss) { const l = L(); items[i].ss = l; items[i + 1].ss = l; i++; } }
+    if (finisher) {
+      const cond = pool.filter(e => ['conditioning', 'plyo'].includes(e.pattern) && !dayUsed.has(e.id) && !(s.avoid.includes('impact') || s.avoid.includes('knee') ? e.pattern === 'plyo' || /jump|burpee/i.test(e.name) : false) && !(s.level === 'beginner' && e.tags.includes('advanced')));
+      const pick = cond.map(e => [e, rand() - (used[e.id] || 0) * 0.5]).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]);
+      const l = L();
+      pick.forEach(e => { const r = parseRec(e.rec.endurance || e.rec.default); used[e.id] = (used[e.id] || 0) + 1; items.push({ id: e.id, sets: s.goal === 'fitness' ? 4 : 3, reps: r.reps.slice(0, 16), ss: pick.length > 1 ? l : null }); });
+    }
+    const name = (counts[base] > 1 || split.days.filter(d => DAY_T[d][0] === base).length > 1) && !/ [ABC]$/.test(base) ? `${base} ${counts[base]}` : base;
+    return { name, exercises: items.map(x => x.ss ? [x.id, x.sets, x.reps, x.ss] : [x.id, x.sets, x.reps]) };
+  });
+  // phases
+  const W = s.weeks, deload = W >= 6 ? 1 : 0, nW = W - deload;
+  const PH = {
+    strength: [['Base', 'Build volume and groove your technique', '3-4 sets', '6-8', 'RPE 7'], ['Strength', 'Heavier main lifts, fewer reps', '4 sets', '4-6', 'RPE 8'], ['Peak', 'Heaviest sets of the block', '3-4 sets', '2-4', 'RPE 8-9']],
+    muscle: [['Accumulation', 'Build volume with clean form', '3 sets', '10-12', 'RPE 7-8'], ['Intensification', 'Heavier, add a set to the big lifts', '3-4 sets', '6-10', 'RPE 8-9'], ['Overreach', 'Push the last set of each exercise close to failure', '4 sets', '6-10', 'RPE 9']],
+    tone: [['Tone', 'Learn the moves, rest about 60s', '3 sets', '12-15', 'RPE 7'], ['Define', 'Shorter rests and an extra round', '3-4 sets', '12-15', 'RPE 8'], ['Finish', 'Heaviest weights you can hold for the range', '4 sets', '10-12', 'RPE 8-9']],
+    fitness: [['Base', 'Build your engine and technique', '3 sets', '10-12', 'RPE 7'], ['Build', 'More rounds, less rest', '3-4 sets', '8-12', 'RPE 8'], ['Push', 'Best efforts on every finisher', '4 sets', '8-12', 'RPE 8-9']],
+    general: [['Learn', 'Get comfortable with every movement', '2-3 sets', '10-12', 'RPE 6-7'], ['Build', 'Add weight steadily', '3 sets', '8-12', 'RPE 7-8'], ['Progress', 'Slightly heavier, same good form', '3 sets', '8-10', 'RPE 8']],
+  }[s.goal];
+  let k = nW >= 7 ? 3 : nW >= 3 ? 2 : 1; if (s.level === 'beginner') k = Math.min(k, 2);
+  const phases = []; let w = 1;
+  for (let i = 0; i < k; i++) { const len = Math.floor(nW / k) + (i < nW % k ? 1 : 0); const p = PH[i]; phases.push({ weeks: [w, w + len - 1], name: p[0], focus: p[1], sets: p[2], reps: p[3], rpe: s.level === 'beginner' && i === 0 ? 'RPE 6-7' : p[4] }); w += len; }
+  if (deload) phases.push({ weeks: [W, W], name: 'Deload', focus: 'Half the sets, same weights, let your body recover', sets: '2 sets', reps: '8-10', rpe: 'RPE 6' });
+  const gi = GOAL_INFO[s.goal];
+  const fset = new Set(s.focus), legsAll = fset.has('s:quads') && fset.has('s:hamstrings');
+  const focusNames = [...new Set((legsAll ? ['Legs'] : []).concat(s.focus.filter(f => !(legsAll && ['s:quads', 's:hamstrings', 's:calves'].includes(f))).map(f => CP_FOCUS.find(c => c[0] === f)?.[1] || targetName(f))))];
+  const equipPhrase = { gym: 'a full gym', dumbbells: 'dumbbells, a bench and your body weight', home: 'dumbbells, kettlebells, bands and your body weight', bodyweight: 'just your body weight and a band' }[s.equip];
+  const avoidNote = s.avoid.length ? ` Exercises are chosen to be kind to your ${s.avoid.filter(a => a !== 'impact').join(' and ') || 'joints'}${s.avoid.includes('impact') ? ', with no jumping' : ''}.` : '';
+  const nutrition = { muscle: 'Eat a small surplus (+200-300 kcal) with 1.6-2.2 g protein per kg body weight.', strength: 'Eat at maintenance or a small surplus. Aim for 1.6-2 g protein per kg and carbs around training.', tone: 'Eat a small deficit (300-400 kcal) and keep protein high at 1.8-2 g per kg so you keep muscle while leaning out.', fitness: 'Eat around maintenance with plenty of carbs on training days. Protein 1.6 g per kg.', general: 'Eat around maintenance, built around protein (about 1.6 g per kg), vegetables and whole foods.' }[s.goal];
+  const progression = { muscle: 'Use double progression: once you hit the top of the rep range on every set, add a little weight and drop back to the bottom of the range.', strength: 'Add 2.5 kg to upper-body lifts and 5 kg to lower-body lifts whenever you complete all sets at the top of the range.', tone: 'Keep rests short. When every round feels comfortable at the top of the range, move to the next weight up.', fitness: 'Each week, finish the finisher faster, add a round, or add a little weight to the main lifts.', general: 'Add a rep or two each week. When you reach the top of the range on every set, go up to the next weight.' }[s.goal] + (s.level === 'beginner' ? ' Leave 2-3 reps in the tank while you learn the movements.' : '');
+  const extras = [];
+  const actFreq = { Pilates: '1-2 Pilates sessions a week', yoga: '1-2 yoga sessions a week', running: '1-2 easy runs of 20-40 minutes a week', walking: 'Daily walks, aiming for 8,000-10,000 steps', swimming: '1-2 swims of 20-40 minutes a week', cycling: '1-2 rides of 30-60 minutes a week' };
+  s.acts.forEach(a => actFreq[a] && extras.push(actFreq[a]));
+  if (!extras.length) extras.push({ tone: '2-3 walks of 30-45 minutes a week', fitness: '1-2 steady cardio sessions of 20-40 minutes (run, cycle, row or swim)', general: 'A daily walk, aiming for 7,000+ steps', muscle: '1-2 walks or easy cardio sessions for recovery', strength: '1-2 walks or easy cardio sessions for recovery' }[s.goal]);
+  const id = 'custom-' + uid();
+  return {
+    id, custom: true, created: today(), spec: s,
+    name: `${W}-Week ${gi.title}${focusNames.length ? ` (${focusNames.slice(0, 3).join(', ')})` : ''}`,
+    category: 'My programs', weeks: W, daysPerWeek: days.length, level: s.level[0].toUpperCase() + s.level.slice(1),
+    summary: `${days.length} days a week on ${/^[aeiou]/.test(split.label) ? 'an' : 'a'} ${split.label}${focusNames.length ? `, with extra work for ${focusNames.join(', ').toLowerCase()}` : ''}. Built for ${gi.phrase} using ${equipPhrase}, about ${s.minutes} minutes a session.${avoidNote}`,
+    nutrition, progression, phases, days, extras,
+    note: `Here's your program: ${/^[aeiou]/.test(split.label) ? 'an' : 'a'} ${split.label}, ${days.length} days a week for ${W} weeks${focusNames.length ? `, with extra ${focusNames.join(' and ').toLowerCase()} work` : ''}. Each phase sets its own sets, reps and effort${deload ? ', and the last week is a deload so you recover' : ''}.`,
+  };
+}
+function cleanProgram(raw, base) {
+  if (!raw || !Array.isArray(raw.days)) return null;
+  const days = raw.days.slice(0, 7).map(d => ({ name: String(d?.name || 'Day').slice(0, 40), exercises: (Array.isArray(d?.exercises) ? d.exercises : []).map(x => Array.isArray(x) ? x : [x?.id, x?.sets, x?.reps, x?.superset]).filter(x => EX[x[0]]).slice(0, 12).map(x => { const r = [x[0], Math.max(1, Math.min(8, parseInt(x[1]) || 3)), String(x[2] || '8-12').slice(0, 20)]; if (x[3] && /^[A-H]$/.test(String(x[3]))) r.push(String(x[3])); return r; }) })).filter(d => d.exercises.length >= 2);
+  if (days.length < 2) return null;
+  days.forEach(d => d.exercises.forEach((x, k) => { if (x[3] && !(d.exercises[k - 1]?.[3] === x[3] || d.exercises[k + 1]?.[3] === x[3])) x.length = 3; }));
+  const W = Math.max(2, Math.min(20, parseInt(raw.weeks) || base.weeks));
+  let phases = (Array.isArray(raw.phases) ? raw.phases : []).map(p => ({ weeks: [parseInt(p?.weeks?.[0]) || 0, parseInt(p?.weeks?.[1]) || 0], name: String(p?.name || '').slice(0, 30), focus: String(p?.focus || '').slice(0, 140), sets: String(p?.sets || '3 sets').slice(0, 20), reps: String(p?.reps || '8-12').slice(0, 20), rpe: String(p?.rpe || 'RPE 8').slice(0, 20) })).filter(p => p.name && p.weeks[0] >= 1 && p.weeks[1] >= p.weeks[0]);
+  const ok = phases.length && phases[0].weeks[0] === 1 && phases[phases.length - 1].weeks[1] === W && phases.every((p, i) => !i || p.weeks[0] === phases[i - 1].weeks[1] + 1);
+  if (!ok) phases = base.weeks === W ? base.phases : null;
+  if (!phases) return null;
+  const str = (v, d, n = 400) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, n) : d);
+  return { ...base, name: str(raw.name, base.name, 60), weeks: W, daysPerWeek: days.length, days, phases, summary: str(raw.summary, base.summary), nutrition: str(raw.nutrition, base.nutrition), progression: str(raw.progression, base.progression), extras: Array.isArray(raw.extras) ? raw.extras.map(x => String(x).slice(0, 120)).filter(Boolean).slice(0, 5) : base.extras, note: str(raw.note, base.note, 500) };
+}
+async function claudeProgram(s, base, change) {
+  const catalogue = EXERCISES.map(e => `${e.id}|${e.name}|${e.primary.map(m => M[m].name).join(',')}|${TAX.equipment[e.equipment]}|${e.type}`).join('\n');
+  const slim = p => JSON.stringify({ name: p.name, weeks: p.weeks, summary: p.summary, nutrition: p.nutrition, progression: p.progression, phases: p.phases, days: p.days, extras: p.extras });
+  const prompt = `You are an expert strength and conditioning coach inside a gym app. ${change ? 'Revise this training program to reflect the change the person asked for, keeping everything else that still fits.' : 'Shape a complete multi-week training program for this person.'}
+
+What they said: "${s.text}"
+${change ? `Change requested now: "${change}"\n` : ''}Settings (from their answers, follow them unless their words clearly say otherwise): goal ${s.goal}, ${s.days} days a week, ${s.weeks} weeks, ${s.level}, equipment ${s.equip}, about ${s.minutes} minutes a session${s.focus.length ? ', extra focus on ' + s.focus.map(targetName).join(', ') : ''}${s.avoid.length ? ', needs to be friendly to: ' + s.avoid.join(', ') : ''}${s.exclude.length ? ', avoid exercises named like: ' + s.exclude.join(', ') : ''}.
+
+${change ? 'Current program' : 'A rule-based draft you can improve on'} (JSON):
+${slim(base)}
+
+It must be a proper program: a sensible split with balanced weekly volume, compound lifts before isolation work, sets and reps that suit the goal, phases that cover every week from 1 to the last with no gaps, a clear progression rule, and a deload in the final week for blocks of 6 weeks or more. Use only exercise ids from the catalogue and respect the equipment. Supersets: give both exercises the same capital letter (A, B...) as the 4th element; otherwise leave it out. Reps are short strings like "8-12", "10 each" or "30s". Extras are 1-3 short suggestions for activities outside the gym (walks, yoga, Pilates, runs) that fit what they asked for.
+
+Reply with JSON only, same shape as the draft plus a "note": {"note": "two friendly sentences explaining how this program fits what they asked for${change ? ' and what changed' : ''}", "name": "...", "weeks": 8, "summary": "...", "nutrition": "...", "progression": "...", "phases": [{"weeks": [1, 3], "name": "...", "focus": "...", "sets": "3 sets", "reps": "8-12", "rpe": "RPE 7-8"}], "days": [{"name": "...", "exercises": [["id", 3, "8-12", "A"]]}], "extras": ["..."]}
+
+Catalogue (id|name|primary muscles|equipment|type):
+${catalogue}`;
+  const out = await sampleFn.json(prompt, { modelTier: 'default', cache: false });
+  return cleanProgram(out, base);
+}
+const cpState = () => ui.cp || (ui.cp = { sel: { goal: 'auto', days: 'auto', weeks: 'auto', level: 'auto', equip: 'auto', minutes: 'auto' }, focus: [], text: '', draft: null, busy: false });
+function cpSheet() {
+  const c = cpState();
+  openSheet(`<div class="sheet-head"><div><div class="label">Made for you</div><h2>Build my program</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
+   <div class="stack">
+    <div class="coach" style="padding:14px"><div class="bubble" style="margin:0">Tell me what you're after and I'll shape a full program around it: the split, exercises, sets and reps, phases, progression and a deload. Mention your goal, how many days you can train, your equipment and anything you love, hate or need to work around.</div></div>
+    <textarea id="cpText" rows="4" placeholder="e.g. 3 days a week at home with dumbbells. I want to tone up, focus on glutes and arms, and I have a dodgy knee." aria-label="Describe the program you want">${esc(c.text)}</textarea>
+    <details class="card" ${Object.values(c.sel).some(v => v !== 'auto') || c.focus.length ? 'open' : ''}><summary class="small"><strong>Or tap the basics</strong> <span class="muted">(anything left on Auto comes from what you wrote)</span></summary>
+     <div class="stack" style="gap:12px;margin-top:12px">${Object.entries(CP_OPTS).map(([k, opts]) => `<div><div class="label" style="margin-bottom:6px">${CP_LABEL[k]}</div><div class="chips">${opts.map(([v, l]) => `<button class="chip ${String(c.sel[k]) === String(v) ? 'on' : ''}" aria-pressed="${String(c.sel[k]) === String(v)}" data-act="cpSel" data-k="${k}" data-v="${v}">${esc(l)}</button>`).join('')}</div></div>`).join('')}
+      <div><div class="label" style="margin-bottom:6px">Extra focus (optional)</div><div class="chips">${CP_FOCUS.map(([v, l]) => `<button class="chip ${c.focus.includes(v) ? 'on' : ''}" aria-pressed="${c.focus.includes(v)}" data-act="cpFocus" data-v="${v}">${esc(l)}</button>`).join('')}</div></div></div></details>
+    <button class="btn primary block" data-act="cpCreate">Create my program</button>
+    <div class="small muted">${sampleFn ? 'Claude shapes it from the exercise library, then you can ask for changes.' : 'Built from the exercise library with proper programming rules, then you can ask for changes.'}</div>
+   </div>`);
+}
+function cpBusy(msg) {
+  openSheet(`<div class="sheet-head"><div><div class="label">Made for you</div><h2>Build my program</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div><div class="coach" style="padding:14px"><div class="bubble" style="margin:0">${esc(msg)}</div></div>`);
+}
+async function cpGenerate(change) {
+  const c = cpState();
+  if (!change) { c.text = $('#cpText')?.value.trim() || ''; if (!c.text && Object.values(c.sel).every(v => v === 'auto') && !c.focus.length) { toast('Tell me what you want, or tap a few basics'); return; } }
+  const spec = change ? resolveSpec(change, null, null, c.draft.spec) : resolveSpec(c.text, c.sel, c.focus, null);
+  let prog = buildCustomProgram(spec);
+  if (change) { prog.id = c.draft.id; }
+  if (sampleFn) {
+    c.busy = true; cpBusy(change ? 'Updating your program…' : 'Shaping your program…');
+    try { const p = await claudeProgram(spec, change ? { ...c.draft, spec } : prog, change); if (p) prog = { ...p, spec }; } catch (err) { console.warn('program fallback', err); if (err?.code === 'not_granted') sampleFn = null; }
+    c.busy = false;
+    if (!document.querySelector('.scrim')) { c.draft = prog; return; }
+  } else if (change) {
+    prog.note = 'Updated. ' + prog.note;
+  }
+  c.draft = prog; cpPreview();
+}
+function cpPreview() {
+  const c = cpState(), p = c.draft; if (!p) return cpSheet();
+  openSheet(`<div class="sheet-head"><div><div class="cat muted">Made for you · ${esc(p.level)}</div><h2>${esc(p.name)}</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
+   <div class="stack">
+    <div class="coach" style="padding:14px"><div class="bubble" style="margin:0">${esc(p.note || 'Here is your program.')}</div></div>
+    <div>${esc(p.summary)}</div>
+    ${progBody(p, false)}
+    <div class="card stack" style="gap:8px"><label class="label" for="cpChange">Want anything changed?</label><textarea id="cpChange" rows="2" placeholder="e.g. swap lunges for something else, make it 3 days, more arm work, shorter sessions"></textarea><button class="btn block" data-act="cpRefine">Update program</button></div>
+    <div class="field"><label class="label" for="cpName">Program name</label><input id="cpName" type="text" value="${esc(p.name)}" maxlength="60"></div>
+    <div class="field"><label class="label" for="progStart">Start date</label><input type="date" id="progStart" value="${today()}"></div>
+    <button class="btn primary block" data-act="cpStart">Start this program</button>
+    <div class="small muted">It's yours alone and lasts for this program. When you finish, I'll ask if you want to keep it to run again.</div>
+    ${state.program ? `<div class="small muted">Starting this ends ${esc(PROG[state.program.id]?.name || 'your current program')} and saves it to your past programs.</div>` : ''}
+    <button class="btn ghost block" data-act="cpRestart">Start again</button>
+   </div>`);
+}
+function askSaveSheet() {
+  const p = PROG[state.askSave]; if (!p) { state.askSave = null; return; }
+  ui.askedSave = true;
+  openSheet(`<div class="sheet-head"><div><div class="label">Program finished</div><h2>Keep ${esc(p.name)}?</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
+   <div class="stack"><div class="muted">Save it to My programs so you can run it again later. If you don't, it's removed. Your logged workouts stay either way.</div>
+    <button class="btn primary block" data-act="keepCustom" data-id="${p.id}" data-v="1">Save for future use</button>
+    <button class="btn block" data-act="keepCustom" data-id="${p.id}" data-v="0">No thanks, remove it</button></div>`);
+}
+function dropCustom(id) { state.customPrograms = state.customPrograms.filter(x => x.id !== id); delete PROG[id]; }
 function loadProgDay(dayIndex) {
   const ps = programStatus(); if (!ps) return;
   const day = ps.def.days[dayIndex];
@@ -1222,7 +1543,11 @@ function loadProgDay(dayIndex) {
 }
 function endProgramRecord() {
   const ps = programStatus();
-  if (state.program) state.programHistory.push({ id: state.program.id, start: state.program.start, end: today(), done: ps ? ps.done : 0 });
+  if (state.program) {
+    const def = PROG[state.program.id];
+    state.programHistory.push({ id: state.program.id, name: def?.name, start: state.program.start, end: today(), done: ps ? ps.done : 0 });
+    if (def?.custom && !def.saved) { if (def.declined) dropCustom(def.id); else { state.askSave = def.id; ui.askedSave = false; } }
+  }
   state.program = null;
 }
 
@@ -1369,6 +1694,22 @@ const A = {
     const log = { id: uid(), kind: 'activity', date: $('#actDate').value || today(), name: $('#actName').value.trim() || a.name, activity: a.id, minutes: min, km: a.dist && dist > 0 ? Math.round(toKm(dist) * 100) / 100 : null, effort: ui.actEffort, note: $('#actNote').value.trim(), programId: null, started: Date.now(), ended: Date.now(), items: [] };
     logs.push(log); sortLogs(); saveLog(log); closeSheet(); render(); toast(`${a.name} logged`);
   },
+  cpOpen: () => cpSheet(), cpRestart: () => { ui.cp = null; cpSheet(); },
+  cpSel: d => { const c = cpState(); c.sel[d.k] = d.v === 'auto' ? 'auto' : isNaN(+d.v) ? d.v : +d.v; document.querySelectorAll(`[data-act="cpSel"][data-k="${d.k}"]`).forEach(b => { const on = b.dataset.v === d.v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); },
+  cpFocus: (d, el) => { const c = cpState(), i = c.focus.indexOf(d.v); if (i < 0) c.focus.push(d.v); else c.focus.splice(i, 1); el.classList.toggle('on', i < 0); el.setAttribute('aria-pressed', i < 0); },
+  cpCreate: () => { if (!cpState().busy) cpGenerate(); },
+  cpRefine: () => { const t = $('#cpChange')?.value.trim(); if (!t) { toast('Say what you want changed'); return; } const n = $('#cpName')?.value.trim(); if (n) cpState().draft.name = n; if (!cpState().busy) cpGenerate(t); },
+  cpStart: () => {
+    const c = cpState(), p = c.draft; if (!p) return;
+    const start = $('#progStart')?.value || today(), name = $('#cpName')?.value.trim();
+    const prog = { ...p, name: name || p.name, saved: false }; delete prog.note;
+    endProgramRecord();
+    state.customPrograms = state.customPrograms.filter(x => x.id !== prog.id).concat(prog); PROG[prog.id] = prog;
+    state.program = { id: prog.id, start, runId: uid() }; state.draft = blankDraft(); ui.cp = null; ui.askedSave = !!state.askSave && ui.askedSave;
+    saveState(true); closeSheet(); go('home'); toast('Program started. Good luck!');
+  },
+  keepCustom: d => { const p = PROG[d.id]; if (d.v === '1') { if (p) p.saved = true; toast('Saved to My programs'); } else if (state.program?.id === d.id) { if (p) p.declined = true; } else dropCustom(d.id); if (state.askSave === d.id) state.askSave = null; saveState(true); closeSheet(); render(); },
+  delCustom: d => confirmSheet('Delete this program?', 'It is removed from My programs. Your logged workouts stay.', () => { if (state.program?.id === d.id) { endProgramRecord(); if (state.askSave === d.id) state.askSave = null; } dropCustom(d.id); saveState(true); closeSheet(); render(); }, 'Delete program'),
   progCat: d => { ui.progCat = d.v; render(); }, progDetail: d => progDetail(d.id),
   startProgram: d => { const start = $('#progStart')?.value || today(); endProgramRecord(); state.program = { id: d.id, start, runId: uid() }; state.draft = blankDraft(); saveState(true); closeSheet(); go('home'); toast('Program started. Good luck!'); },
   endProgram: () => confirmSheet('End this program?', 'It moves to your past programs. Your logged workouts stay.', () => { endProgramRecord(); saveState(true); render(); }, 'End program'),

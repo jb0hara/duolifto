@@ -1088,37 +1088,33 @@ function resolveSpec(text, sel, focusSel, prev) {
   if (o.reshuffle) s.seed = (s.seed * 7 + 13) % 100000;
   s.level = s.level || (s.flags.includes('older') ? 'beginner' : 'intermediate');
   s.goal = s.goal || (s.sport ? 'fitness' : s.level === 'beginner' ? 'general' : s.focus.length ? 'muscle' : 'general');
-  // guardrails
+  // Follow what they ask for. Where it goes against the usual evidence, keep it and add a tip instead of changing it.
   if (s.layout && o.layout) {
-    const L = s.layout.length, max = s.level === 'beginner' ? 4 : 6;
-    if (L > max) { guard.push(`You listed ${L} sessions a week. I kept ${max}${s.level === 'beginner' ? ': as a beginner, 3-4 sessions give faster progress with less risk of burning out' : ': more than 6 a week adds fatigue faster than results'}, keeping the same mix of session types as closely as possible.`); const keep = []; const pool = s.layout.slice(); while (keep.length < max) { const cnt = {}; pool.forEach(x => cnt[x] = (cnt[x] || 0) + 1); const kc = {}; keep.forEach(x => kc[x] = (kc[x] || 0) + 1); const nx = Object.keys(cnt).sort((a, c) => (cnt[c] - (kc[c] || 0) * 2) - (cnt[a] - (kc[a] || 0) * 2))[0]; keep.push(nx); pool.splice(pool.indexOf(nx), 1); } s.layout = keep; }
-    if (o.daysRaw && o.daysRaw !== L && o.daysRaw <= 7) guard.push(`You said ${o.daysRaw} days but listed ${L} sessions, so I followed the sessions you listed.`);
-    o.daysRaw = s.layout.length;
+    const L = s.layout.length;
+    if (o.daysRaw && o.daysRaw !== L && o.daysRaw <= 7 && L <= 7) guard.push(`You mentioned ${o.daysRaw} days and listed ${L} sessions, so I built the ${L} sessions you listed.`);
+    if (o.daysRaw && o.daysRaw < L && L > 7) s.doubleDays = o.daysRaw;
+    o.daysRaw = L;
   }
   let days = pick('days', o.daysRaw);
   if (days != null) {
-    days = +days;
-    const begOver = s.level === 'beginner' && days > 4;
-    if (begOver) guard.push(`You asked for ${days} sessions a week. As a beginner, 3-4 full-body sessions give faster progress with far less risk of burning out or getting hurt, so I set 4. Fill other days with walks or yoga if you want to move more.`);
-    else if (days > 7) guard.push(`You asked for ${days} sessions a week. I've set ${s.level === 'beginner' ? 4 : 6}: muscles need around 48 hours to recover between hard sessions, and more than 6 a week adds fatigue faster than it adds results.`);
-    else if (days === 7) guard.push('Training 7 days a week leaves no full rest day, so I set 6. Use the 7th day for a walk, yoga or stretching instead.');
-    if (days < 2) guard.push('One session a week can maintain fitness but rarely builds it, so I set 2. Twice a week is the minimum the research supports for progress.');
-    days = Math.max(2, Math.min(6, days));
-    if (begOver) days = 4;
+    days = Math.max(1, Math.min(14, Math.round(+days) || 1));
+    if (s.flags.includes('doubles') && days <= 7 && !(s.layout && o.layout)) { s.doubleDays = days; days = Math.min(14, days * 2); }
+    if (days > 7) guard.push(`Heads up: ${days} sessions a week means training twice on some days. That works best with an easy session paired with a hard one, plenty of food and 8+ hours of sleep. Drop back if you feel run down.`);
+    else if (days === 7) guard.push('Heads up: with no full rest day, keep one or two sessions lighter and watch for signs of fatigue, like poor sleep or stalling lifts.');
+    else if (days === 1) guard.push('Tip: one session a week will maintain your fitness. A second session, even a short one, would speed up progress.');
+    else if (s.level === 'beginner' && days > 4) guard.push(`Tip: ${days} days is a lot for a beginner. I built it as asked, so keep the effort moderate for the first few weeks while your body adapts.`);
   }
   s.days = days || s.days || (s.sport ? 3 : s.level === 'beginner' ? 3 : 4);
-  if (s.flags.includes('doubles')) guard.push('Two sessions a day is only worth it for full-time athletes. I kept one session a day so you recover properly.');
   let wk = pick('weeks', o.weeksRaw);
-  if (wk != null) { wk = +wk; if (wk > 16) guard.push(`A ${wk}-week program would go stale. Bodies adapt to a plan in 4-12 weeks, so I built a ${s.goal === 'strength' ? 12 : 10}-week block. When it ends, build the next one from where you are.`); if (wk < 3) guard.push('Under 3 weeks is too short to see progress, so I made it 4.'); wk = wk > 16 ? (s.goal === 'strength' ? 12 : 10) : Math.max(4, wk); }
+  if (wk != null) { wk = Math.max(1, Math.min(52, Math.round(+wk) || 1)); if (wk < 3) guard.push(`Tip: ${wk} week${wk > 1 ? 's is' : ' is'} enough to get started. Most changes show up after 4-6 weeks, so consider running it again.`); }
   s.weeks = wk || s.weeks || (s.liftTarget ? 10 : s.level === 'beginner' ? 6 : s.goal === 'fitness' || s.goal === 'general' ? 6 : 8);
   let mins = pick('minutes', o.minutesRaw);
-  if (mins != null) { mins = +mins; if (mins > 105) guard.push(`${mins}-minute sessions are longer than they need to be. Effort drops off after about an hour and a half, so I capped them at 90 minutes.`); if (mins < 20) guard.push('Sessions shorter than 20 minutes leave little room for real work, so I set 20.'); mins = Math.max(20, Math.min(90, mins)); }
+  if (mins != null) { mins = Math.max(10, Math.min(240, +mins)); if (mins > 105) guard.push(`Tip: in ${mins}-minute sessions, energy usually dips after about 90 minutes, so I put the most important work first.`); }
   s.minutes = mins || s.minutes || (s.level === 'beginner' ? 45 : 60);
-  if (s.level === 'beginner' && s.minutes > 60) { const asked = mins && o.minutesRaw > 90 ? o.minutesRaw : s.minutes; if (asked !== s.minutes) guard.splice(guard.findIndex(g => g.includes('capped them at 90')), 1); guard.push(`As a beginner, sessions of about an hour are plenty, so I kept them to 60 minutes rather than ${asked}. Quality beats length while you learn the lifts.`); s.minutes = 60; }
-  if (o.minutesDelta) s.minutes = Math.max(20, Math.min(90, s.minutes + o.minutesDelta));
+  if (o.minutesDelta) s.minutes = Math.max(10, Math.min(240, s.minutes + o.minutesDelta));
   s.equip = s.equip || 'gym';
   if (s.liftTarget && s.equip !== 'gym') s.liftTarget = null;
-  if (s.flags.includes('pregnancy')) guard.push("Because you mentioned pregnancy or recovering after a baby, I've kept everything low impact with no heavy ab work. Please get the all-clear from your doctor or physio first.");
+  if (s.flags.includes('pregnancy')) guard.push("Because you mentioned pregnancy or recovering after a baby, I've kept everything low impact with no heavy ab work. Please check with your doctor or physio before you start.");
   s.guard = guard;
   s.text = [prev?.text, text].filter(Boolean).join(' / ').slice(-600);
   return s;
@@ -1187,13 +1183,14 @@ function splitPlan(s) {
     else if (N === 5) split = light ? 'mix' : 'phul';
     else split = light ? 'ul' : 'ppl';
   }
+  if (N === 1) return { seq: ['F'], label: 'full-body session', why: 'One full-body session covers every major muscle each week.' };
   let seq;
   if (split === 'full') { seq = Array(N).fill('F'); why = 'Full-body sessions hit every muscle each time you train, so even on ' + N + ' days a week each muscle is worked ' + N + ' times. That frequency is ideal for ' + (s.level === 'beginner' ? 'learning the lifts and building a base.' : 'your goal.'); }
-  else if (split === 'ul') { seq = N === 2 ? ['U', 'L'] : N === 3 ? (upF ? ['U', 'L', 'U'] : lowF ? ['L', 'U', 'L'] : ['U', 'L', 'F']) : N === 4 ? ['U', 'L', 'U', 'L'] : N === 5 ? (upF ? ['U', 'L', 'U', 'L', 'U'] : ['L', 'U', 'L', 'U', 'L']) : ['U', 'L', 'U', 'L', 'U', 'L']; why = 'An upper/lower split trains every muscle about twice a week, which research links to better results than once a week, while giving each half of the body time to recover.'; }
-  else if (split === 'ppl') { seq = N === 2 ? ['U', 'L'] : N === 3 ? ['P', 'PU', 'LG'] : N === 4 ? ['P', 'PU', 'LG', lowF ? 'LG' : 'U'] : N === 5 ? ['P', 'PU', 'LG', 'U', 'L'] : ['P', 'PU', 'LG', 'P', 'PU', 'LG']; why = N === 6 ? 'Push/pull/legs twice a week trains every muscle twice, with lots of room for volume.' : N === 3 ? 'Push/pull/legs on 3 days trains each muscle once a week. That works, but full body or upper/lower would hit muscles twice and usually gives better results.' : 'Push/pull/legs with extra upper and lower days keeps most muscles at twice a week.'; }
-  else if (split === 'bro') { seq = N <= 3 ? ['BC', 'BB', 'LG'] : N === 4 ? ['BC', 'BB', 'LG', 'BS'] : N === 5 ? ['BC', 'BB', 'LG', 'BS', 'BA'] : ['BC', 'BB', 'LG', 'BS', 'BA', 'LG']; seq = seq.slice(0, N); why = 'You asked for one muscle group a day, so that is the shape. Research favours training each muscle twice a week, so I gave every day enough volume to make each once-a-week session count' + (N === 6 ? ', with a second leg day.' : '.'); }
-  else if (split === 'phul') { seq = ['U', 'L', 'P', 'PU', 'LG']; why = 'Upper and lower days early in the week, then push, pull and legs, so every muscle is trained twice across 5 sessions.'; }
-  else { seq = ['F', 'U', 'L', 'F', s.goal === 'fitness' ? 'C' : 'F']; why = 'A mix of full-body and upper/lower days spreads the work so no muscle is hammered two days running.'; }
+  else if (split === 'ul') { seq = N === 2 ? ['U', 'L'] : N === 3 ? (upF ? ['U', 'L', 'U'] : lowF ? ['L', 'U', 'L'] : ['U', 'L', 'F']) : N === 5 ? (upF ? ['U', 'L', 'U', 'L', 'U'] : ['L', 'U', 'L', 'U', 'L']) : Array.from({ length: N }, (_, i) => i % 2 ? 'L' : 'U'); why = 'An upper/lower split trains every muscle about twice a week, which research links to better results than once a week, while giving each half of the body time to recover.'; }
+  else if (split === 'ppl') { seq = N === 2 ? ['U', 'L'] : N === 3 ? ['P', 'PU', 'LG'] : N === 4 ? ['P', 'PU', 'LG', lowF ? 'LG' : 'U'] : N === 5 ? ['P', 'PU', 'LG', 'U', 'L'] : Array.from({ length: N }, (_, i) => ['P', 'PU', 'LG'][i % 3]); why = N === 6 ? 'Push/pull/legs twice a week trains every muscle twice, with lots of room for volume.' : N === 3 ? 'Push/pull/legs on 3 days trains each muscle once a week. That works, but full body or upper/lower would hit muscles twice and usually gives better results.' : 'Push/pull/legs with extra upper and lower days keeps most muscles at twice a week.'; }
+  else if (split === 'bro') { seq = N <= 3 ? ['BC', 'BB', 'LG'] : N === 4 ? ['BC', 'BB', 'LG', 'BS'] : N === 5 ? ['BC', 'BB', 'LG', 'BS', 'BA'] : Array.from({ length: N }, (_, i) => ['BC', 'BB', 'LG', 'BS', 'BA', 'LG'][i % 6]); seq = seq.slice(0, N); why = 'You asked for one muscle group a day, so that is the shape. Research favours training each muscle twice a week, so I gave every day enough volume to make each once-a-week session count' + (N === 6 ? ', with a second leg day.' : '.'); }
+  else if (split === 'phul') { seq = N === 5 ? ['U', 'L', 'P', 'PU', 'LG'] : Array.from({ length: N }, (_, i) => ['U', 'L', 'P', 'PU', 'LG'][i % 5]); why = 'Upper and lower days early in the week, then push, pull and legs, so every muscle is trained twice across 5 sessions.'; }
+  else { seq = Array.from({ length: N }, (_, i) => ['F', 'U', 'L', 'F', s.goal === 'fitness' ? 'C' : 'F'][i % 5]); why = 'A mix of full-body and upper/lower days spreads the work so no muscle is hammered two days running.'; }
   const LOW = ['L', 'LG', 'G'], UP = ['U', 'P', 'PU', 'BC', 'BB', 'BS', 'BA', 'A'];
   const swapFor = th => {
     const cnt = arr => seq.filter(x => arr.includes(x)).length, last = arr => Math.max(...arr.map(x => seq.lastIndexOf(x)));
@@ -1234,7 +1231,7 @@ function buildCustomProgram(s) {
   // 2. sessions a bucket appears in, and sets per session
   const rate = { strength: 1 / 3.5, muscle: 1 / 3, tone: 1 / 2.4, fitness: 1 / 2.6, general: 1 / 3 }[s.goal];
   const finisher = s.goal === 'fitness' || (s.goal === 'tone' && s.minutes >= 40) || s.sport === 'field' || s.sport === 'rotational';
-  const cap = Math.max(8, Math.min(s.level === 'beginner' ? 18 : 30, Math.floor((s.minutes - 6 - (finisher ? 6 : 0)) * rate)));
+  const cap = Math.max(6, Math.min(45, Math.floor((s.minutes - 6 - (finisher ? 6 : 0)) * rate)));
   const tot = Object.keys(BK).reduce((a, b) => a + (plan.seq.some(th => THEME[th].b.includes(b)) ? want[b] : 0), 0), capW = cap * N * 0.85;
   if (tot < capW * 0.8) { const f = Math.min(1.6, capW * 0.85 / tot), hi = { muscle: 20, strength: 16, tone: 16, fitness: 12, general: 14 }[s.goal]; Object.keys(want).forEach(b => { want[b] = Math.min(BK[b].big ? (fb.has(b) ? 22 : hi) : 12, Math.round(want[b] * f)); }); }
   const dayB = plan.seq.map(th => ({ th, sets: {}, total: 0 }));
@@ -1246,12 +1243,12 @@ function buildCustomProgram(s) {
     const per = want[b] / n;
     chosen.forEach((i, k) => { const v = Math.max(2, Math.round(per + (k < (want[b] % n) ? 0.4 : 0))); dayB[i].sets[b] = v; dayB[i].total += v; });
   });
-  let trimmed = 0;
+  let trimmed = 0; const DROP = ['core', 'calves', 'rear', 'biceps', 'triceps', 'delts', 'hams', 'glutes', 'back', 'chest', 'quads'];
   dayB.forEach(d => {
     let guard = 80;
     while (d.total > cap && guard--) {
       const ks = Object.keys(d.sets), by = f => ks.filter(f).sort((a, c) => d.sets[c] - d.sets[a]);
-      const b = by(x => !fb.has(x) && !BK[x].big && d.sets[x] > 2)[0] || by(x => !fb.has(x) && BK[x].big && d.sets[x] > 2)[0] || by(x => !fb.has(x) && !BK[x].big)[0] || by(x => d.sets[x] > 3)[0];
+      const b = by(x => !fb.has(x) && !BK[x].big && d.sets[x] > 2)[0] || by(x => !fb.has(x) && BK[x].big && d.sets[x] > 2)[0] || by(x => !fb.has(x) && !BK[x].big)[0] || by(x => d.sets[x] > 3)[0] || (Object.keys(d.sets).length > 2 ? ks.filter(x => !fb.has(x)).sort((x, y) => DROP.indexOf(x) - DROP.indexOf(y))[0] : null);
       if (!b) break; trimmed++;
       if (d.sets[b] > 2) { d.sets[b]--; d.total--; } else { d.total -= d.sets[b]; delete d.sets[b]; }
     }
@@ -1280,7 +1277,7 @@ function buildCustomProgram(s) {
         dayUsed.add(best.id); used[best.id] = (used[best.id] || 0) + 1; if (forced.has(best.id)) placed.add(best.id);
         const k = items.length === 0 && best.type === 'compound' ? 'main' : best.type === 'compound' ? 'c' : 'i';
         const share = Math.max(2, Math.min(5, Math.round(sets / nEx + (j === 0 && sets % nEx ? 0.5 : 0))));
-        items.push({ id: best.id, sets: k === 'main' ? Math.max(share, s.level === 'beginner' ? 3 : 4) : share, reps: cpReps(best, k, s), b, iso: best.type !== 'compound', focus: fb.has(b) });
+        items.push({ id: best.id, sets: k === 'main' && cap > 8 ? Math.max(share, s.level === 'beginner' ? 3 : 4) : share, reps: cpReps(best, k, s), b, iso: best.type !== 'compound', focus: fb.has(b) });
       }
     });
     // power opener for athletes
@@ -1330,6 +1327,15 @@ function buildCustomProgram(s) {
   }
   if (deload) phases.push({ weeks: [W, W], name: 'Deload', focus: 'Half the sets, same weights, let your body recover', sets: '2 sets', reps: '8-10', rpe: 'RPE 6' });
   if (test) phases.push({ weeks: [W, W], name: 'Taper & test', focus: `Light early in the week, then work up to ${LT.w} ${u} on the ${EX[LT.lift].name.toLowerCase()}`, sets: '2-3 sets', reps: '1-3', rpe: 'RPE 6, then max' });
+  const longPlan = W > 16 && !LT;
+  if (longPlan) {
+    phases.length = 0;
+    for (let st = 1, bn = 1; st <= W; st += 6, bn++) {
+      const len = Math.min(6, W - st + 1), pre = `Block ${bn} · `, a = PH[0], b = PH[Math.min(2, bn) % 3 || 1];
+      if (len >= 4) { const l1 = Math.ceil((len - 1) / 2); phases.push({ weeks: [st, st + l1 - 1], name: pre + a[0], focus: a[1], sets: a[2], reps: a[3], rpe: a[4] }, { weeks: [st + l1, st + len - 2], name: pre + b[0], focus: b[1], sets: b[2], reps: b[3], rpe: b[4] }, { weeks: [st + len - 1, st + len - 1], name: pre + 'Deload', focus: 'Half the sets, same weights, let your body recover', sets: '2 sets', reps: '8-10', rpe: 'RPE 6' }); }
+      else phases.push({ weeks: [st, st + len - 1], name: pre + b[0], focus: b[1], sets: b[2], reps: b[3], rpe: b[4] });
+    }
+  }
   // 5. text
   const gi = GOAL_INFO[s.goal];
   const fLabel = s.focus.filter(f => FOCUS_SING[f] && !(f === 'lats' && s.focus.includes('back')) && !(['biceps', 'triceps'].includes(f) && s.focus.includes('arms')) && !(['quads', 'hams'].includes(f) && s.focus.includes('legs'))).slice(0, 2).map(f => FOCUS_SING[f]).join(' & ');
@@ -1337,7 +1343,7 @@ function buildCustomProgram(s) {
   const equipPhrase = { gym: 'a full gym', dumbbells: 'dumbbells, a bench and your body weight', home: 'dumbbells, kettlebells, bands and your body weight', bodyweight: 'just your body weight and a band' }[s.equip];
   const avoidNote = s.avoid.filter(a => a !== 'impact').length ? ` Exercises are chosen to be kind to your ${s.avoid.filter(a => a !== 'impact').join(' and ')}.` : s.avoid.includes('impact') ? ' Everything is low impact.' : '';
   const art = w => /^[aeiou]/.test(w) ? 'an' : 'a';
-  const sched = { 2: 'Mon, Thu', 3: 'Mon, Wed, Fri', 4: 'Mon, Tue, Thu, Fri', 5: 'Mon, Tue, Wed, Fri, Sat', 6: 'Mon to Sat, with Sunday off' }[N];
+  const sched = { 1: 'any day that suits you', 2: 'Mon, Thu', 3: 'Mon, Wed, Fri', 4: 'Mon, Tue, Thu, Fri', 5: 'Mon, Tue, Wed, Fri, Sat', 6: 'Mon to Sat, with Sunday off', 7: 'every day' }[N] || `${N} sessions over ${s.doubleDays || 7} days, so twice a day on ${N - (s.doubleDays || 7)} of them (for example morning and evening, at least 6 hours apart)`;
   why.push(...s.guard);
   why.push(plan.why);
   if (fb.size) { const fbig = [...fb].map(b => `${BK[b].name.toLowerCase()} about ${want[b]}`).slice(0, 3).join(', '); why.push(`Your focus areas get the most work: ${fbig} hard sets a week, split across sessions and done first while you're fresh. Around 10-20 weekly sets is where research sees the most growth.`); }
@@ -1350,7 +1356,8 @@ function buildCustomProgram(s) {
   if (s.flags.includes('older')) why.push('Strength training is one of the best things you can do for healthy ageing. Single-leg and balance work is included, and everything progresses gently.');
   if (s.avoid.some(a => a !== 'impact')) why.push(`I picked joint-friendly options for your ${s.avoid.filter(a => a !== 'impact').join(' and ')}. If anything hurts, stop that exercise and check with a physio.`);
   if (missing.length) why.push(`${missing.map(id => EX[id].name).join(', ')} need equipment you haven't got, so I used the closest alternatives.`);
-  if (deload) why.push(`Week ${W} is a deload: half the sets so fatigue drops and you start the next block fresh.`);
+  if (longPlan) why.push('The plan runs in 6-week blocks: build for five weeks, then a deload week so you start each block fresh and keep progressing.');
+  else if (deload) why.push(`Week ${W} is a deload: half the sets so fatigue drops and you start the next block fresh.`);
   if (LT) why.push(`Percentages are based on your target of ${LT.w} ${u}. If the early weeks feel too easy or hard, adjust them by 2.5-5 ${u}.`);
   why.push(`Suggested week: ${sched}.`);
   const nutrition = { muscle: 'Eat a small surplus (+200-300 kcal) with 1.6-2.2 g protein per kg body weight.', strength: 'Eat at maintenance or a small surplus. Aim for 1.6-2 g protein per kg and carbs around training.', tone: 'Eat a small deficit (300-400 kcal) and keep protein high at 1.8-2 g per kg so you keep muscle while leaning out.', fitness: 'Eat around maintenance with plenty of carbs on training days. Protein 1.6 g per kg.', general: 'Eat around maintenance, built around protein (about 1.6 g per kg), vegetables and whole foods.' }[s.goal];
@@ -1362,22 +1369,19 @@ function buildCustomProgram(s) {
   return {
     id: 'custom-' + uid(), custom: true, created: today(), spec: s,
     name, category: 'My programs', weeks: W, daysPerWeek: N, level: s.level[0].toUpperCase() + s.level.slice(1),
-    summary: `${N} days a week on ${art(plan.label)} ${plan.label}${fNames.length ? `, with extra ${fNames.join(', ')} work` : ''}. Built ${sport ? 'to support your ' + { running: 'running', field: 'sport', climbing: 'climbing', rotational: 'sport', swimming: 'swimming' }[sport[0]] : 'for ' + gi.phrase} using ${equipPhrase}, about ${s.minutes} minutes a session.${avoidNote}`,
+    summary: `${N} session${N > 1 ? 's' : ''} a week on ${art(plan.label)} ${plan.label}${fNames.length ? `, with extra ${fNames.join(', ')} work` : ''}. Built ${sport ? 'to support your ' + { running: 'running', field: 'sport', climbing: 'climbing', rotational: 'sport', swimming: 'swimming' }[sport[0]] : 'for ' + gi.phrase} using ${equipPhrase}, about ${s.minutes} minutes a session.${avoidNote}`,
     nutrition, progression, phases, days, extras, why, schedule: sched,
-    note: (s.guard.length ? s.guard[0] + ' ' : '') + `Here's what I built: ${art(plan.label)} ${plan.label}, ${N} days a week for ${W} weeks${fNames.length ? `, with your ${fNames.slice(0, 3).join(', ')} getting the most work` : ''}. "How it's built" below explains each choice.`,
+    note: (s.guard.length ? s.guard[0] + ' ' : '') + `Here's what I built: ${art(plan.label)} ${plan.label}, ${N} session${N > 1 ? 's' : ''} a week for ${W} weeks${fNames.length ? `, with your ${fNames.slice(0, 3).join(', ')} getting the most work` : ''}. "How it's built" below explains each choice.`,
   };
 }
 function cleanProgram(raw, base, s) {
   if (!raw || !Array.isArray(raw.days)) return null;
   const pool = new Set(cpPool(s).map(e => e.id));
-  const maxEx = s.minutes <= 30 ? 6 : s.minutes <= 45 ? 7 : s.minutes <= 60 ? 9 : 10;
-  const days = raw.days.slice(0, 6).map(d => ({ name: String(d?.name || 'Day').slice(0, 40), exercises: (Array.isArray(d?.exercises) ? d.exercises : []).map(x => Array.isArray(x) ? x : [x?.id, x?.sets, x?.reps, x?.superset]).filter(x => EX[x[0]] && pool.has(x[0])).slice(0, maxEx).map(x => { const r = [x[0], Math.max(1, Math.min(6, parseInt(x[1]) || 3)), String(x[2] || '8-12').slice(0, 20)]; if (x[3] && /^[A-H]$/.test(String(x[3]))) r.push(String(x[3])); return r; }) })).filter(d => d.exercises.length >= 2);
+  const maxEx = Math.max(6, Math.min(16, Math.round(s.minutes / 6)));
+  const days = raw.days.slice(0, 14).map(d => ({ name: String(d?.name || 'Day').slice(0, 40), exercises: (Array.isArray(d?.exercises) ? d.exercises : []).map(x => Array.isArray(x) ? x : [x?.id, x?.sets, x?.reps, x?.superset]).filter(x => EX[x[0]] && pool.has(x[0])).slice(0, maxEx).map(x => { const r = [x[0], Math.max(1, Math.min(10, parseInt(x[1]) || 3)), String(x[2] || '8-12').slice(0, 20)]; if (x[3] && /^[A-H]$/.test(String(x[3]))) r.push(String(x[3])); return r; }) })).filter(d => d.exercises.length >= 2);
   if (days.length < 2) return null;
   days.forEach(d => d.exercises.forEach((x, k) => { if (x[3] && !(d.exercises[k - 1]?.[3] === x[3] || d.exercises[k + 1]?.[3] === x[3])) x.length = 3; }));
-  // weekly volume ceiling: no muscle group above ~25 hard sets a week
-  const vol = {}; days.forEach(d => d.exercises.forEach(x => { const g = EX[x[0]].primary[0]; vol[g] = (vol[g] || 0) + x[1]; }));
-  Object.entries(vol).forEach(([g, v]) => { if (v > 25) { const f = 25 / v; days.forEach(d => d.exercises.forEach(x => { if (EX[x[0]].primary[0] === g) x[1] = Math.max(1, Math.round(x[1] * f)); })); } });
-  const W = Math.max(4, Math.min(16, parseInt(raw.weeks) || base.weeks));
+  const W = Math.max(1, Math.min(52, parseInt(raw.weeks) || base.weeks));
   let phases = (Array.isArray(raw.phases) ? raw.phases : []).map(p => ({ weeks: [parseInt(p?.weeks?.[0]) || 0, parseInt(p?.weeks?.[1]) || 0], name: String(p?.name || '').slice(0, 30), focus: String(p?.focus || '').slice(0, 160), sets: String(p?.sets || '3 sets').slice(0, 20), reps: String(p?.reps || '8-12').slice(0, 20), rpe: String(p?.rpe || 'RPE 8').slice(0, 24) })).filter(p => p.name && p.weeks[0] >= 1 && p.weeks[1] >= p.weeks[0]);
   const ok = phases.length && phases[0].weeks[0] === 1 && phases[phases.length - 1].weeks[1] === W && phases.every((p, i) => !i || p.weeks[0] === phases[i - 1].weeks[1] + 1);
   if (!ok) phases = base.weeks === W ? base.phases : null;
@@ -1394,22 +1398,23 @@ async function claudeProgram(s, base, change) {
   const prompt = `You are an expert, evidence-based strength coach inside a gym app. ${change ? 'Revise this person\'s program to reflect the change they asked for, keeping everything else that still fits.' : 'Design an original multi-week program for this person, built around exactly what they asked for. Do not copy a generic template: choose the split, exercises, order, volume and progression to fit their goal, schedule, equipment, focus areas, sport, likes, dislikes and limitations.'}
 
 What they said: "${s.text}"
-${change ? `Change requested now: "${change}"\n` : ''}Settings already worked out from their words and answers (these already respect the safety limits, so keep to them): goal ${s.goal}; ${s.days} sessions a week; ${s.weeks} weeks; ${s.level}; equipment ${s.equip}; about ${s.minutes} minutes a session${s.split ? '; split they asked for: ' + s.split : ''}${s.focus.length ? '; focus: ' + s.focus.map(f => FOCUS_NAME[f] || f).join(', ') : ''}${s.sport ? '; sport: ' + s.sport : ''}${s.liftTarget ? `; lift target: ${EX[s.liftTarget.lift].name} ${s.liftTarget.w} ${unit()}` : ''}${s.avoid.length ? '; must be kind to: ' + s.avoid.join(', ') : ''}${s.include.length ? '; exercises they want in: ' + s.include.join(', ') : ''}${s.exclude.length ? '; avoid exercises named like: ' + s.exclude.join(', ') : ''}${s.themes.length ? '; dedicated days they asked for: ' + s.themes.map(x => THEME[x].name).join(', ') : ''}${s.layout ? '; EXACT weekly session layout they asked for (keep these session types and this count): ' + s.layout.map(x => THEME[x].name).join(', ') : ''}.
-${s.guard.length ? 'Limits I applied to their request (mention these kindly in the note): ' + s.guard.join(' ') : ''}
+${change ? `Change requested now: "${change}"\n` : ''}Settings already worked out from their words and answers (taken from what they asked for, so keep to them exactly): goal ${s.goal}; ${s.days} sessions a week; ${s.weeks} weeks; ${s.level}; equipment ${s.equip}; about ${s.minutes} minutes a session${s.split ? '; split they asked for: ' + s.split : ''}${s.focus.length ? '; focus: ' + s.focus.map(f => FOCUS_NAME[f] || f).join(', ') : ''}${s.sport ? '; sport: ' + s.sport : ''}${s.liftTarget ? `; lift target: ${EX[s.liftTarget.lift].name} ${s.liftTarget.w} ${unit()}` : ''}${s.avoid.length ? '; must be kind to: ' + s.avoid.join(', ') : ''}${s.include.length ? '; exercises they want in: ' + s.include.join(', ') : ''}${s.exclude.length ? '; avoid exercises named like: ' + s.exclude.join(', ') : ''}${s.themes.length ? '; dedicated days they asked for: ' + s.themes.map(x => THEME[x].name).join(', ') : ''}${s.layout ? '; EXACT weekly session layout they asked for (keep these session types and this count): ' + s.layout.map(x => THEME[x].name).join(', ') : ''}.
+${s.guard.length ? 'Tips already noted for them (keep their request as it is; you may mention these kindly): ' + s.guard.join(' ') : ''}
 
-Evidence-based rules you must follow:
-- Train each muscle about twice a week where the schedule allows; 2-6 sessions a week, one session a day, never more.
-- Weekly hard sets per muscle: roughly 6-10 for maintenance, 10-20 for growth (focus muscles toward the top), never above 25. Beginners sit at the lower end.
+The person's request always wins. Give them exactly what they asked for (number of sessions, session types, length, weeks, exercises, volume), even where it differs from typical advice. Never reduce or change something they asked for; if it goes against the evidence, build it anyway and add a short, kind tip in "why".
+Use these evidence-based defaults only for details they did not specify:
+- Train each muscle about twice a week where the schedule allows. If there are more than 7 sessions, pair a lighter session with a harder one on double days.
+- Weekly hard sets per muscle: roughly 6-10 for maintenance, 10-20 for growth (focus muscles toward the top). Beginners sit at the lower end.
 - Fit the session length: about 2.5-3.5 minutes per set including rest. Put focus muscles and big compound lifts early in the session, isolation work after.
 - Rep ranges suit the goal (strength: main lifts 3-6 reps; muscle: 6-15 near failure; toning: 10-15 with short rests and supersets; fitness: strength then a conditioning finisher).
-- Phases must cover every week from 1 to ${s.weeks} with no gaps; include a deload (or a taper and test week for a lift target) in the final week of blocks of 6+ weeks.
+- Phases must cover every week from 1 to ${s.weeks} with no gaps; include a deload (or a taper and test week for a lift target) in the final week of blocks of 6+ weeks, and a deload about every 6 weeks in longer plans, unless they asked otherwise.
 - Only use exercise ids from the catalogue (already filtered to their equipment). Include exercises they asked for; never include ones they want to avoid.
 - Supersets: give both exercises the same capital letter (A, B...) as the 4th element; otherwise leave it out. Reps are short strings like "8-12", "10 each" or "30s".
 
 ${change ? 'Current program' : 'A rule-based draft (only for reference; you should design your own and improve on it)'} (JSON):
 ${slim(base)}
 
-Reply with JSON only: {"note": "two or three friendly sentences on how this program fits what they asked for${change ? ' and what changed' : ''}", "name": "a short, specific name", "weeks": ${s.weeks}, "summary": "...", "nutrition": "...", "progression": "...", "why": ["4-7 short sentences explaining the key choices: split and frequency, weekly sets for their focus, exercise choices, rep ranges, deload, and any limits applied"], "schedule": "e.g. Mon, Wed, Fri", "phases": [{"weeks": [1, 3], "name": "...", "focus": "...", "sets": "3 sets", "reps": "8-12", "rpe": "RPE 7-8"}], "days": [{"name": "...", "exercises": [["id", 3, "8-12", "A"]]}], "extras": ["1-3 activities to do outside the gym"]}
+Reply with JSON only: {"note": "two or three friendly sentences on how this program fits what they asked for${change ? ' and what changed' : ''}", "name": "a short, specific name", "weeks": ${s.weeks}, "summary": "...", "nutrition": "...", "progression": "...", "why": ["4-7 short sentences explaining the key choices: split and frequency, weekly sets for their focus, exercise choices, rep ranges, deload, and tips where their request differs from typical advice"], "schedule": "e.g. Mon, Wed, Fri", "phases": [{"weeks": [1, 3], "name": "...", "focus": "...", "sets": "3 sets", "reps": "8-12", "rpe": "RPE 7-8"}], "days": [{"name": "...", "exercises": [["id", 3, "8-12", "A"]]}], "extras": ["1-3 activities to do outside the gym"]}
 
 Catalogue (id|name|primary muscles|equipment|type|pattern):
 ${catalogue}`;

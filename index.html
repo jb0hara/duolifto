@@ -133,13 +133,16 @@ textarea { resize: vertical; min-height: 64px; }
 .big { font-family: var(--font-display); font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; }
 .big small { font-size: 14px; color: var(--muted); font-weight: 600; }
 
-.heat { display: grid; grid-template-rows: repeat(7, 1fr); grid-auto-flow: column; gap: 3px; }
-.heat i { width: 100%; aspect-ratio: 1; border-radius: 3px; background: var(--surface-2); }
-.heat i.on { background: var(--good); }
-.heat i.act { background: var(--act); }
+.cal-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; text-align: center; }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.cal b { font-size: 11px; color: var(--muted); text-align: center; font-weight: 600; }
+.cal button, .cal span { aspect-ratio: 1; max-height: 52px; width: 100%; border-radius: 8px; border: 0; background: var(--surface-2); color: var(--fg); font: 600 13px/1 var(--font-body); font-variant-numeric: tabular-nums; display: flex; align-items: center; justify-content: center; padding: 0; min-width: 0; }
+.cal .on { background: var(--good); color: var(--surface); } .cal .act { background: var(--act); color: var(--surface); }
+.cal .both { background: linear-gradient(135deg, var(--good) 50%, var(--act) 50%); color: var(--surface); }
+.cal .today { outline: 2px solid var(--fg); outline-offset: -2px; }
+.cal .future { background: transparent; color: var(--muted); opacity: .45; }
 .heatkey { display: inline-flex; align-items: center; gap: 5px; } .heatkey i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
 .actbars .list-row { gap: 10px; } .actbars .bar { flex: 1; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; } .actbars .bar i { display: block; height: 100%; background: var(--act); border-radius: 4px; }
-.heat i.today { outline: 1.5px solid var(--fg); outline-offset: -1.5px; }
 
 .chart { width: 100%; height: auto; display: block; overflow: visible; }
 .chart text { fill: var(--muted); font-size: 11px; font-family: var(--font-body); }
@@ -158,6 +161,13 @@ textarea { resize: vertical; min-height: 64px; }
 .coach .btn.primary { background: var(--on-ink); color: var(--ink); border-color: var(--on-ink); }
 .coach .btn.ghost { color: var(--on-ink); border-color: color-mix(in srgb, var(--on-ink) 30%, transparent); }
 .coach .ideas { display: flex; gap: 6px; flex-wrap: wrap; }
+.chatlog { display: flex; flex-direction: column; gap: 8px; max-height: min(52vh, 440px); overflow-y: auto; overscroll-behavior: contain; }
+.sheet .chatlog { max-height: 60vh; }
+.coach .changes { align-self: flex-start; font-size: 12.5px; opacity: .85; display: flex; flex-direction: column; gap: 2px; padding-left: 4px; }
+.coach .link { color: var(--on-ink); font-size: 12.5px; align-self: flex-start; }
+.coach .iconbtn { background: transparent; color: var(--on-ink); border-color: color-mix(in srgb, var(--on-ink) 30%, transparent); width: 32px; height: 32px; }
+.coach .typing { opacity: .7; font-style: italic; }
+.chat-in { display: flex; gap: 8px; align-items: flex-end; } .chat-in textarea { flex: 1; min-height: 44px; max-height: 140px; resize: none; } .chat-in .btn { flex: none; min-height: 44px; }
 .coach .ideas button { background: transparent; border: 1px solid color-mix(in srgb, var(--on-ink) 30%, transparent); color: var(--on-ink); border-radius: 999px; padding: 4px 10px; font-size: 12.5px; text-align: left; }
 .sugg { display: flex; flex-direction: column; gap: 6px; }
 .sugg label { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center; background: var(--surface); color: var(--fg); border-radius: 10px; padding: 9px 11px; cursor: pointer; }
@@ -262,6 +272,7 @@ ul.cues.bad li::marker { color: var(--bad); }
     <div class="brand"><span class="plate" aria-hidden="true"></span>Duolifto</div>
     <div class="row" style="gap:8px;flex-wrap:nowrap">
       <span class="sync" id="sync"><i></i><span>This device</span></span>
+      <button class="iconbtn" data-act="openChat" aria-label="Ask the coach"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></button>
       <button class="iconbtn" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button>
     </div>
   </header>
@@ -599,13 +610,13 @@ function ssLabels(items) { const out = []; blocksOf(items).forEach(([i, j], b) =
 const LS_KEY = 'ironlog.v1';
 const STANDALONE = !!window.__STANDALONE__;
 const blankDraft = () => ({ name: '', items: [], programId: null, dayIndex: null });
-const blankState = () => ({ bodyweight: [], goals: [], program: null, programHistory: [], templates: [], draft: blankDraft(), active: null, settings: { unit: 'kg', goalStyle: 'hypertrophy' }, coach: null, customPrograms: [], askSave: null });
+const blankState = () => ({ bodyweight: [], goals: [], program: null, programHistory: [], templates: [], draft: blankDraft(), active: null, settings: { unit: 'kg', goalStyle: 'hypertrophy' }, coach: null, customPrograms: [], askSave: null, chat: [] });
 let state = blankState();
 let logs = [];
 const Store = { col: null, mode: 'local', queue: Promise.resolve(), timer: null };
 function lsGet() { try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch { return null; } }
 function lsSet() { try { localStorage.setItem(LS_KEY, JSON.stringify({ state, logs })); } catch {} }
-function normalize(s) { const b = blankState(); s = Object.assign(b, s || {}); s.settings = Object.assign(blankState().settings, s.settings || {}); s.draft = Object.assign(blankDraft(), s.draft || {}); return s; }
+function normalize(s) { const b = blankState(); s = Object.assign(b, s || {}); s.settings = Object.assign(blankState().settings, s.settings || {}); s.draft = Object.assign(blankDraft(), s.draft || {}); s.chat = (Array.isArray(s.chat) ? s.chat : []).filter(m => m && !m.pending && (m.text || m.items)); return s; }
 function enqueue(fn) { Store.queue = Store.queue.then(fn).then(() => setSync(true, 'Synced')).catch(err => { console.warn('save failed', err); setSync(false, 'Saved on this device'); }); return Store.queue; }
 function saveState(immediate) {
   lsSet();
@@ -722,7 +733,7 @@ function barChart(vals, target, labels) {
 }
 
 // ---------- UI state ----------
-const ui = { tab: 'home', q: '', selG: new Set(), selSG: new Set(), selM: new Set(), match: 'any', scope: 'primary', equip: new Set(), type: 'all', showMore: false, progCat: 'All', progressEx: null, coachText: '', coachBusy: false, timerEnd: 0, timerDur: 90 };
+const ui = { tab: 'home', q: '', selG: new Set(), selSG: new Set(), selM: new Set(), match: 'any', scope: 'primary', equip: new Set(), type: 'all', showMore: false, progCat: 'All', progressEx: null, chatText: '', chatBusy: false, calMonth: null, timerEnd: 0, timerDur: 90 };
 const TABS = [
   ['home', 'Home', '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],
   ['exercises', 'Exercises', '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'],
@@ -737,6 +748,7 @@ function render() {
   renderTabs();
   $('#view').innerHTML = ({ home: viewHome, exercises: viewExercises, workout: viewWorkout, programs: viewPrograms, progress: viewProgress })[ui.tab]();
   if (ui.tab === 'exercises') renderExList();
+  document.querySelectorAll('#view .chatlog').forEach(el => el.scrollTop = el.scrollHeight);
   renderTimer();
   const cur = state.program && PROG[state.program.id];
   if (cur?.custom && !cur.saved && !cur.declined && !state.askSave && daysBetween(state.program.start, today()) >= cur.weeks * 7) { state.askSave = cur.id; ui.askedSave = false; }
@@ -780,17 +792,35 @@ function viewHome() {
   const open = state.goals.filter(g => !g.done), done = state.goals.filter(g => g.done);
   h += open.length ? `<div class="card">${open.map(g => goalRow(g, true)).join('')}</div>` : `<div class="card flat empty"><div><strong>Set your first goal</strong><div class="muted small">Track a target body weight, a lift (like a 100 kg bench), sessions per week, or anything you can measure.</div></div><button class="btn" data-act="goalSheet">Add goal</button></div>`;
   if (done.length) h += `<details class="card"><summary class="small"><strong>${done.length} completed goal${done.length > 1 ? 's' : ''}</strong></summary><div style="margin-top:12px">${done.map(g => goalRow(g, true)).join('')}</div></details>`;
-  h += `<div class="section-head"><h2>Days attended</h2><span class="small muted">${new Set(logs.map(l => l.date)).size} total</span></div><div class="card">${heatmap()}</div>`;
+  h += `<div class="section-head"><h2>Days attended</h2><span class="small muted">${new Set(logs.map(l => l.date)).size} total</span></div><div class="card">${calendar()}</div>`;
   if (state.bodyweight.length > 1) { const g = state.goals.find(g => g.type === 'bodyweight' && !g.done); h += `<div class="section-head"><h2>Body weight</h2><button class="link small" data-act="bwSheet">Log</button></div><div class="card">${lineChart(state.bodyweight.slice(-60).map(b => ({ x: b.date, y: b.kg })), { target: g ? +g.target : null, unitLabel: ' ' + unit() })}</div>`; }
   const prs = recentPRs();
   if (prs.length) h += `<div class="section-head"><h2>Recent PRs</h2></div><div class="card">${prs.map(p => `<div class="list-row"><div><strong>${esc(EX[p.exId]?.name || p.exId)}</strong><div class="small muted">${fmtD(p.date)}</div></div><div class="big">${round1(p.w)} ${unit()} × ${p.r}</div></div>`).join('')}</div>`;
   return h + '</div>';
 }
-function heatmap() {
-  const t = today(), start = addDays(mondayOf(t), -7 * 15), gym = new Set(logs.filter(l => !isAct(l)).map(l => l.date)), act = new Set(logs.filter(isAct).map(l => l.date));
-  let cells = '';
-  for (let i = 0; i < 16 * 7; i++) { const d = addDays(start, i), c = gym.has(d) ? 'on' : act.has(d) ? 'act' : ''; cells += d > t ? '<i style="visibility:hidden"></i>' : `<i class="${c} ${d === t ? 'today' : ''}" title="${fmtD(d)}${c === 'on' ? ': gym' : c ? ': activity' : ''}"></i>`; }
-  return `<div class="heat" style="grid-template-columns:repeat(16,1fr)">${cells}</div><div class="row between small muted" style="margin-top:8px"><span>${fmtD(start)}</span><span class="row" style="gap:10px"><span class="heatkey"><i style="background:var(--good)"></i>Gym</span><span class="heatkey"><i style="background:var(--act)"></i>Other activity</span></span><span>Today</span></div>`;
+function calendar() {
+  const t = today(), mon = ui.calMonth && ui.calMonth <= t.slice(0, 7) ? ui.calMonth : t.slice(0, 7);
+  const first = parseD(mon + '-01'), dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), lead = (first.getDay() + 6) % 7;
+  const byDay = {}; logs.forEach(l => { if (l.date.startsWith(mon)) (byDay[l.date] = byDay[l.date] || []).push(l); });
+  const wd = [0, 1, 2, 3, 4, 5, 6].map(i => new Date(2024, 0, 1 + i).toLocaleDateString(undefined, { weekday: 'narrow' })); // 1 Jan 2024 was a Monday
+  let cells = wd.map(w => `<b aria-hidden="true">${w}</b>`).join('') + '<i></i>'.repeat(lead);
+  for (let d = 1; d <= dim; d++) {
+    const ds = mon + '-' + pad(d), L = byDay[ds] || [], gym = L.some(l => !isAct(l)), act = L.some(isAct);
+    const cls = [gym && act ? 'both' : gym ? 'on' : act ? 'act' : '', ds === t ? 'today' : ''].join(' ').trim();
+    const label = parseD(ds).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' }) + (L.length ? ': ' + L.map(l => l.name).join(', ') : '');
+    cells += ds > t ? `<span class="future">${d}</span>` : `<button class="${cls}" data-act="calDay" data-d="${ds}" aria-label="${esc(label)}">${d}</button>`;
+  }
+  const n = Object.keys(byDay).length, title = first.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  return `<div class="cal-head"><button class="iconbtn" data-act="calMove" data-d="-1" aria-label="Previous month">‹</button><div><strong>${title}</strong><div class="small muted">${n} day${n === 1 ? '' : 's'} trained</div></div><button class="iconbtn" data-act="calMove" data-d="1" aria-label="Next month" ${mon >= t.slice(0, 7) ? 'disabled' : ''}>›</button></div>
+   <div class="cal">${cells}</div>
+   <div class="row small muted" style="gap:12px;margin-top:10px"><span class="heatkey"><i style="background:var(--good)"></i>Gym</span><span class="heatkey"><i style="background:var(--act)"></i>Other activity</span><span class="heatkey"><i style="outline:1.5px solid var(--fg);outline-offset:-1.5px"></i>Today</span><span style="margin-left:auto">Tap a day for details</span></div>`;
+}
+function daySheet(d) {
+  const L = logs.filter(l => l.date === d), bw = state.bodyweight.find(b => b.date === d), ago = daysBetween(d, today());
+  openSheet(`<div class="sheet-head"><div><div class="label">${ago === 0 ? 'Today' : ago === 1 ? 'Yesterday' : ago + ' days ago'}</div><h2>${esc(parseD(d).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }))}</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
+   <div class="stack">${L.length ? `<div class="card">${L.map(logRow).join('')}</div>` : '<div class="card flat small muted">Nothing logged on this day.</div>'}
+    ${bw ? `<div class="small muted">Body weight: <strong>${round1(bw.kg)} ${unit()}</strong></div>` : ''}
+    <button class="btn block" data-act="activitySheet" data-date="${d}">+ Log an activity on this day</button></div>`);
 }
 function recentPRs() {
   const out = [], best = {};
@@ -816,14 +846,14 @@ function actSummary(l) { return [l.minutes ? l.minutes + ' min' : '', l.km ? rou
 function actRow(l) {
   return `<div class="list-row"><div style="min-width:0"><strong>${esc(l.name)}</strong><div class="small muted">${fmtDL(l.date)} · ${actSummary(l)}</div>${l.note ? `<div class="small" style="margin-top:2px">${esc(l.note)}</div>` : ''}<div class="chips" style="margin-top:4px">${actPill(l.activity)}</div></div><button class="btn sm ghost danger" data-act="delLog" data-id="${l.id}" aria-label="Delete activity">×</button></div>`;
 }
-function activitySheet() {
+function activitySheet(date) {
   if (!ACT[ui.actType]) ui.actType = 'walking';
   if (!EFFORT[ui.actEffort]) ui.actEffort = 'moderate';
   const a = ACT[ui.actType];
   openSheet(`<div class="sheet-head"><div><div class="label">Outside the gym</div><h2>Log an activity</h2></div><button class="iconbtn" data-act="closeSheet" aria-label="Close">×</button></div>
    <div class="stack">
     <div class="field"><span class="label">What did you do?</span><div class="chips">${ACTS.map(x => `<button class="chip ${x.id === a.id ? 'on' : ''}" aria-pressed="${x.id === a.id}" data-act="selActType" data-id="${x.id}">${esc(x.name)}</button>`).join('')}</div></div>
-    <div class="grid2"><div class="field"><label class="label" for="actMin">Minutes</label><input id="actMin" type="number" inputmode="numeric" min="1" placeholder="45"></div><div class="field"><label class="label" for="actDate">Date</label><input id="actDate" type="date" value="${today()}" max="${today()}"></div></div>
+    <div class="grid2"><div class="field"><label class="label" for="actMin">Minutes</label><input id="actMin" type="number" inputmode="numeric" min="1" placeholder="45"></div><div class="field"><label class="label" for="actDate">Date</label><input id="actDate" type="date" value="${date && date <= today() ? date : today()}" max="${today()}"></div></div>
     <div class="field" id="actDistF" ${a.dist ? '' : 'hidden'}><label class="label" for="actDist">Distance (${distUnit()}, optional)</label><input id="actDist" type="number" inputmode="decimal" step="0.1" min="0" placeholder="5"></div>
     <div class="field"><span class="label">How hard was it?</span><div class="seg">${Object.entries(EFFORT).map(([k, v]) => `<button data-act="selActEffort" data-v="${k}" aria-pressed="${ui.actEffort === k}">${v}</button>`).join('')}</div></div>
     <div class="field"><label class="label" for="actName">Name (optional)</label><input id="actName" type="text" placeholder="${esc(a.name)}"></div>
@@ -967,7 +997,7 @@ function exDetail(id) {
 function viewWorkout() {
   if (state.active) return viewSession();
   const d = state.draft, ps = programStatus();
-  let h = `<div class="stack">${coachBox()}`;
+  let h = `<div class="stack">${chatBox()}`;
   h += `<div class="section-head"><h2>Your workout</h2>${d.items.length ? '<button class="link small" data-act="clearDraft">Clear</button>' : ''}</div>`;
   if (d.programId && PROG[d.programId]) h += `<div class="small muted" style="margin-top:-8px">From ${esc(PROG[d.programId].name)}${ps && ps.def.id === d.programId ? ` · ${esc(ps.phase.name)} phase: ${esc(ps.phase.sets)}, ${esc(ps.phase.rpe)}` : ''}</div>`;
   h += `<div class="row between"><span class="small muted">Recommended sets × reps for</span><div class="seg">${['strength', 'hypertrophy', 'endurance'].map(k => `<button data-act="setStyle" data-v="${k}" aria-pressed="${state.settings.goalStyle === k}">${STYLE_NAMES[k]}</button>`).join('')}</div></div>`;
@@ -1000,25 +1030,648 @@ function builderBlocks() {
   }).join('')}</div>`;
 }
 
-// Coach (chat recommender)
-const IDEAS = ['45 min push day, heavy', 'Upper chest and side delts with supersets', 'Quick 30 min legs, dumbbells only', 'Pull day for lats and biceps', 'Home workout, no equipment, full body', 'Glutes and hamstrings, knee friendly'];
-let sampleFn = null;
-function coachBox() {
-  const c = state.coach;
-  let h = `<div class="coach"><div class="row between"><strong style="font-family:var(--font-display);font-size:20px;letter-spacing:.02em">Coach</strong><span class="small" style="opacity:.7">${sampleFn ? 'Powered by Claude' : 'Instant suggestions'}</span></div>
-   <div class="bubble">What kind of session do you want? Tell me the muscles, how long you have, your equipment or your goal.</div>`;
-  if (c && c.prompt) h += `<div class="bubble me">${esc(c.prompt)}</div>`;
-  if (ui.coachBusy) h += `<div class="bubble">Putting a session together…</div>`;
-  else if (c && c.items) {
-    const labels = ssLabels(c.items);
-    h += `<div class="bubble">${esc(c.note || 'Here is what I would do. Untick anything you want to skip.')}</div>`;
-    if (c.items.length) h += `<div class="sugg">${c.items.map((it, i) => { const e = EX[it.exId]; return `<label><input type="checkbox" data-input="coachPick" data-i="${i}" ${it.pick !== false ? 'checked' : ''}><div style="min-width:0"><div style="font-weight:600"><span class="dotc" style="background:${G[e.primaryGroup].color};margin-right:6px"></span>${labels[i]} · ${esc(e.name)}</div><div class="why">${esc(it.why || e.primary.slice(0, 2).map(m => M[m].name).join(', '))}</div></div><span class="rec">${esc(it.sets)} × ${esc(it.reps)}</span></label>`; }).join('')}</div>
-     <div class="row"><button class="btn primary" style="flex:2" data-act="coachAdd">Add selected to workout</button><button class="btn ghost" style="flex:1" data-act="coachShuffle">Mix it up</button></div>`;
-  }
-  h += `<textarea id="coachText" rows="2" placeholder="e.g. 45 minute back and biceps session with supersets" data-input="coachText" aria-label="Describe your session">${esc(ui.coachText)}</textarea>
-   <button class="btn primary block" data-act="coachGo" ${ui.coachBusy ? 'disabled' : ''}>Suggest exercises</button>
-   ${!c ? `<div class="ideas">${IDEAS.map(t => `<button data-act="coachIdea" data-t="${esc(t)}">${esc(t)}</button>`).join('')}</div>` : ''}</div>`;
+// ---------- Coach: chat assistant ----------
+// One chat that reads and changes the app's data. With Claude it calls the page tools below; without Claude a rule-based parser does the same jobs.
+const IDEAS = ['45 min push day, heavy', 'Log a 5 km run yesterday', 'I weigh 80 kg today', 'How many days did I train this week?', 'Set a goal to bench 100 kg by March', 'Build me a 3 day glute program'];
+let sampleFn = null, chatCtl = null, turn = null;
+const CHAT_MAX = 40, snaps = {};
+const chatMsgs = () => state.chat || (state.chat = []);
+const did = msg => { if (turn) turn.changes.push(msg); };
+const fmtLong = s => parseD(s).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const whenWord = s => s === today() ? 'today' : s === addDays(today(), -1) ? 'yesterday' : fmtDL(s);
+function snapNow() { const { chat, ...rest } = state; return { s: JSON.stringify(rest), l: JSON.stringify(logs) }; }
+function restoreSnap(sn) {
+  const prev = JSON.parse(sn.l), before = new Map(logs.map(l => [l.id, JSON.stringify(l)])), keep = new Set(prev.map(l => l.id));
+  const gone = logs.filter(l => !keep.has(l.id)).map(l => l.id);
+  const chat = state.chat; state = normalize(JSON.parse(sn.s)); state.chat = chat; logs = prev; sortLogs();
+  gone.forEach(deleteLog); prev.forEach(l => { if (before.get(l.id) !== JSON.stringify(l)) saveLog(l); });
+  saveState(true);
+}
+
+// chat UI
+function chatBox(inSheet) {
+  const msgs = chatMsgs();
+  return `<div class="coach chat"><div class="row between" style="flex-wrap:nowrap"><strong style="font-family:var(--font-display);font-size:20px;letter-spacing:.02em">Coach</strong><span class="row" style="gap:12px;flex-wrap:nowrap"><span class="small" style="opacity:.7">${sampleFn ? 'Powered by Claude' : 'Built-in assistant'}</span>${msgs.length && !ui.chatBusy ? '<button class="link small" data-act="chatClear">Clear</button>' : ''}${inSheet ? '<button class="iconbtn ink" data-act="closeSheet" aria-label="Close">×</button>' : ''}</span></div>
+   <div class="chatlog" aria-live="polite">${chatLog()}</div>
+   <div class="chat-in"><textarea id="chatText" rows="1" placeholder="Message the coach…" data-input="chatText" aria-label="Message the coach">${esc(ui.chatText)}</textarea><span class="chat-act">${chatActBtn()}</span></div>
+   ${msgs.length ? '' : `<div class="ideas">${IDEAS.map(t => `<button data-act="chatSay" data-t="${esc(t)}">${esc(t)}</button>`).join('')}</div>`}</div>`;
+}
+const chatActBtn = () => ui.chatBusy ? '<button class="btn ghost" data-act="chatStop">Stop</button>' : '<button class="btn primary" data-act="chatSend">Send</button>';
+function fmtChat(t) { return esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/^\s*[-*•] /gm, '• ').replace(/\n/g, '<br>'); }
+function chatLog() {
+  const msgs = chatMsgs();
+  let lastItems = -1; msgs.forEach((m, i) => { if (m.items?.length) lastItems = i; });
+  let h = `<div class="bubble">Hi! Tell me what you want and I'll do it in the app: build or change today's workout, log a session, run, class or weigh-in on any date, set goals, start or change your program, or answer questions about your training.</div>`;
+  msgs.forEach((m, i) => {
+    if (m.role === 'user') { h += `<div class="bubble me">${esc(m.text)}</div>`; return; }
+    h += `<div class="bubble">${m.pending && !m.text ? `<span class="typing">${esc(m.status || 'Thinking…')}</span>` : fmtChat(m.text)}${m.pending && m.text && m.status ? `<div class="typing">${esc(m.status)}</div>` : ''}</div>`;
+    if (m.changes?.length) h += `<div class="changes">${m.changes.map(c => `<div>✓ ${esc(c)}</div>`).join('')}${m.undone ? '<em>Undone</em>' : snaps[m.id] ? `<button class="link" data-act="chatUndo" data-id="${m.id}">Undo</button>` : ''}</div>`;
+    if (m.items?.length && i === lastItems) {
+      const labels = ssLabels(m.items);
+      h += `<div class="sugg">${m.items.map((it, k) => { const e = EX[it.exId]; return e ? `<label><input type="checkbox" data-input="chatPick" data-m="${i}" data-i="${k}" ${it.pick !== false ? 'checked' : ''}><div style="min-width:0"><div style="font-weight:600"><span class="dotc" style="background:${G[e.primaryGroup].color};margin-right:6px"></span>${labels[k]} · ${esc(e.name)}</div><div class="why">${esc(it.why || e.primary.slice(0, 2).map(x => M[x].name).join(', '))}</div></div><span class="rec">${esc(it.sets)} × ${esc(it.reps)}</span></label>` : ''; }).join('')}</div>
+       <div class="row"><button class="btn primary" style="flex:2" data-act="chatAdd" data-m="${i}">${state.active ? 'Add to this workout' : 'Add selected to workout'}</button><button class="btn ghost" style="flex:1" data-act="chatShuffle" data-m="${i}">Mix it up</button></div>`;
+    }
+    if (m.buttons?.length && i === msgs.length - 1) h += `<div class="ideas">${m.buttons.map((b, k) => `<button data-act="chatBtn" data-m="${i}" data-k="${k}">${esc(b.label)}</button>`).join('')}</div>`;
+  });
   return h;
+}
+function refreshChat() {
+  document.querySelectorAll('.chatlog').forEach(el => { el.innerHTML = chatLog(); el.scrollTop = el.scrollHeight; });
+  document.querySelectorAll('.chat-act').forEach(el => el.innerHTML = chatActBtn());
+}
+function chatSheet() { openSheet(chatBox(true)); refreshChat(); setTimeout(() => $('#chatText')?.focus(), 50); }
+function openChat() {
+  if (ui.tab === 'workout' && !state.active) { const t = $('#chatText'); if (t) { t.scrollIntoView({ block: 'center', behavior: 'smooth' }); t.focus(); return; } }
+  chatSheet();
+}
+
+async function chatSend(text) {
+  text = String(text ?? ui.chatText).trim(); if (!text || ui.chatBusy) return;
+  ui.chatText = ''; const ta = $('#chatText'); if (ta) ta.value = '';
+  const msgs = chatMsgs();
+  msgs.push({ role: 'user', text });
+  const reply = { id: uid(), role: 'assistant', text: '', pending: true, status: 'Thinking…' };
+  msgs.push(reply);
+  turn = { snap: snapNow(), changes: [], buttons: [], items: null, msg: reply };
+  ui.chatBusy = true; refreshChat();
+  let done = false;
+  if (sampleFn) {
+    try { await claudeChat(reply); done = true; }
+    catch (err) {
+      if (err?.code === 'cancelled') { reply.text = (err.text || reply.text || '').trim() || 'Stopped.'; done = true; }
+      else {
+        console.warn('chat fallback', err);
+        if (['not_granted', 'tools_unavailable', 'sampling_disabled'].includes(err?.code)) sampleFn = null;
+        if (turn.changes.length) { reply.text = (err?.text || '').trim() || 'Done.'; done = true; }
+      }
+    }
+  }
+  if (!done) { reply.status = null; reply.text = ruleChat(text); }
+  reply.pending = false; delete reply.status;
+  if (turn.changes.length) { reply.changes = turn.changes; Object.keys(snaps).forEach(k => delete snaps[k]); snaps[reply.id] = turn.snap; }
+  if (turn.buttons.length) reply.buttons = turn.buttons.slice(0, 4);
+  if (turn.items) { reply.items = turn.items; reply.itemsPrompt = turn.itemsPrompt; }
+  turn = null; ui.chatBusy = false; chatCtl = null;
+  if (msgs.length > CHAT_MAX) msgs.splice(0, msgs.length - CHAT_MAX);
+  saveState(); render(); refreshChat();
+}
+
+// ---------- operations shared by Claude's tools and the rule-based parser ----------
+const EX_ALIAS = { bench: 'barbell-bench-press', 'bench press': 'barbell-bench-press', squat: 'back-squat', squats: 'back-squat', deadlift: 'conventional-deadlift', deadlifts: 'conventional-deadlift', ohp: 'overhead-press', 'shoulder press': 'overhead-press', 'military press': 'overhead-press', rdl: 'romanian-deadlift', rdls: 'romanian-deadlift', pullup: 'pull-up', pullups: 'pull-up', chinup: 'chin-up', chinups: 'chin-up', dips: 'chest-dip', dip: 'chest-dip', 'hip thrust': 'barbell-hip-thrust', 'hip thrusts': 'barbell-hip-thrust', pushup: 'push-up', pushups: 'push-up', 'leg curl': 'lying-leg-curl', 'leg curls': 'lying-leg-curl', curls: 'dumbbell-curl', 'bicep curl': 'dumbbell-curl', 'bicep curls': 'dumbbell-curl', 'lateral raise': 'dumbbell-lateral-raise', 'lateral raises': 'dumbbell-lateral-raise', 'side raises': 'dumbbell-lateral-raise', lunges: 'walking-lunge', lunge: 'walking-lunge', pulldown: 'lat-pulldown', pulldowns: 'lat-pulldown', 'tricep pushdown': 'triceps-pushdown-rope', pushdowns: 'triceps-pushdown-rope', rows: 'barbell-row', row: 'barbell-row', 'calf raise': 'standing-calf-raise', 'calf raises': 'standing-calf-raise', 'split squat': 'bulgarian-split-squat', 'split squats': 'bulgarian-split-squat', bss: 'bulgarian-split-squat' };
+const EX_STOP = new Set(['the', 'a', 'an', 'my', 'some', 'of', 'with', 'and', 'exercise', 'exercises', 'please', 'to', 'for', 'in', 'on', 'it', 'them', 'those', 'that', 'this']);
+const exWords = s => String(s).toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w && !EX_STOP.has(w)).map(stemWord);
+function exFind(q, among) {
+  if (!q) return null; q = String(q).trim();
+  const low = q.toLowerCase().replace(/[^a-z0-9 -]/g, '').trim(), direct = EX[q] || EX[low.replace(/\s+/g, '-')];
+  if (direct && (!among || among.includes(direct.id))) return direct;
+  const pool = among ? among.map(id => EX[id]).filter(Boolean) : EXERCISES;
+  const words = exWords(low); if (!words.length) return null;
+  let best = null, bs = 0;
+  pool.forEach(e => {
+    const n = exWords(e.name.replace(/-/g, ' ')), hits = words.filter(w => n.includes(w)).length; if (!hits) return;
+    let s = hits / words.length * 10 - (n.length - hits) * 0.7 + (hits === n.length ? 3 : 0) + (lastSets(e.id) ? 0.6 : 0);
+    if (s > bs) { bs = s; best = e; }
+  });
+  const alias = !among && EX_ALIAS[low.replace(/^(the|my|some) /, '')];
+  if (alias && EX[alias] && bs < 12) return EX[alias];
+  return bs >= (among ? 4 : 6) ? best : null;
+}
+const exName = id => EX[id]?.name || id;
+function pastDate(d, label = 'date') {
+  d = String(d || '').trim() || today();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || isNaN(parseD(d))) throw new Error(`The ${label} must be YYYY-MM-DD`);
+  if (d > today()) throw new Error(`${d} is in the future, so it can't be logged yet`);
+  return d;
+}
+const wItems = () => state.active ? state.active.items : state.draft.items;
+function wNew(e, sets, reps) {
+  const r = parseRec(recFor(e)), n = Math.max(1, Math.min(20, parseInt(sets) || r.sets)), rp = String(reps || r.reps).slice(0, 16);
+  if (!state.active) return { exId: e.id, sets: n, reps: rp, link: false };
+  const last = lastSets(e.id);
+  return { exId: e.id, link: false, target: rp, sets: Array.from({ length: n }, (_, k) => ({ w: last ? last.sets[Math.min(k, last.sets.length - 1)].w : '', r: firstNum(rp), done: false })) };
+}
+function wIndex(q) {
+  const items = wItems(), e = exFind(q, items.map(i => i.exId)) || exFind(q);
+  return e ? items.findIndex(i => i.exId === e.id) : -1;
+}
+function editWorkout(ops) {
+  const done = [], problems = [], act = !!state.active, where = act ? 'this workout' : 'your workout';
+  (Array.isArray(ops) ? ops : [ops]).forEach(o => {
+    try {
+      const op = String(o?.op || '').toLowerCase(), items = wItems();
+      if (op === 'clear') { if (act) throw new Error('a workout is in progress, so remove exercises one at a time or finish it'); if (items.length) { state.draft = blankDraft(); done.push('Cleared your workout'); } return; }
+      if (op === 'rename') { const n = String(o.name || '').trim().slice(0, 60); if (!n) throw new Error('give a name'); (act ? state.active : state.draft).name = n; done.push(`Named it "${n}"`); return; }
+      if (op === 'add') {
+        const e = exFind(o.exercise); if (!e) throw new Error(`no exercise called "${o.exercise}"`);
+        if (items.some(i => i.exId === e.id)) throw new Error(`${e.name} is already in ${where}`);
+        const it = wNew(e, o.sets, o.reps), pos = o.position ? Math.max(0, Math.min(items.length, parseInt(o.position) - 1)) : items.length;
+        items.splice(pos, 0, it);
+        if (o.superset_with_previous && pos > 0) items[pos - 1].link = true;
+        done.push(`Added ${e.name} (${act ? it.sets.length : it.sets} × ${act ? it.target : it.reps})`); return;
+      }
+      const targets = String(o.exercise || '').toLowerCase() === 'all' ? items.map((_, i) => i) : [wIndex(o.exercise)];
+      if (targets.some(i => i < 0) || !targets.length) throw new Error(`"${o.exercise}" isn't in ${where}`);
+      const i = targets[0], it = items[i];
+      if (op === 'remove') { const n = exName(it.exId); removeAt(items, i); done.push(`Removed ${n}`); }
+      else if (op === 'replace') {
+        const e = exFind(o.with); if (!e) throw new Error(`no exercise called "${o.with}"`);
+        const old = exName(it.exId), nw = wNew(e, o.sets || (act ? it.sets.length : it.sets), o.reps || (act ? it.target : it.reps)); nw.link = it.link; items[i] = nw;
+        done.push(`Swapped ${old} for ${e.name}`);
+      } else if (op === 'set') {
+        targets.forEach(k => {
+          const x = items[k], n = o.sets != null ? Math.max(1, Math.min(20, parseInt(o.sets) || 1)) : null, reps = o.reps != null ? String(o.reps).slice(0, 16) : null;
+          if (act) { if (n) { while (x.sets.length < n) { const l = x.sets[x.sets.length - 1] || { w: '', r: '' }; x.sets.push({ w: l.w, r: l.r, done: false }); } while (x.sets.length > n && !x.sets[x.sets.length - 1].done) x.sets.pop(); } if (reps) { x.target = reps; x.sets.forEach(s => { if (!s.done) s.r = firstNum(reps); }); } }
+          else { if (n) x.sets = n; if (reps) x.reps = reps; }
+        });
+        done.push(`${targets.length > 1 ? 'Every exercise' : exName(it.exId)} now ${o.sets != null ? parseInt(o.sets) + ' sets' : ''}${o.sets != null && o.reps != null ? ' × ' : ''}${o.reps != null ? o.reps + ' reps' : ''}`);
+      } else if (op === 'move') {
+        const to = Math.max(0, Math.min(items.length - 1, (parseInt(o.position) || 1) - 1)); const [x] = items.splice(i, 1); x.link = false; items.splice(to, 0, x);
+        done.push(`Moved ${exName(x.exId)} to position ${to + 1}`);
+      } else if (op === 'superset') {
+        const others = (Array.isArray(o.with) ? o.with : [o.with]).filter(Boolean).map(q => items[wIndex(q)]).filter(x => x && x !== it);
+        if (!others.length) throw new Error('name the exercise to superset it with');
+        others.forEach(x => items.splice(items.indexOf(x), 1));
+        const at = items.indexOf(it); items.splice(at + 1, 0, ...others);
+        for (let k = at; k < at + others.length; k++) items[k].link = true;
+        done.push(`Superset ${[it, ...others].map(x => exName(x.exId)).join(' + ')}`);
+      } else if (op === 'unsuperset') { let a = i; while (a > 0 && items[a - 1].link) a--; let b = a; while (items[b].link && b < items.length - 1) b++; for (let k = a; k <= b; k++) items[k].link = false; done.push(`Split the superset with ${exName(it.exId)}`); }
+      else throw new Error(`unknown op "${op}"`);
+    } catch (err) { problems.push(err.message); }
+  });
+  const items = wItems(); if (items.length) items[items.length - 1].link = false;
+  if (!state.active && items.length && !state.draft.name) state.draft.name = defaultName(items);
+  done.forEach(did);
+  return { done, problems };
+}
+const ACT_WORDS = [[/\b(run|runs|ran|running|jog|jogged|jogging|parkrun|sprints?)\b/, 'running'], [/\b(walk|walks|walked|walking|stroll)\b/, 'walking'], [/\b(cycl\w*|bike|biked|biking|ride|rode|spin)\b/, 'cycling'], [/\b(swim|swam|swimming|laps)\b/, 'swimming'], [/\b(hike|hiked|hiking|trek)\b/, 'hiking'], [/\b(pilates|reformer)\b/, 'pilates'], [/\byoga\b/, 'yoga'], [/\b(dance|danced|dancing|zumba|barre)\b/, 'dance'], [/\b(stretch\w*|mobility)\b/, 'stretching'], [/\b(class|bootcamp|hiit|crossfit|f45|aerobics|circuit class|body ?pump)\b/, 'class'], [/\b(tennis|football|soccer|footy|basketball|netball|golf|squash|padel|rugby|cricket|volleyball|badminton|boxing|martial arts|bjj|jiu.?jitsu|karate|climb\w*|boulder\w*|surf\w*|hockey|baseball|softball|rowing|kayak\w*|ski\w*|snowboard\w*|skat\w*|sport|game|match)\b/, 'sport']];
+function actType(s) { const t = String(s || '').toLowerCase(); if (ACT[t]) return t; const hit = ACT_WORDS.find(([re]) => re.test(t)); return hit ? hit[1] : 'other'; }
+function logActivity(o) {
+  const date = pastDate(o.date), type = actType(o.activity), a = ACT[type];
+  let km = +o.km || 0; if (!km && +o.miles) km = +o.miles * 1.60934;
+  let min = Math.round(+o.minutes || 0), guessed = false;
+  if (!(min > 0)) { min = km ? Math.round(km * ({ running: 6, walking: 12, cycling: 3, swimming: 25, hiking: 15 }[type] || 10)) : ['pilates', 'yoga', 'class', 'dance'].includes(type) ? 45 : 30; guessed = true; }
+  const nm = String(o.name || '').trim().slice(0, 40) || (type === 'other' || type === 'sport' ? (String(o.activity || '').trim().replace(/^./, c => c.toUpperCase()).slice(0, 40) || a.name) : a.name);
+  const log = { id: uid(), kind: 'activity', date, name: nm, activity: type, minutes: min, km: a.dist && km > 0 ? Math.round(km * 100) / 100 : null, effort: EFFORT[o.effort] ? o.effort : 'moderate', note: String(o.note || '').slice(0, 120), programId: null, started: Date.now(), ended: Date.now(), items: [] };
+  logs.push(log); sortLogs(); saveLog(log);
+  did(`Logged ${nm} on ${whenWord(date)} (${actSummary(log)})`);
+  return { id: log.id, guessedMinutes: guessed, minutes: min, date, name: nm };
+}
+function logBodyweight(kg, date) {
+  kg = parseFloat(kg); if (!(kg > 0 && kg < 700)) throw new Error('That body weight does not look right');
+  date = pastDate(date);
+  state.bodyweight = state.bodyweight.filter(b => b.date !== date).concat({ date, kg: round1(kg) }).sort((a, b) => a.date < b.date ? -1 : 1);
+  did(`Logged body weight ${round1(kg)} ${unit()} for ${whenWord(date)}`);
+  return { date, kg: round1(kg) };
+}
+function logWorkout(o) {
+  const date = pastDate(o.date), items = [];
+  (Array.isArray(o.exercises) ? o.exercises : []).forEach(x => {
+    const e = exFind(x?.exercise); if (!e) throw new Error(`no exercise called "${x?.exercise}"`);
+    let sets = Array.isArray(x.sets) ? x.sets.map(s => ({ w: +s?.weight || 0, r: parseInt(s?.reps) || 0, done: true })) : Array.from({ length: Math.max(1, Math.min(20, parseInt(x.sets) || 3)) }, () => ({ w: +x.weight || 0, r: parseInt(x.reps) || 0, done: true }));
+    sets = sets.filter(s => s.r > 0 || s.w > 0); if (sets.length) items.push({ exId: e.id, link: false, target: String(x.reps || sets[0].r || ''), sets });
+  });
+  if (!items.length) throw new Error('Add at least one exercise with its sets');
+  const t = parseD(date).getTime() + 12 * 3600000;
+  const log = { id: uid(), date, name: String(o.name || '').trim().slice(0, 60) || defaultName(items), programId: null, dayIndex: null, runId: null, started: t, ended: t + 3600000, items };
+  logs.push(log); sortLogs(); saveLog(log);
+  did(`Logged workout "${log.name}" on ${whenWord(date)} (${items.length} exercise${items.length > 1 ? 's' : ''})`);
+  return { id: log.id };
+}
+function deleteEntry(o) {
+  if (o.bodyweight_date) { const d = String(o.bodyweight_date), n = state.bodyweight.length; state.bodyweight = state.bodyweight.filter(b => b.date !== d); if (state.bodyweight.length === n) throw new Error('No weigh-in on ' + d); did(`Deleted the weigh-in from ${whenWord(d)}`); return 'deleted'; }
+  const l = logs.find(x => x.id === String(o.log_id)); if (!l) throw new Error('No entry with that id');
+  logs = logs.filter(x => x !== l); deleteLog(l.id); did(`Deleted ${l.name} from ${whenWord(l.date)}`); return 'deleted';
+}
+function goalOp(o) {
+  const a = String(o.action || '').toLowerCase();
+  if (a === 'add') {
+    const type = ['bodyweight', 'lift', 'attendance', 'custom'].includes(o.type) ? o.type : 'custom', target = parseFloat(o.target); if (isNaN(target)) throw new Error('A goal needs a number to aim for');
+    const deadline = /^\d{4}-\d{2}-\d{2}$/.test(o.deadline || '') ? o.deadline : null;
+    const g = { id: uid(), type, target, created: today(), deadline, history: [], done: false };
+    if (type === 'bodyweight') { const b = latestBW(); g.start = b ? b.kg : target; g.title = `Reach ${target} ${unit()} body weight`; }
+    else if (type === 'lift') { const e = exFind(o.exercise); if (!e) throw new Error(`no exercise called "${o.exercise}"`); g.exId = e.id; g.start = bestTop(e.id) || 0; g.title = `${e.name}: ${target} ${unit()}`; }
+    else if (type === 'attendance') { g.start = 0; g.title = `Train ${target} days a week`; }
+    else { g.start = parseFloat(o.start) || 0; g.unit = String(o.unit || '').slice(0, 12); g.title = String(o.title || '').slice(0, 80) || `Reach ${target}${g.unit ? ' ' + g.unit : ''}`; }
+    if (o.title && type !== 'custom') g.title = String(o.title).slice(0, 80);
+    g.history.push({ d: today(), v: g.start, note: 'Goal set' }); state.goals.push(g);
+    did(`Added goal: ${g.title}${deadline ? ' by ' + fmtD(deadline) : ''}`); return { id: g.id, title: g.title };
+  }
+  const g = state.goals.find(x => x.id === String(o.goal_id)); if (!g) throw new Error('No goal with that id');
+  if (a === 'delete') { state.goals = state.goals.filter(x => x !== g); did(`Deleted goal: ${g.title}`); }
+  else if (a === 'complete' || a === 'reopen') { g.done = a === 'complete'; g.history.push({ d: today(), v: '', note: g.done ? 'Marked complete' : 'Reopened' }); did(`${g.done ? 'Completed' : 'Reopened'} goal: ${g.title}`); }
+  else if (a === 'update') {
+    const parts = [];
+    if (o.target != null && !isNaN(parseFloat(o.target)) && +o.target !== +g.target) { g.history.push({ d: today(), v: '', note: `Target changed from ${g.target} to ${+o.target}` }); g.target = +o.target; if (g.type === 'bodyweight') g.title = `Reach ${g.target} ${unit()} body weight`; else if (g.type === 'lift') g.title = `${exName(g.exId)}: ${g.target} ${unit()}`; else if (g.type === 'attendance') g.title = `Train ${g.target} days a week`; parts.push('target ' + g.target); }
+    if (o.deadline !== undefined) { g.deadline = /^\d{4}-\d{2}-\d{2}$/.test(o.deadline || '') ? o.deadline : null; parts.push(g.deadline ? 'deadline ' + fmtD(g.deadline) : 'no deadline'); }
+    if (o.value != null || o.note) { g.history.push({ d: today(), v: o.value != null ? +o.value : '', note: String(o.note || '').slice(0, 120) }); parts.push(o.value != null ? 'progress ' + o.value : 'note added'); }
+    did(`Updated goal ${g.title}: ${parts.join(', ') || 'no change'}`);
+  } else throw new Error('Unknown goal action');
+  return 'ok';
+}
+function progFind(q) {
+  if (!q) return null; if (PROG[q]) return PROG[q];
+  const lib = state.customPrograms.concat(PROGRAMS), w = exWords(q);
+  let best = null, bs = 0;
+  lib.forEach(p => { const n = exWords(p.name.replace(/[-/]/g, ' ') + ' ' + p.category), hits = w.filter(x => n.includes(x)).length, s = hits / Math.max(1, w.length) * 10 - (n.length - hits) * 0.2; if (hits && s > bs) { bs = s; best = p; } });
+  return bs >= 5 ? best : null;
+}
+function ownProgram() {
+  const p = state.program && PROG[state.program.id]; if (!p) throw new Error('No program is running');
+  if (p.custom) return p;
+  const np = JSON.parse(JSON.stringify(p)); Object.assign(np, { id: 'custom-' + uid(), custom: true, saved: false, forkOf: p.id, category: 'My programs', name: p.name + ' (my version)', created: today() });
+  logs.forEach(l => { if (l.programId === p.id && l.date >= state.program.start) { l.programId = np.id; saveLog(l); } });
+  if (state.draft.programId === p.id) state.draft.programId = np.id;
+  if (state.active?.programId === p.id) state.active.programId = np.id;
+  state.customPrograms.push(np); PROG[np.id] = np; state.program.id = np.id;
+  did(`Made your own copy of ${p.name} so it can be changed`);
+  return np;
+}
+function progDay(p, d) { if (d == null || d === '' || String(d).toLowerCase() === 'all') return null; const n = parseInt(d); if (n >= 1 && n <= p.days.length) return n - 1; const w = String(d).toLowerCase(); const i = p.days.findIndex(x => x.name.toLowerCase().includes(w)); if (i < 0) throw new Error(`No day "${d}" in the program`); return i; }
+function programOp(o) {
+  const a = String(o.action || '').toLowerCase();
+  if (a === 'start') {
+    const p = progFind(o.program); if (!p) throw new Error(`No program called "${o.program}"`);
+    const start = /^\d{4}-\d{2}-\d{2}$/.test(o.start_date || '') ? o.start_date : today();
+    if (state.program?.id === p.id) throw new Error(`${p.name} is already running`);
+    endProgramRecord(); state.program = { id: p.id, start, runId: uid() }; if (state.draft.programId) state.draft = blankDraft();
+    did(`Started ${p.name} from ${whenWord(start)}`); return { id: p.id, name: p.name };
+  }
+  if (a === 'end') { if (!state.program) throw new Error('No program is running'); const n = PROG[state.program.id]?.name || 'your program'; endProgramRecord(); did(`Ended ${n}`); return 'ended'; }
+  if (a === 'create') {
+    const req = String(o.request || '').trim(); if (!req) throw new Error('Describe the program in the request');
+    const spec = resolveSpec(req, null, null, null), prog = buildCustomProgram(spec);
+    ui.cp = null; const c = cpState(); c.text = req; c.draft = prog;
+    if (turn) turn.buttons.push({ label: 'Review your new program', act: 'cpShow' });
+    return { name: prog.name, weeks: prog.weeks, sessionsPerWeek: prog.daysPerWeek, days: prog.days.map(d => d.name), note: 'A draft is ready. The person reviews it, can ask for changes there, then taps Start. It is not running yet.' };
+  }
+  const p0 = state.program && PROG[state.program.id]; if (!p0) throw new Error('No program is running');
+  if (a === 'load_day') {
+    if (state.active) throw new Error('A workout is in progress; finish it first');
+    const di = progDay(p0, o.day) ?? (programStatus()?.nextDay || 0), day = p0.days[di];
+    state.draft = { name: day.name, programId: p0.id, dayIndex: di, items: day.exercises.map((x, k) => ({ exId: x[0], sets: x[1], reps: x[2], link: !!(x[3] && day.exercises[k + 1] && day.exercises[k + 1][3] === x[3]) })) };
+    did(`Loaded ${day.name} into your workout`); return 'loaded';
+  }
+  if (a === 'rebuild') {
+    if (!p0.spec) throw new Error('This program was not built from a description; change it with swap_exercise, set_exercise, add_exercise, remove_exercise or rename instead');
+    const spec = resolveSpec(String(o.request || ''), null, null, p0.spec), np = buildCustomProgram(spec);
+    Object.assign(np, { id: p0.id, saved: p0.saved, created: p0.created }); delete np.note;
+    state.customPrograms = state.customPrograms.map(x => x.id === p0.id ? np : x); PROG[np.id] = np;
+    did(`Rebuilt your program: ${np.summary.split('.')[0]}`); return { name: np.name, days: np.days.map(d => d.name) };
+  }
+  if (['swap_exercise', 'remove_exercise', 'set_exercise'].includes(a)) { const d0 = progDay(p0, o.day); if (!exFind(o.exercise, [...new Set((d0 == null ? p0.days : [p0.days[d0]]).flatMap(d => d.exercises.map(x => x[0])))])) throw new Error(`"${o.exercise}" isn't in ${d0 == null ? 'the program' : p0.days[d0].name}`); if (a === 'swap_exercise' && !exFind(o.with)) throw new Error(`no exercise called "${o.with}"`); }
+  if (a === 'add_exercise' && !exFind(o.exercise)) throw new Error(`no exercise called "${o.exercise}"`);
+  if (!['rename', 'rename_day', 'add_exercise', 'swap_exercise', 'remove_exercise', 'set_exercise'].includes(a)) throw new Error('Unknown program action');
+  const p = ownProgram();
+  if (a === 'rename') { const n = String(o.name || '').trim().slice(0, 60); if (!n) throw new Error('Give a name'); p.name = n; did(`Renamed your program to ${n}`); return 'ok'; }
+  if (a === 'rename_day') { const di = progDay(p, o.day); if (di == null) throw new Error('Say which day'); const n = String(o.name || '').trim().slice(0, 40); p.days[di].name = n; did(`Renamed day ${di + 1} to ${n}`); return 'ok'; }
+  const di = progDay(p, o.day), days = di == null ? p.days : [p.days[di]];
+  if (a === 'add_exercise') {
+    if (di == null) throw new Error('Say which day to add it to');
+    const e = exFind(o.exercise); if (!e) throw new Error(`no exercise called "${o.exercise}"`);
+    const r = parseRec(recFor(e)); p.days[di].exercises.push([e.id, Math.max(1, Math.min(10, parseInt(o.sets) || r.sets)), String(o.reps || r.reps).slice(0, 16)]);
+    did(`Added ${e.name} to ${p.days[di].name}`); return 'ok';
+  }
+  const ids = [...new Set(days.flatMap(d => d.exercises.map(x => x[0])))], e = exFind(o.exercise, ids);
+  if (!e) throw new Error(`"${o.exercise}" isn't in ${di == null ? 'the program' : p.days[di].name}`);
+  let n = 0;
+  if (a === 'swap_exercise') {
+    const w = exFind(o.with); if (!w) throw new Error(`no exercise called "${o.with}"`);
+    days.forEach(d => d.exercises.forEach(x => { if (x[0] === e.id) { x[0] = w.id; n++; } }));
+    did(`Swapped ${e.name} for ${w.name} in your program${di == null ? '' : ' (' + p.days[di].name + ')'}`);
+  } else if (a === 'remove_exercise') {
+    days.forEach(d => { const before = d.exercises.length; d.exercises = d.exercises.filter(x => x[0] !== e.id); n += before - d.exercises.length; });
+    did(`Removed ${e.name} from your program`);
+  } else if (a === 'set_exercise') {
+    days.forEach(d => d.exercises.forEach(x => { if (x[0] === e.id) { if (o.sets != null) x[1] = Math.max(1, Math.min(10, parseInt(o.sets) || x[1])); if (o.reps != null) x[2] = String(o.reps).slice(0, 16); n++; } }));
+    did(`${e.name} is now ${o.sets != null ? parseInt(o.sets) + ' sets' : ''}${o.sets != null && o.reps != null ? ' × ' : ''}${o.reps != null ? o.reps + ' reps' : ''} in your program`);
+  } else throw new Error('Unknown program action');
+  return { changed: n };
+}
+function settingsOp(o) {
+  const out = [];
+  if (o.unit && ['kg', 'lb'].includes(o.unit) && o.unit !== unit()) { state.settings.unit = o.unit; out.push(`Switched to ${o.unit}`); }
+  if (o.rep_style && STYLE_NAMES[o.rep_style] && o.rep_style !== state.settings.goalStyle) { state.settings.goalStyle = o.rep_style; out.push(`Recommended sets and reps now set for ${STYLE_NAMES[o.rep_style].toLowerCase()}`); }
+  out.forEach(did); return out.length ? out : 'no change';
+}
+const SCREENS = { home: ['Go to Home', 'tab', 'home'], exercises: ['Browse exercises', 'tab', 'exercises'], workout: ['Go to your workout', 'tab', 'workout'], programs: ['See programs', 'tab', 'programs'], progress: ['See your progress', 'tab', 'progress'], log_activity: ['Log an activity', 'activitySheet'], body_weight: ['Log body weight', 'bwSheet'], new_goal: ['Add a goal', 'goalSheet'], program_builder: ['Open the program builder', 'cpOpen'], settings: ['Open settings', 'settings'] };
+function showOp(o) {
+  if (!turn) return 'ok';
+  const e = o.exercise && exFind(o.exercise);
+  if (e) turn.buttons.push({ label: `How to do ${e.name}`, act: 'exDetail', id: e.id });
+  const pr = o.program && progFind(o.program);
+  if (pr) turn.buttons.push({ label: `View ${pr.name}`, act: 'progDetail', id: pr.id });
+  const s = SCREENS[o.screen]; if (s) turn.buttons.push({ label: s[0], act: s[1], id: s[2] });
+  return e || pr || s ? 'A button for it is shown under your reply.' : 'Nothing to show';
+}
+
+// ---------- Claude ----------
+function chatContext() {
+  const t = today(), m = mondayOf(t), ps = programStatus(), L = [];
+  L.push(`Today is ${fmtLong(t)} (${t}). Weights are in ${unit()}. Recommended sets × reps style: ${state.settings.goalStyle}.`);
+  L.push(`Days trained this week (from ${m}): ${sessionsBetween(m, t)}. This month: ${sessionsBetween(t.slice(0, 8) + '01', t)}. Week streak: ${weekStreak()}. Total days logged: ${new Set(logs.map(l => l.date)).size}.`);
+  const w = state.active || state.draft, items = wItems();
+  L.push(state.active ? `A WORKOUT IS IN PROGRESS: "${w.name}". edit_workout changes this live session.` : `Workout they are planning (not started yet)${w.name ? ': "' + w.name + '"' : ''}:`);
+  L.push(items.length ? items.map((it, i) => `  ${i + 1}. ${exName(it.exId)} [${it.exId}] ${state.active ? it.sets.length + ' sets (' + it.sets.filter(s => s.done).length + ' done) × ' + it.target : it.sets + ' × ' + it.reps}${it.link ? ' (superset with next)' : ''}`).join('\n') : '  (empty)');
+  if (ps) {
+    L.push(`Program running: ${ps.def.name} [${ps.def.id}]${ps.def.custom ? ' (their own program)' : ' (built-in; changing it makes their own copy automatically)'}. Started ${ps.p.start}, week ${ps.week} of ${ps.def.weeks}${ps.finished ? ' (finished)' : ''}, ${ps.phase.name} phase (${ps.phase.sets} of ${ps.phase.reps} at ${ps.phase.rpe}). ${ps.done}/${ps.total} sessions done, ${ps.thisWeek}/${ps.def.daysPerWeek} this week. Next up: day ${ps.nextDay + 1}.`);
+    ps.def.days.forEach((d, i) => L.push(`  Day ${i + 1} ${d.name}: ${d.exercises.map(x => `${exName(x[0])} ${x[1]}×${x[2]}`).join(', ')}`));
+  } else L.push('No program running.');
+  L.push('Programs they can start: ' + state.customPrograms.filter(p => p.saved).concat(PROGRAMS).map(p => `${p.name} [${p.id}] ${p.weeks}wk ${p.daysPerWeek}d/wk`).join('; '));
+  const goals = state.goals.map(g => { const p = goalProgress(g); return `  [${g.id}] ${g.title} (${g.type}${g.deadline ? ', by ' + g.deadline : ''}): ${round1(p.current)} of ${round1(p.target)}, ${p.pct}%${g.done ? ', completed' : ''}`; });
+  L.push(goals.length ? 'Goals:\n' + goals.join('\n') : 'No goals yet.');
+  L.push(state.bodyweight.length ? 'Recent weigh-ins: ' + state.bodyweight.slice(-6).map(b => `${b.date} ${b.kg}`).join(', ') : 'No weigh-ins yet.');
+  const recent = logs.filter(l => l.date >= addDays(t, -21)).slice(-15);
+  L.push(recent.length ? 'Entries in the last 3 weeks (use get_history for older ones):\n' + recent.map(l => `  [${l.id}] ${l.date} ${isAct(l) ? `${l.name}: ${actSummary(l)}` : `${l.name}: ${l.items.map(i => `${exName(i.exId)} ${i.sets.map(s => `${round1(s.w)}×${s.r}`).join(',')}`).join('; ')}`}`).join('\n') : 'Nothing logged in the last 3 weeks.');
+  const best = [...new Set(logs.flatMap(l => l.items.map(i => i.exId)))].filter(id => EX[id]).map(id => [id, bestTop(id)]).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  if (best.length) L.push('Heaviest sets: ' + best.map(([id, w]) => `${exName(id)} ${round1(w)}`).join(', '));
+  return L.join('\n');
+}
+const CHAT_RULES = `You are the coach built into Duolifto, a gym and fitness tracking app. You chat with the person and you can read and change their data in the app with the tools. Be a flexible assistant: work out what they want and do it the way they ask. Their request wins over typical advice; if something seems unwise, do it anyway and add a short, kind tip.
+
+How to work:
+- Act, don't ask permission. Every change you make shows under your reply with an Undo button, so just make the change. Only ask a short question when the request is truly ambiguous and a wrong guess would be unhelpful.
+- Batch work: one edit_workout call can carry many ops, so build a whole session in one call (start with {"op":"clear"} when they want a fresh session rather than additions).
+- Building a session: compounds first, isolations after, about 7-8 minutes per exercise when they give a time, 5-7 exercises otherwise, matched to their equipment, goal and current program phase. Use reps like "8-12", "5", "30s" or "10 each".
+- Dates are YYYY-MM-DD. Work out "yesterday", "Monday", "last week" from today's date. Never log anything in the future.
+- When they ask for a new multi-week program, call manage_program with action "create" and their request in their own words, then tell them to tap the button to review it. To change the program that is running, use the manage_program edit actions (or "rebuild" with a description for their own built programs).
+- Answer questions about their training from the data below; call get_history only for older entries or a lift's full history.
+- Reply in plain, friendly sentences, short (1-4 sentences unless they ask for detail). No markdown headings or tables. Say what you changed; the app lists the exact changes for them.
+- Use only exercise ids or names from the catalogue.`;
+function chatTools(reply) {
+  const step = (status, fn) => async (input) => {
+    reply.status = status; refreshChat();
+    const r = fn(input || {});
+    saveState(); render(); refreshChat();
+    return r;
+  };
+  const ex = { type: 'string', description: 'Exercise id or name from the catalogue' };
+  return [
+    { name: 'get_history', description: 'Read logged entries (workouts with sets, activities) between two dates, or every logged session of one exercise. Returns a list with entry ids.', inputSchema: { type: 'object', properties: { from: { type: 'string', description: 'YYYY-MM-DD' }, to: { type: 'string', description: 'YYYY-MM-DD' }, exercise: ex } },
+      execute: step('Looking at your history…', o => {
+        if (o.exercise) { const e = exFind(o.exercise); if (!e) throw new Error('Unknown exercise'); return exHistory(e.id).slice(-30).map(h => ({ date: h.date, sets: h.sets.map(s => `${round1(+s.w)}×${s.r}`).join(', '), top: round1(h.top), e1rm: round1(h.best) })); }
+        const from = o.from || addDays(today(), -60), to = o.to || today();
+        return logs.filter(l => l.date >= from && l.date <= to).slice(-40).map(l => isAct(l) ? { id: l.id, date: l.date, activity: l.name, detail: actSummary(l) } : { id: l.id, date: l.date, workout: l.name, exercises: l.items.map(i => `${exName(i.exId)} ${i.sets.map(s => `${round1(s.w)}×${s.r}`).join(',')}`).join('; ') });
+      }) },
+    { name: 'edit_workout', description: 'Change the workout they are planning, or the live workout if one is in progress. Takes a list of ops applied in order. Returns what was done and any problems.', inputSchema: { type: 'object', properties: { ops: { type: 'array', items: { type: 'object', properties: {
+      op: { type: 'string', enum: ['add', 'remove', 'replace', 'set', 'move', 'superset', 'unsuperset', 'clear', 'rename'] }, exercise: { type: 'string', description: 'Exercise id or name; "all" with set changes every exercise' }, with: { description: 'replace: the new exercise. superset: exercise(s) to pair with it', type: ['string', 'array'] }, sets: { type: 'integer' }, reps: { type: 'string' }, position: { type: 'integer', description: '1-based' }, superset_with_previous: { type: 'boolean' }, name: { type: 'string', description: 'rename: workout name' } }, required: ['op'] } } }, required: ['ops'] },
+      execute: step('Updating your workout…', o => editWorkout(o.ops)) },
+    { name: 'log_entry', description: 'Log something done on a date: type "activity" (walk, run, Pilates, yoga, class, sport...), "bodyweight", or "workout" (a past gym session with its exercises and sets).', inputSchema: { type: 'object', properties: {
+      type: { type: 'string', enum: ['activity', 'bodyweight', 'workout'] }, date: { type: 'string', description: 'YYYY-MM-DD, default today' }, activity: { type: 'string', description: 'What they did, in their words' }, minutes: { type: 'number' }, km: { type: 'number' }, effort: { type: 'string', enum: ['easy', 'moderate', 'hard'] }, name: { type: 'string' }, note: { type: 'string' }, weight: { type: 'number', description: 'bodyweight' },
+      exercises: { type: 'array', items: { type: 'object', properties: { exercise: ex, sets: { description: 'Number of sets, or a list of {weight, reps}', type: ['integer', 'array'] }, reps: { type: 'integer' }, weight: { type: 'number' } } } } }, required: ['type'] },
+      execute: step('Logging it…', o => o.type === 'bodyweight' ? logBodyweight(o.weight, o.date) : o.type === 'workout' ? logWorkout(o) : logActivity(o)) },
+    { name: 'delete_entry', description: 'Delete a logged workout or activity by its id, or a weigh-in by its date.', inputSchema: { type: 'object', properties: { log_id: { type: 'string' }, bodyweight_date: { type: 'string' } } },
+      execute: step('Deleting it…', deleteEntry) },
+    { name: 'manage_goal', description: 'Add, update, complete, reopen or delete a goal. Types: bodyweight (target weight), lift (exercise + target weight), attendance (days a week), custom (title, unit, start, target).', inputSchema: { type: 'object', properties: {
+      action: { type: 'string', enum: ['add', 'update', 'complete', 'reopen', 'delete'] }, goal_id: { type: 'string' }, type: { type: 'string', enum: ['bodyweight', 'lift', 'attendance', 'custom'] }, target: { type: 'number' }, exercise: ex, deadline: { type: 'string', description: 'YYYY-MM-DD' }, title: { type: 'string' }, unit: { type: 'string' }, start: { type: 'number' }, value: { type: 'number', description: 'update: new progress value for custom goals' }, note: { type: 'string' } }, required: ['action'] },
+      execute: step('Updating your goals…', goalOp) },
+    { name: 'manage_program', description: 'Programs. start (program id or name, optional start_date), end, create (a new custom program from "request"; it opens as a draft to review), load_day (put a program day into the workout), and edits to the running program: swap_exercise (exercise -> with), set_exercise (sets/reps), add_exercise, remove_exercise (optional day = number or name; default every day), rename, rename_day, rebuild (their own built program, from a "request" describing the change).', inputSchema: { type: 'object', properties: {
+      action: { type: 'string', enum: ['start', 'end', 'create', 'load_day', 'swap_exercise', 'set_exercise', 'add_exercise', 'remove_exercise', 'rename', 'rename_day', 'rebuild'] }, program: { type: 'string' }, start_date: { type: 'string' }, request: { type: 'string' }, day: { type: 'string' }, exercise: ex, with: ex, sets: { type: 'integer' }, reps: { type: 'string' }, name: { type: 'string' } }, required: ['action'] },
+      execute: step('Updating your program…', programOp) },
+    { name: 'change_settings', description: 'Change the weight unit (kg or lb) or the rep style used for recommended sets and reps.', inputSchema: { type: 'object', properties: { unit: { type: 'string', enum: ['kg', 'lb'] }, rep_style: { type: 'string', enum: ['strength', 'hypertrophy', 'endurance'] } } },
+      execute: step('Changing settings…', settingsOp) },
+    { name: 'show', description: 'Put a button under your reply that opens a screen, an exercise\'s how-to and muscle map, or a program\'s details.', inputSchema: { type: 'object', properties: { screen: { type: 'string', enum: Object.keys(SCREENS) }, exercise: ex, program: { type: 'string' } } },
+      execute: step('…', showOp) },
+  ];
+}
+async function claudeChat(reply) {
+  const catalogue = EXERCISES.map(e => `${e.id}|${e.name}|${G[e.primaryGroup].name}|${TAX.equipment[e.equipment]}|${e.type}`).join('\n');
+  const head = `${CHAT_RULES}\n\nTheir data right now:\n${chatContext()}\n\nExercise catalogue (id|name|main group|equipment|type):\n${catalogue}\n\nThe conversation follows.`;
+  const hist = chatMsgs().filter(m => m !== reply && m.text && !m.pending).slice(-14).map(m => ({ role: m.role, content: m.role === 'assistant' && m.changes?.length ? `${m.text}\n[Changes made: ${m.changes.join('; ')}${m.undone ? ' (the person undid these)' : ''}]` : m.text }));
+  const ctl = chatCtl = new AbortController();
+  const { text } = await sampleFn([{ role: 'user', content: head }, ...hist], { tools: chatTools(reply), modelTier: 'default', effort: 'low', signal: ctl.signal, onText: ({ text }) => { reply.text = text; refreshChat(); } });
+  reply.text = String(text || '').trim() || (turn.changes.length ? 'Done.' : 'Sorry, I lost my train of thought. Could you say that again?');
+}
+
+// ---------- rule-based assistant (no Claude) ----------
+const WD_FULL = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+const MON3 = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const MRE = '(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\.?';
+function parseWhen(t) {
+  const td = today(); let m;
+  if (/\bday before yesterday\b/.test(t)) return addDays(td, -2);
+  if (/\byesterday\b|\blast night\b/.test(t)) return addDays(td, -1);
+  if (/\b(today|this morning|tonight|this afternoon|this evening)\b/.test(t)) return td;
+  if ((m = t.match(/\b(\d+) days? ago\b/))) return addDays(td, -m[1]);
+  if (/\b(a|one) week ago\b/.test(t)) return addDays(td, -7);
+  if ((m = t.match(/\b(\d{4})-(\d{2})-(\d{2})\b/))) return m[0] <= td ? m[0] : null;
+  if ((m = t.match(/\b(last |this |on |on the )?(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b/))) { let back = (parseD(td).getDay() - WD_FULL.indexOf(m[2]) + 7) % 7; if (m[1] === 'last ' && back === 0) back = 7; return addDays(td, -back); }
+  const ymd = (d, mo, y) => { const yy = y ? (+y < 100 ? 2000 + +y : +y) : +td.slice(0, 4); let s = `${yy}-${pad(mo)}-${pad(d)}`; if (!y && s > td) s = `${yy - 1}-${pad(mo)}-${pad(d)}`; return isNaN(parseD(s)) || +d > 31 || mo > 12 || mo < 1 ? null : s; };
+  if ((m = t.match(new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?(?: of)? ${MRE}(?: (\\d{4}))?`)))) return ymd(m[1], MON3.indexOf(m[2]) + 1, m[3]);
+  if ((m = t.match(new RegExp(`\\b${MRE} (\\d{1,2})(?:st|nd|rd|th)?\\b(?:,? (\\d{4}))?`)))) return ymd(m[2], MON3.indexOf(m[1]) + 1, m[3]);
+  if ((m = t.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/))) return ymd(m[1], +m[2], m[3]);
+  return null;
+}
+function parseDeadline(t) {
+  const td = today(); let m;
+  if ((m = t.match(/\bin (\d+) (day|week|month)s?\b/))) { const n = +m[1]; if (m[2] === 'month') { const d = parseD(td); d.setMonth(d.getMonth() + n); return dstr(d); } return addDays(td, n * (m[2] === 'week' ? 7 : 1)); }
+  if (/\bby (the )?end of (the )?year\b|\bby christmas\b/.test(t)) return td.slice(0, 4) + (/christmas/.test(t) ? '-12-25' : '-12-31');
+  if ((m = t.match(/\bby (\d{4}-\d{2}-\d{2})\b/))) return m[1];
+  if ((m = t.match(new RegExp(`\\b(?:by|before|until) (?:the )?(?:end of )?(\\d{1,2})?(?:st|nd|rd|th)?(?: of)? ?${MRE}(?: (\\d{4}))?`)))) {
+    const mo = MON3.indexOf(m[2]) + 1; let y = m[3] ? +m[3] : +td.slice(0, 4);
+    const dd = m[1] ? +m[1] : new Date(y, mo, 0).getDate(); let s = `${y}-${pad(mo)}-${pad(dd)}`;
+    if (!m[3] && s < td) { y++; s = `${y}-${pad(mo)}-${pad(m[1] ? dd : new Date(y, mo, 0).getDate())}`; }
+    return s;
+  }
+  return null;
+}
+const numFix = t => t.replace(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b/g, w => NUMW[w]).replace(/\bhalf an hour\b/g, '30 min').replace(/\ban hour\b/g, '60 min');
+function minutesIn(t) { let m = t.match(/(\d+(?:\.\d+)?)\s*(?:h|hr|hrs|hours?)\b(?:\s*(?:and\s*)?(\d+)\s*(?:m|min|mins|minutes?)\b)?/); if (m) return Math.round(+m[1] * 60 + (+m[2] || 0)); m = t.match(/(\d+)\s*(?:m|min|mins|minutes?)\b/); return m ? +m[1] : null; }
+function kmIn(t) { let m = t.match(/(\d+(?:\.\d+)?)\s*(?:k|km|kms|kilometers?|kilometres?)\b/); if (m) return +m[1]; m = t.match(/(\d+(?:\.\d+)?)\s*(?:mi|miles?)\b/); return m ? +m[1] * 1.60934 : null; }
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+function ruleChat(text) {
+  const parts = text.split(/(?<=[.!?;])\s+|\s+(?:and then|then also|and also)\s+/i).map(s => s.trim()).filter(Boolean);
+  const outs = parts.map(p => { try { return ruleOne(p); } catch (err) { return `I couldn't do that: ${err.message}.`; } });
+  return outs.filter(Boolean).join('\n\n');
+}
+function ruleOne(raw) {
+  const t = ' ' + numFix(raw.toLowerCase().replace(/[’']/g, "'").replace(/[!?.,;]+$/, '')) + ' ';
+  let m;
+  const items = wItems(), where = state.active ? 'this workout' : 'your workout';
+  const report = (r, ok) => ((r.done.length ? (ok || 'Done') + '. ' : '') + (r.problems.length ? cap(r.problems.join('; ')) + '.' : '')).trim();
+  // help
+  if (/^\s*(help|what can you do|how does this work|commands)\b/.test(t)) return 'You can ask me to:\n- build a session ("45 min upper body with dumbbells")\n- change your workout ("swap bench for dumbbell press", "make squats 5x5", "remove curls")\n- log things ("ran 5 km yesterday", "Pilates on Monday 50 min", "I weigh 72.4 kg")\n- set goals ("goal: squat 120 kg by June")\n- run programs ("start the 8-week push pull legs", "build me a 3 day glute program", "swap lunges for step-ups in my program")\n- answer questions ("how many days did I train this month?", "what\'s my best deadlift?")';
+  if (/^\s*(hi|hey|hello|yo|g'?day|morning|evening)\b[\s!]*$/.test(t)) return 'Hey! What do you want to do today?';
+  if (/^\s*(thanks|thank you|cheers|ta|nice|great|perfect|awesome|legend)\b/.test(t)) return 'Any time. Have a great session!';
+  // undo
+  if (/^\s*(undo|revert|take that back|undo that)\b/.test(t)) { const id = Object.keys(snaps)[0]; if (!id) return 'There is nothing I changed that I can undo right now.'; A.chatUndo({ id }); return 'Undone. Everything is back how it was before my last change.'; }
+  // settings
+  if ((m = t.match(/\b(?:use|switch to|change to|in|set (?:units? )?to)\s+(kg|kgs|kilos?|kilograms?|lb|lbs|pounds?)\b/)) && !/\b(weigh|log|goal)\b/.test(t)) { const u = /^(kg|kilo)/.test(m[1]) ? 'kg' : 'lb'; const r = settingsOp({ unit: u }); return Array.isArray(r) ? `Done, weights now show in ${u}. Numbers you've already logged stay as entered.` : `You're already using ${u}.`; }
+  if ((m = t.match(/\b(?:set|switch|change)\b.*\b(reps?|sets?|style|recommendations?)\b.*\b(strength|hypertrophy|size|muscle|endurance|toning)\b/))) { const s = { size: 'hypertrophy', muscle: 'hypertrophy', toning: 'endurance' }[m[2]] || m[2]; settingsOp({ rep_style: s }); return `Recommended sets and reps are now set up for ${STYLE_NAMES[s].toLowerCase()}.`; }
+  // body weight
+  if ((m = t.match(/\b(?:i weigh|i weighed|weighed in at|weighed|my weight is|weight is|weight was|body ?weight(?: is| was|:)?|log (?:my )?weight(?: of| as)?|weigh in(?: at)?)\s*(\d+(?:\.\d+)?)\s*(kg|kgs|kilos?|lb|lbs|pounds?)?/)) && !/\b(goal|target|aim|want to)\b/.test(t)) {
+    const r = logBodyweight(+m[1], parseWhen(t) || today());
+    const g = state.goals.find(x => x.type === 'bodyweight' && !x.done); const p = g && goalProgress(g);
+    return `Logged ${r.kg} ${unit()} for ${whenWord(r.date)}.${p ? ` You're ${p.pct}% of the way to ${g.target} ${unit()}.` : ''}`;
+  }
+  // goals
+  if (/\b(goal|target)\b/.test(t) || (/\bi want to (bench|squat|deadlift|press|weigh|lift|hit)\b/.test(t) && /\d/.test(t))) {
+    if (/\b(delete|remove|drop|cancel)\b/.test(t) || /\b(done|complete|completed|achieved|hit it|reached)\b/.test(t)) {
+      const open = state.goals.filter(g => /\b(reopen)\b/.test(t) ? g.done : !g.done); const w = exWords(t.replace(/\b(delete|remove|drop|cancel|goal|my|mark|as|done|complete|completed|achieved|reached)\b/g, ''));
+      const g = open.find(x => w.some(y => exWords(x.title).includes(y))) || (open.length === 1 ? open[0] : null);
+      if (!g) return open.length ? `Which goal? You have: ${open.map(x => x.title).join('; ')}.` : 'You have no open goals.';
+      goalOp({ action: /\b(delete|remove|drop|cancel)\b/.test(t) ? 'delete' : 'complete', goal_id: g.id });
+      return /\b(delete|remove|drop|cancel)\b/.test(t) ? `Deleted "${g.title}".` : `Marked "${g.title}" complete. Nice work!`;
+    }
+    const deadline = parseDeadline(t), tt = t.replace(/\b(by|before|until|in)\b.*$/, ' ');
+    if ((m = tt.match(/\b(\d+)\s*(?:days?|times|sessions?)\s*(?:a|per|each)\s*week\b/))) { const r = goalOp({ action: 'add', type: 'attendance', target: +m[1], deadline }); return `Goal set: ${r.title}. I'll track it from the days you log.`; }
+    if ((m = tt.match(/\b(?:weigh|weight|get (?:down|up) to|reach|hit|be)\s*(\d+(?:\.\d+)?)\s*(kg|kgs|kilos?|lb|lbs|pounds?)?\b/)) && /\b(weigh|weight|body ?weight|kg|lb|kilos|pounds)\b/.test(tt) && !/\b(bench|squat|deadlift|press|row|curl|thrust|pull|lift)\b/.test(tt)) { const r = goalOp({ action: 'add', type: 'bodyweight', target: +m[1], deadline }); return `Goal set: ${r.title}${deadline ? ' by ' + fmtD(deadline) : ''}.${latestBW() ? '' : ' Log your body weight so I can track it.'}`; }
+    if ((m = tt.match(/(\d+(?:\.\d+)?)\s*(kg|kgs|kilos?|lb|lbs|pounds?)?/))) {
+      const name = tt.replace(/\b(goal|target|aim|aiming|set|a|my|to|for|i want to|want|lift|hit|reach|get|of|is|new|add)\b/g, ' ').replace(/(\d+(?:\.\d+)?)\s*(kg|kgs|kilos?|lb|lbs|pounds?)?/g, ' ').replace(/[:,-]/g, ' ');
+      const e = exFind(name);
+      if (e) { const r = goalOp({ action: 'add', type: 'lift', exercise: e.id, target: +m[1], deadline }); return `Goal set: ${r.title}${deadline ? ' by ' + fmtD(deadline) : ''}. Your best so far is ${round1(bestTop(e.id))} ${unit()}.`; }
+      const title = raw.replace(/^\s*(set (a |my )?)?(new )?(goal|target)\s*(to|of|:)?\s*/i, '').replace(/\s+(by|before|until|in)\s.*$/i, '').trim();
+      const r = goalOp({ action: 'add', type: 'custom', target: +m[1], title: cap(title || raw).slice(0, 80), unit: m[2] || '', deadline });
+      return `Goal set: ${r.title}. Update it from Home as you go.`;
+    }
+    turnBtn('Add a goal', 'goalSheet');
+    return 'What should the goal be? For example "bench 100 kg by March", "weigh 75 kg" or "train 4 days a week".';
+  }
+  // program
+  if (/\b(programs?|programmes?)\b|\btraining plan\b/.test(t) || (/^\s*(start|begin|switch to)\b/.test(t) && progFind(t.replace(/\b(start|begin|switch to|the|please|today)\b/g, ' ')))) {
+    const ps = programStatus();
+    if (/\b(end|stop|quit|cancel|finish)\b/.test(t) && /\b(my|this|current|the)\b/.test(t)) { programOp({ action: 'end' }); return 'Program ended. It\'s saved in your past programs and your workouts stay logged.'; }
+    if (/\b(build|make|create|design|write|custom|new)\b/.test(t) && !/\b(my|current|this) (program|plan)\b/.test(t)) {
+      const r = programOp({ action: 'create', request: raw });
+      return `I've drafted "${r.name}": ${r.sessionsPerWeek} session${r.sessionsPerWeek > 1 ? 's' : ''} a week for ${r.weeks} weeks (${r.days.join(', ')}). Tap below to review it, ask for changes and start it.`;
+    }
+    if ((m = t.match(/\b(swap|replace|switch|change)\s+(.+?)\s+(?:for|with|to)\s+(.+?)\s+(?:in|on|from)\s+(?:my |the )?(?:program|programme|plan)\b(?:\s+on\s+(.+))?/))) { const r = programOp({ action: 'swap_exercise', exercise: m[2], with: altName(m[2], m[3]), day: m[4] }); return `Done, swapped in your program (${r.changed} spot${r.changed === 1 ? '' : 's'}).`; }
+    if ((m = t.match(/\b(remove|drop|take out|get rid of)\s+(.+?)\s+from\s+(?:my |the )?(?:program|programme|plan)\b/))) { programOp({ action: 'remove_exercise', exercise: m[2] }); return 'Removed it from your program.'; }
+    if ((m = t.match(/\b(?:make|change|set)\s+(?:my |the )?(?:program|programme|plan)\s+(.+)/)) || (m = t.match(/\b(?:my |the )(?:program|programme|plan)\s+(?:should|to)\s+(?:be\s+)?(.+)/))) {
+      const p = ps && PROG[ps.def.id];
+      if (p?.spec) { const r = programOp({ action: 'rebuild', request: m[1] }); return `Updated your program: ${r.days.length} days (${r.days.join(', ')}).`; }
+      if (ps) { ui.cp = null; cpState().text = `${ps.def.daysPerWeek} days a week like ${ps.def.name}, ${m[1]}`; turnBtn('Build a version of it', 'cpOpen'); return `${ps.def.name} is a built-in program, so I can swap, add or remove exercises in it ("swap lunges for step-ups in my program"). For a bigger change, build your own version.`; }
+      return 'You have no program running. Say "build me a program…" with what you want, or "start" and a program name.';
+    }
+    if (/\b(start|begin|run|switch to|do)\b/.test(t)) {
+      const name = t.replace(/\b(start|begin|run|switch to|do|the|program|programme|plan|please|i want to|can you|from|today|monday|next week)\b/g, ' ');
+      const p = progFind(name);
+      if (p) { programOp({ action: 'start', program: p.id, start_date: parseWhen(t) && parseWhen(t) <= today() ? parseWhen(t) : today() }); turnBtn('Go to Home', 'tab', 'home'); return `Started ${p.name}: ${p.daysPerWeek} days a week for ${p.weeks} weeks. Your first session is ${p.days[0].name}.`; }
+      turnBtn('See programs', 'tab', 'programs');
+      return 'Which program? Name it (for example "start the 8 week push pull legs"), or tell me what you want and I\'ll build one.';
+    }
+    if (ps) { turnBtn(`Load ${ps.def.days[ps.nextDay].name}`, 'loadProgDay', null, { day: ps.nextDay }); return `You're on ${ps.def.name}, week ${ps.week} of ${ps.def.weeks} (${ps.phase.name} phase: ${ps.phase.sets} of ${ps.phase.reps} at ${ps.phase.rpe}). ${ps.done} of ${ps.total} sessions done, ${ps.thisWeek} of ${ps.def.daysPerWeek} this week. Next up: ${ps.def.days[ps.nextDay].name}.`; }
+    turnBtn('Build my own', 'cpOpen'); turnBtn('See programs', 'tab', 'programs');
+    return 'No program is running. Pick one from Programs, say "start" and its name, or tell me what you want and I\'ll build one.';
+  }
+  // load today's program session
+  if (/\b(load|start|do|give me)\b.*\b(today'?s|next|my)\b.*\b(session|workout|day)\b/.test(t) && programStatus() && !state.active) { programOp({ action: 'load_day' }); turnBtn('Go to your workout', 'tab', 'workout'); return `${turn.changes[turn.changes.length - 1]}. Ready when you are.`; }
+  // questions
+  if (/\b(how many|how often|count)\b/.test(t) && /\b(train|trained|session|sessions|workout|workouts|days?|times|gym|went)\b/.test(t)) {
+    const td = today(), mo = mondayOf(td);
+    let a, b, label;
+    if (/\blast week\b/.test(t)) { a = addDays(mo, -7); b = addDays(mo, -1); label = 'last week'; }
+    else if (/\blast month\b/.test(t)) { const d = parseD(td); d.setDate(0); b = dstr(d); a = b.slice(0, 8) + '01'; label = 'last month'; }
+    else if (/\bthis month\b|\bmonth\b/.test(t)) { a = td.slice(0, 8) + '01'; b = td; label = 'this month'; }
+    else if (/\bthis year\b|\byear\b/.test(t)) { a = td.slice(0, 4) + '-01-01'; b = td; label = 'this year'; }
+    else if (/\b(ever|total|all time|altogether)\b/.test(t)) { a = '0000'; b = td; label = 'in total'; }
+    else { a = mo; b = td; label = 'this week'; }
+    const L = logs.filter(l => l.date >= a && l.date <= b), days = new Set(L.map(l => l.date)).size, gym = new Set(L.filter(l => !isAct(l)).map(l => l.date)).size;
+    return `You've trained on ${days} day${days === 1 ? '' : 's'} ${label}${days && gym < days ? ` (${gym} with a gym session, the rest other activities)` : ''}. Week streak: ${weekStreak()}.`;
+  }
+  if (/\b(streak)\b/.test(t)) return `Your streak is ${weekStreak()} week${weekStreak() === 1 ? '' : 's'} in a row with at least one session.`;
+  if ((m = t.match(/\b(?:what(?:'s| is)|show)\s+my\s+(?:best|pr|max|heaviest|top|personal best|1rm)\s+(?:on |for |in )?(.+)/)) || (m = t.match(/\bhow much (?:can i|do i|did i) (?:lift|bench|squat|deadlift|press)\s*(?:on |for )?(.*)/))) {
+    const q = m[1].trim() || (t.match(/\b(bench|squat|deadlift|press)\b/) || [])[1]; const e = exFind(q);
+    if (!e) return `I couldn't find "${q}". Try the exercise's name, like "barbell bench press".`;
+    const h = exHistory(e.id); if (!h.length) return `You haven't logged ${e.name} yet.`;
+    const top = h.reduce((a, b) => b.top > a.top ? b : a), best = Math.max(...h.map(x => x.best));
+    return `Your heaviest ${e.name} is ${round1(top.top)} ${unit()} (${fmtD(top.date)}), and your estimated 1-rep max is ${round1(best)} ${unit()}. You've done it ${h.length} time${h.length === 1 ? '' : 's'}.`;
+  }
+  if (/\b(last|previous|recent) (workout|session|time i trained)\b|\bwhat did i do\b/.test(t) && !/\b(delete|remove)\b/.test(t)) {
+    const when = parseWhen(t), gymOnly = /\b(workout|session)\b/.test(t), L = when ? logs.filter(l => l.date === when) : logs.filter(l => !gymOnly || !isAct(l)).slice(-1);
+    if (!L.length) return when ? `Nothing logged on ${fmtDL(when)}.` : 'You haven\'t logged anything yet.';
+    return L.map(l => isAct(l) ? `${fmtDL(l.date)}: ${l.name}, ${actSummary(l)}.` : `${fmtDL(l.date)}: ${l.name}. ${l.items.map(i => `${exName(i.exId)} ${i.sets.map(s => `${round1(s.w)}×${s.r}`).join(', ')}`).join('; ')}.`).join('\n');
+  }
+  if ((m = t.match(/\bwhen did i (?:last )?(?:do|train|hit|work)\s+(.+?)(?: last)?\s*$/))) {
+    const e = exFind(m[1]); if (e) { const h = exHistory(e.id); return h.length ? `You last did ${e.name} on ${fmtDL(h[h.length - 1].date)}: ${h[h.length - 1].sets.map(s => `${round1(+s.w)}×${s.r}`).join(', ')}.` : `You haven't logged ${e.name} yet.`; }
+    const tg = parseCoach(m[1]).targets.flatMap(targetMuscles); if (tg.length) { const l = logs.slice().reverse().find(l => l.items.some(i => EX[i.exId]?.primary.some(x => tg.includes(x)))); return l ? `You last trained that on ${fmtDL(l.date)} (${l.name}).` : 'You haven\'t trained that yet.'; }
+  }
+  if ((m = t.match(/\bhow (?:do i|to|should i)\s+(?:do |perform )?(?:a |an |the )?(.+?)\s*$/))) { const e = exFind(m[1]); if (e) { turnBtn(`How to do ${e.name}`, 'exDetail', e.id); return `Here's ${e.name}: tap below for the steps, form cues and the muscles it works.`; } }
+  // delete a logged entry
+  if ((m = t.match(/\b(delete|remove|undo|get rid of|scrap)\b.*\b(workout|session|activity|run|walk|log|entry|weigh-?in|weight|pilates|yoga|class|swim|ride)\b/)) && !/\b(from|in) (my |this |the )?(workout|session|program)\b/.test(t) && !(m[2] === 'workout' && /\b(exercise|exercises)\b/.test(t))) {
+    const when = parseWhen(t);
+    if (/\bweigh-?in|weight\b/.test(t)) { const b = when ? state.bodyweight.find(x => x.date === when) : latestBW(); if (!b) return 'I couldn\'t find that weigh-in.'; deleteEntry({ bodyweight_date: b.date }); return `Deleted the weigh-in from ${whenWord(b.date)}.`; }
+    const kind = /\b(workout|session)\b/.test(m[2]) ? 'gym' : m[2] === 'log' || m[2] === 'entry' ? 'any' : 'act';
+    const type = kind === 'act' ? actType(m[2]) : null;
+    const L = logs.filter(l => (!when || l.date === when) && (kind === 'any' || (kind === 'gym' ? !isAct(l) : isAct(l) && (m[2] === 'activity' || l.activity === type))));
+    const l = L[L.length - 1]; if (!l) return 'I couldn\'t find that entry.';
+    deleteEntry({ log_id: l.id }); return `Deleted ${l.name} from ${whenWord(l.date)}.`;
+  }
+  // log a past gym workout: "log bench 3x8 at 60kg yesterday"
+  if (/\b(log|logged|i did|did|add)\b/.test(t) && (m = t.match(/(\d+)\s*(?:x|sets? of)\s*(\d+)\s*(?:reps?)?\s*(?:at|@|with|of)?\s*(\d+(?:\.\d+)?)\s*(?:kg|kgs|kilos?|lb|lbs|pounds?)/)) && !/\b(to|into) (my |this |the )?(workout|session)\b/.test(t)) {
+    const name = t.slice(0, m.index).replace(/\b(log|logged|i did|did|add|yesterday|today|on|of)\b/g, ' '); const e = exFind(name);
+    if (e) { const when = parseWhen(t) || today(); logWorkout({ date: when, exercises: [{ exercise: e.id, sets: +m[1], reps: +m[2], weight: +m[3] }] }); return `Logged ${e.name} ${m[1]}×${m[2]} at ${m[3]} ${unit()} for ${whenWord(when)}.`; }
+  }
+  // log an activity
+  const actHit = ACT_WORDS.find(([re]) => re.test(t));
+  const logVerb = /\b(log|logged|did|went|done|had|just|finished|completed|ran|walked|swam|rode|hiked|biked|cycled|jogged|played|this morning|last night|ago)\b/.test(t) || (parseWhen(t) && parseWhen(t) !== today());
+  if (actHit && (logVerb || ((minutesIn(t) || kmIn(t)) && !parseCoach(t).targets.length && !/\b(session|workout)\b/.test(t))) && !/\b(how|what|should|recommend|suggest|plan)\b/.test(t)) {
+    const when = parseWhen(t) || today();
+    if (when > today()) return 'That date is in the future, so I can only log it once it\'s happened.';
+    const word = (t.match(actHit[0]) || [''])[0];
+    const r = logActivity({ activity: actHit[1] === 'sport' || actHit[1] === 'class' ? word : actHit[1], minutes: minutesIn(t), km: kmIn(t), date: when, effort: /\b(easy|light|gentle|relaxed|slow)\b/.test(t) ? 'easy' : /\b(hard|tough|intense|brutal|killer|fast|tempo|sprint)\b/.test(t) ? 'hard' : 'moderate' });
+    return `Logged ${r.name} for ${whenWord(r.date)}${r.guessedMinutes ? `. I put ${r.minutes} minutes; tell me if it was different` : ''}. It counts toward your days this week.`;
+  }
+  // workout edits
+  if (/^\s*(clear|empty|reset|wipe|start over)\b/.test(t) || /\b(clear|empty|reset|wipe)\b.*\b(workout|session)\b/.test(t)) { const r = editWorkout([{ op: 'clear' }]); return r.done.length ? 'Cleared your workout. What do you want to train?' : report(r) || 'Your workout is already empty.'; }
+  if ((m = t.match(/\b(?:swap|replace|switch|change|sub|substitute)\s+(?:out\s+)?(?:the\s+)?(.+?)\s+(?:for|with|to|into)\s+(.+?)\s*$/))) {
+    const i = wIndex(m[1]);
+    if (i < 0) { const ps = programStatus(); if (ps && exFind(m[1], [...new Set(ps.def.days.flatMap(d => d.exercises.map(x => x[0])))])) { const r = programOp({ action: 'swap_exercise', exercise: m[1], with: altName(m[1], m[2]) }); return `It's not in ${where}, so I swapped it in your program (${r.changed} spot${r.changed === 1 ? '' : 's'}).`; } return `${cap(m[1])} isn't in ${where}.`; }
+    const r = editWorkout([{ op: 'replace', exercise: items[i].exId, with: altName(items[i].exId, m[2]) }]); return report(r, r.done[0]);
+  }
+  if ((m = t.match(/\b(?:remove|delete|drop|take out|get rid of|skip|no more|cut)\s+(?:the\s+)?(.+?)(?:\s+(?:from|in|out of)\s+(?:my |the |this )?(?:workout|session))?\s*$/))) {
+    if (/^(all|everything|it all)$/.test(m[1].trim())) return report(editWorkout([{ op: 'clear' }]), 'Cleared your workout');
+    const r = editWorkout([{ op: 'remove', exercise: m[1] }]); return report(r, r.done[0]);
+  }
+  if ((m = t.match(/(\d+)\s*(?:x|×|sets? of|by)\s*(\d+(?:\s*-\s*\d+)?|\d+s)\b/)) && /\b(make|set|change|do|switch|put|all|everything|every)\b/.test(t) && !/\badd\b/.test(t)) {
+    const rest = t.replace(m[0], ' ').replace(/\b(make|set|change|do|switch|put|it|to|the|reps?|sets?|for|on|my|please)\b/g, ' ').trim();
+    const ex = /\b(all|everything|every exercise|each)\b/.test(rest) || !rest ? 'all' : rest;
+    const r = editWorkout([{ op: 'set', exercise: ex, sets: +m[1], reps: m[2].replace(/\s/g, '') }]); return report(r, r.done[0]);
+  }
+  if ((m = t.match(/\b(?:add|do)\s+(?:another|one more|an extra|1 more|1 extra)\s+set\s+(?:to|of|on|for)\s+(.+?)\s*$/)) || (m = t.match(/\b(?:remove|drop|take off|one less)\s+(?:a|one|1)?\s*set\s+(?:from|of|on|for)\s+(.+?)\s*$/))) {
+    const i = wIndex(m[1]); if (i < 0) return `${cap(m[1])} isn't in ${where}.`;
+    const cur = state.active ? items[i].sets.length : +items[i].sets || 3, r = editWorkout([{ op: 'set', exercise: items[i].exId, sets: /\b(remove|drop|take off|less)\b/.test(t) ? Math.max(1, cur - 1) : cur + 1 }]); return report(r, r.done[0]);
+  }
+  if ((m = t.match(/\b(?:make|set|change)\s+(.+?)\s+(\d+)\s+sets\b/)) || (m = t.match(/\b(\d+)\s+sets\s+(?:of|for|on)\s+(.+?)\s*$/))) { const [ex, n] = /^\d+$/.test(m[1]) ? [m[2], m[1]] : [m[1], m[2]]; const r = editWorkout([{ op: 'set', exercise: /\b(all|everything)\b/.test(ex) ? 'all' : ex, sets: +n }]); return report(r, r.done[0]); }
+  if ((m = t.match(/\b(?:superset|pair)\s+(.+?)\s+(?:with|and)\s+(.+?)\s*$/))) { const r = editWorkout([{ op: 'superset', exercise: m[1], with: m[2] }]); return report(r, r.done[0]); }
+  if ((m = t.match(/\b(?:call|name|rename)\s+(?:it|this|my workout|the workout)\s+(.+)$/))) { const r = editWorkout([{ op: 'rename', name: raw.replace(/^.*?\b(?:call|name|rename)\s+(?:it|this|my workout|the workout)\s+/i, '').replace(/^["']|["']$/g, '') }]); return report(r, r.done[0]); }
+  if ((m = t.match(/\b(?:add|include|put in|throw in|chuck in|also do|plus)\s+(?:some\s+|a\s+|an\s+)?(.+?)(?:\s+(?:to|into|in)\s+(?:my |the |this )?(?:workout|session))?\s*$/))) {
+    const sr = m[1].match(/^(.*?)\s*(\d+)\s*(?:x|×|sets? of)\s*(\S+)\s*$/), q = sr ? sr[1] : m[1];
+    const e = exFind(q);
+    if (e) { const r = editWorkout([{ op: 'add', exercise: e.id, sets: sr?.[2], reps: sr?.[3] }]); return report(r, r.done[0]); }
+    const P = parseCoach(q);
+    if (P.targets.length) { const rec = ruleRecommend(q + ' ' + (/\d+\s*exercises?/.test(q) ? '' : '2 exercises'), (Date.now() % 100000) + 1); const r = editWorkout(rec.items.map(it => ({ op: 'add', exercise: it.exId, sets: it.sets, reps: it.reps }))); return report(r, r.done.join(', ')); }
+  }
+  // build a session (the old coach)
+  const P = parseCoach(t);
+  if (P.targets.length || /\b(session|workout|routine|day|exercises|train|training|circuit)\b/.test(t)) {
+    const rec = ruleRecommend(raw, (Date.now() % 100000) + 1);
+    if (rec.items.length && turn) { turn.items = rec.items; turn.itemsPrompt = raw; }
+    return rec.items.length ? rec.note + ' Untick anything you want to skip, then add it to your workout.' : rec.note;
+  }
+  turnBtn('What can you do?', 'chatSay', null, { t: 'help' });
+  return 'I\'m not sure what you mean. Try "45 minute leg day", "ran 5 km yesterday", "swap bench for push-ups", "I weigh 70 kg" or "start the 6 week home dumbbell program".';
+}
+function turnBtn(label, act, id, extra) { if (turn) turn.buttons.push({ label, act, ...(id ? { id } : {}), ...(extra || {}) }); }
+// "swap squats for something knee friendly": when the replacement isn't a named exercise, pick an alternative for the same muscles
+function altName(from, phrase) {
+  const e = exFind(phrase); if (e) return e.id;
+  const src = EX[from] || exFind(from); if (!src) return phrase;
+  const P = parseCoach(phrase), want = P.tagWords, used = new Set(wItems().map(i => i.exId));
+  let best = null, bs = -Infinity;
+  EXERCISES.forEach(x => {
+    if (x.id === src.id || used.has(x.id)) return;
+    if (P.allow.size && !P.allow.has(x.equipment)) return; if (P.deny.has(x.equipment)) return;
+    const overlap = x.primary.filter(mm => src.primary.includes(mm)).length; if (!overlap) return;
+    let s = overlap * 2 + (x.primary[0] === src.primary[0] ? 3 : 0) + (x.pattern === src.pattern ? 2 : 0) + (x.type === src.type ? 1 : 0);
+    want.forEach(w => { if (x._s.includes(w)) s += 5; });
+    if (/\b(easier|easy|beginner|simpler)\b/.test(phrase)) s += (x.tags.includes('beginner') ? 4 : 0) - (x.tags.includes('advanced') ? 4 : 0) + (['machine', 'cable'].includes(x.equipment) ? 1 : 0);
+    if (/\b(harder|advanced|tougher)\b/.test(phrase)) s += x.tags.includes('advanced') ? 4 : 0;
+    if (/\bmachine\b/.test(phrase)) s += ['machine', 'smith'].includes(x.equipment) ? 4 : 0;
+    if (/\b(knee|back|shoulder)\b/.test(phrase)) { const j = phrase.match(/\b(knee|back|shoulder)\b/)[1]; if (x._s.includes(j + ' friendly')) s += 6; }
+    if (x.tags.some(tg => ['prehab', 'rehab', 'warm-up', 'mobility'].includes(tg))) s -= 4;
+    if (s > bs) { bs = s; best = x; }
+  });
+  return best ? best.id : phrase;
 }
 const SYN = [
   [/\bpush\b/, ['g:chest', 's:front_delts', 's:side_delts', 's:triceps']], [/\bpull\b/, ['g:back', 's:biceps', 's:rear_delts']],
@@ -1098,39 +1751,6 @@ function ruleRecommend(text, seed) {
   const note = picked.length ? `${picked.length} exercises for ${targets.map(targetName).slice(0, 5).join(', ')}${P.allow.size ? ' using ' + [...P.allow].map(k => TAX.equipment[k].toLowerCase()).join(', ') : ''}, set up for ${STYLE_NAMES[P.style].toLowerCase()}${items.some(i => i.link) ? ', with supersets' : ''}.` : 'I could not find exercises for that. Try naming a muscle group, like "chest and triceps".';
   return { items, note };
 }
-async function claudeRecommend(text) {
-  const catalogue = EXERCISES.map(e => `${e.id}|${e.name}|${e.primary.map(m => M[m].name).join(',')}|${TAX.equipment[e.equipment]}|${e.type}`).join('\n');
-  const recent = logs.slice(-5).map(l => `${l.date}: ${isAct(l) ? `${l.name} (${actSummary(l)})` : l.items.map(i => EX[i.exId]?.name).join(', ')}`).join('\n');
-  const ps = programStatus();
-  const prompt = `You are a strength coach inside a gym app. Build one training session from the exercise catalogue for this request.
-
-Request: "${text}"
-Default goal style: ${state.settings.goalStyle}
-${ps ? `Current program: ${ps.def.name}, week ${ps.week}, ${ps.phase.name} phase (${ps.phase.sets}, ${ps.phase.reps}, ${ps.phase.rpe}).` : ''}
-${recent ? 'Recent sessions:\n' + recent : ''}
-
-Rules: use only ids from the catalogue. Order compounds before isolations. Match the time available (about 8 minutes per exercise; 6 exercises if no time is given). Respect equipment limits. If the user asks for supersets, give each pair the same superset letter (A, B...); otherwise use null. Sets is a number; reps is a short string like "8-12" or "30s".
-
-Reply with JSON only: {"note": "one or two friendly sentences describing the session", "items": [{"id": "...", "sets": 3, "reps": "8-12", "superset": null, "why": "short reason"}]}
-
-Catalogue (id|name|primary muscles|equipment|type):
-${catalogue}`;
-  const out = await sampleFn.json(prompt, { modelTier: 'quick', cache: false });
-  const raw = Array.isArray(out?.items) ? out.items : [];
-  const items = raw.filter(i => i && EX[i.id]).slice(0, 14).map(i => ({ exId: i.id, sets: Math.max(1, Math.min(10, parseInt(i.sets) || 3)), reps: String(i.reps || '8-12').slice(0, 16), ss: i.superset || null, why: String(i.why || '').slice(0, 120), link: false }));
-  items.forEach((it, k) => { if (it.ss && items[k + 1] && items[k + 1].ss === it.ss) it.link = true; });
-  if (!items.length) throw new Error('empty');
-  return { items, note: String(out.note || '').slice(0, 300) };
-}
-async function runCoach(seed) {
-  const text = ui.coachText.trim(); if (!text) { toast('Tell the coach what you want to train'); return; }
-  ui.coachBusy = true; state.coach = { prompt: text }; render();
-  let res = null;
-  if (sampleFn && !seed) { try { res = await claudeRecommend(text); } catch (err) { console.warn('coach fallback', err); if (err?.code === 'not_granted') sampleFn = null; } }
-  if (!res) res = ruleRecommend(text, seed || (Date.now() % 100000) + 1);
-  ui.coachBusy = false; state.coach = { prompt: text, ...res }; ui.coachText = ''; saveState(); render();
-}
-
 // Active session
 function startSession() {
   const d = state.draft;
@@ -1811,8 +2431,14 @@ function viewProgress() {
   } else h += `<div class="card flat empty"><div><strong>No lifts logged yet</strong><div class="small muted">Finish a workout and every exercise you tick off gets its own progress chart here.</div></div><button class="btn" data-act="tab" data-id="workout">Start a workout</button></div>`;
   h += activityProgress();
   h += `<div class="section-head"><h2>History</h2><span class="small muted">${logs.length} session${logs.length === 1 ? '' : 's'}</span></div>`;
-  h += logs.length ? `<div class="card">${logs.slice().reverse().slice(0, 40).map(l => { if (isAct(l)) return actRow(l); const sets = l.items.reduce((n, i) => n + i.sets.length, 0); const gs = [...new Set(l.items.flatMap(i => EX[i.exId] ? [EX[i.exId].primaryGroup] : []))]; return `<div class="list-row"><div style="min-width:0"><strong>${esc(l.name)}</strong><div class="small muted">${fmtDL(l.date)} · ${l.items.length} exercises · ${sets} sets${l.programId && PROG[l.programId] ? ' · ' + esc(PROG[l.programId].name) : ''}</div><div class="chips" style="margin-top:4px">${gs.map(gPill).join('')}</div></div><div class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn sm" data-act="repeatLog" data-id="${l.id}">Repeat</button><button class="btn sm ghost danger" data-act="delLog" data-id="${l.id}" aria-label="Delete workout">×</button></div></div>`; }).join('')}</div>` : `<div class="card flat empty small muted">Your finished workouts and activities will be listed here.</div>`;
+  h += logs.length ? `<div class="card">${logs.slice().reverse().slice(0, 40).map(logRow).join('')}</div>` : `<div class="card flat empty small muted">Your finished workouts and activities will be listed here.</div>`;
   return h + '</div>';
+}
+
+function logRow(l) {
+  if (isAct(l)) return actRow(l);
+  const sets = l.items.reduce((n, i) => n + i.sets.length, 0), gs = [...new Set(l.items.flatMap(i => EX[i.exId] ? [EX[i.exId].primaryGroup] : []))];
+  return `<div class="list-row"><div style="min-width:0"><strong>${esc(l.name)}</strong><div class="small muted">${fmtDL(l.date)} · ${l.items.length} exercises · ${sets} sets${l.programId && PROG[l.programId] ? ' · ' + esc(PROG[l.programId].name) : ''}</div><div class="chips" style="margin-top:4px">${gs.map(gPill).join('')}</div></div><div class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn sm" data-act="repeatLog" data-id="${l.id}">Repeat</button><button class="btn sm ghost danger" data-act="delLog" data-id="${l.id}" aria-label="Delete workout">×</button></div></div>`;
 }
 
 // ---------- sheets ----------
@@ -1906,18 +2532,25 @@ const A = {
   loadTemplate: d => { const t = state.templates.find(x => x.id === d.id); state.draft = { name: t.name, items: t.items.map(x => ({ ...x })), programId: null, dayIndex: null }; saveState(); render(); toast('Loaded ' + t.name); },
   delTemplate: d => { const t = state.templates.find(x => x.id === d.id); confirmSheet(`Delete "${t.name}"?`, 'The saved workout is removed. Logged sessions stay.', () => { state.templates = state.templates.filter(x => x.id !== d.id); saveState(); render(); }, 'Delete'); },
   startSession: () => startSession(),
-  coachGo: () => runCoach(0),
-  coachShuffle: () => { ui.coachText = state.coach?.prompt || ''; runCoach((Date.now() % 100000) + 7); },
-  coachIdea: d => { ui.coachText = d.t; runCoach(0); },
-  coachAdd: () => {
-    const picks = state.coach.items.filter(i => i.pick !== false);
-    if (!picks.length) return toast('Tick at least one exercise');
-    const have = new Set(state.draft.items.map(i => i.exId));
-    picks.forEach((it, k) => { if (!have.has(it.exId)) state.draft.items.push({ exId: it.exId, sets: it.sets, reps: it.reps, link: !!(it.link && picks[k + 1] && state.coach.items.indexOf(picks[k + 1]) === state.coach.items.indexOf(it) + 1) }); });
-    if (state.draft.items.length) state.draft.items[state.draft.items.length - 1].link = false;
-    if (!state.draft.name) state.draft.name = defaultName(state.draft.items);
-    state.coach = null; saveState(); render(); toast(`${picks.length} exercises added`);
+  openChat: () => openChat(), chatSend: () => chatSend(), chatSay: d => chatSend(d.t), chatStop: () => chatCtl?.abort(),
+  chatClear: () => { state.chat = []; Object.keys(snaps).forEach(k => delete snaps[k]); saveState(); render(); refreshChat(); },
+  chatUndo: d => { const sn = snaps[d.id]; if (!sn) return; restoreSnap(sn); delete snaps[d.id]; const m = chatMsgs().find(x => x.id === d.id); if (m) m.undone = true; saveState(true); render(); refreshChat(); toast('Undone'); },
+  chatBtn: d => { const b = chatMsgs()[+d.m]?.buttons?.[+d.k]; if (!b || !A[b.act]) return; if (b.act !== 'chatSay') closeSheet(); A[b.act]({ ...b }); },
+  chatAdd: d => {
+    const m = chatMsgs()[+d.m]; if (!m?.items) return;
+    const picks = m.items.filter(i => i.pick !== false && EX[i.exId]); if (!picks.length) return toast('Tick at least one exercise');
+    const before = snapNow(), items = wItems(), have = new Set(items.map(i => i.exId));
+    picks.forEach((it, k) => { if (have.has(it.exId)) return; const n = wNew(EX[it.exId], it.sets, it.reps); n.link = !!(it.link && picks[k + 1] && m.items.indexOf(picks[k + 1]) === m.items.indexOf(it) + 1); items.push(n); });
+    if (items.length) items[items.length - 1].link = false;
+    if (!state.active && !state.draft.name) state.draft.name = defaultName(items);
+    m.items = null; m.changes = (m.changes || []).concat(`Added ${picks.length} exercise${picks.length > 1 ? 's' : ''} to ${state.active ? 'this' : 'your'} workout`);
+    Object.keys(snaps).forEach(k => delete snaps[k]); snaps[m.id] = before; m.undone = false;
+    saveState(); render(); refreshChat(); toast(`${picks.length} exercises added`);
   },
+  chatShuffle: d => { const m = chatMsgs()[+d.m]; if (!m) return; const rec = ruleRecommend(m.itemsPrompt || '', (Date.now() % 100000) + 7); m.items = rec.items; m.text = rec.note + ' Untick anything you want to skip, then add it to your workout.'; saveState(); refreshChat(); },
+  cpShow: () => cpPreview(),
+  calMove: d => { const t = today().slice(0, 7), cur = parseD((ui.calMonth || t) + '-01'); cur.setMonth(cur.getMonth() + +d.d); const m = dstr(cur).slice(0, 7); ui.calMonth = m >= t ? null : m; render(); },
+  calDay: d => daySheet(d.d),
   tick: d => { const it = state.active.items[+d.k], s = it.sets[+d.n]; s.done = !s.done; if (s.done && !it.link) ui.timerEnd = Date.now() + ui.timerDur * 1000; saveState(); render(); },
   addSet: d => { const sets = state.active.items[+d.k].sets; const l = sets[sets.length - 1] || { w: '', r: '' }; sets.push({ w: l.w, r: l.r, done: false }); saveState(); render(); },
   rmSet: d => { state.active.items[+d.k].sets.pop(); saveState(); render(); },
@@ -1928,7 +2561,7 @@ const A = {
   discardSession: () => confirmSheet('Discard this workout?', 'Nothing from this session will be saved.', () => { state.active = null; ui.timerEnd = 0; saveState(true); render(); }, 'Discard'),
   timerDur: d => { ui.timerDur = +d.s; render(); },
   timerAdd: d => { ui.timerEnd = Math.max(Date.now(), ui.timerEnd) + +d.s * 1000; renderTimer(); }, timerStop: () => { ui.timerEnd = 0; renderTimer(); },
-  activitySheet: () => activitySheet(),
+  activitySheet: d => activitySheet(d?.date),
   selActType: d => { ui.actType = d.id; document.querySelectorAll('[data-act="selActType"]').forEach(b => { const on = b.dataset.id === d.id; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); $('#actDistF').hidden = !ACT[d.id].dist; const n = $('#actName'); if (n) n.placeholder = ACT[d.id].name; },
   selActEffort: d => { ui.actEffort = d.v; document.querySelectorAll('[data-act="selActEffort"]').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === d.v)); },
   saveActivity: () => {
@@ -1984,8 +2617,8 @@ document.addEventListener('input', ev => {
   else if (k === 'draftName') { state.draft.name = el.value; saveState(); }
   else if (k === 'itSets') { state.draft.items[+el.dataset.i].sets = el.value; saveState(); }
   else if (k === 'itReps') { state.draft.items[+el.dataset.i].reps = el.value; saveState(); }
-  else if (k === 'coachText') ui.coachText = el.value;
-  else if (k === 'coachPick') state.coach.items[+el.dataset.i].pick = el.checked;
+  else if (k === 'chatText') { ui.chatText = el.value; el.style.height = 'auto'; el.style.height = Math.min(140, el.scrollHeight) + 'px'; }
+  else if (k === 'chatPick') { const m = chatMsgs()[+el.dataset.m]; if (m?.items?.[+el.dataset.i]) m.items[+el.dataset.i].pick = el.checked; }
   else if (k === 'setW') { state.active.items[+el.dataset.k].sets[+el.dataset.n].w = el.value; saveState(); }
   else if (k === 'setR') { state.active.items[+el.dataset.k].sets[+el.dataset.n].r = el.value; saveState(); }
   else if (k === 'progressEx') { ui.progressEx = el.value; render(); }
@@ -2000,7 +2633,7 @@ document.addEventListener('change', ev => {
     r.readAsText(ev.target.files[0]);
   }
 });
-document.addEventListener('keydown', ev => { if (ev.key === 'Enter' && ev.target.id === 'coachText' && !ev.shiftKey) { ev.preventDefault(); runCoach(0); } if (ev.key === 'Escape') closeSheet(); });
+document.addEventListener('keydown', ev => { if (ev.key === 'Enter' && ev.target.id === 'chatText' && !ev.shiftKey) { ev.preventDefault(); chatSend(); } if (ev.key === 'Escape') closeSheet(); });
 document.addEventListener('submit', ev => {
   const f = ev.target; ev.preventDefault();
   if (f.dataset.form === 'bw') {
@@ -2028,6 +2661,11 @@ document.addEventListener('submit', ev => {
 const h0 = (location.hash || '').slice(1); if (TABS.some(t => t[0] === h0)) ui.tab = h0;
 initStore();
 if (window.claude?.use) claude.use('sample').then(s => { if (s) { sampleFn = s; if (ui.tab === 'workout' && !state.active) render(); } }).catch(() => {});
+// Dates come from the phone's clock: when the app is reopened on a new day, redraw so "today" moves on
+let shownDay = today();
+const dayCheck = () => { if (today() === shownDay) return; shownDay = today(); ui.calMonth = null; if (!document.querySelector('.scrim')) render(); };
+document.addEventListener('visibilitychange', () => { if (!document.hidden) dayCheck(); });
+window.addEventListener('focus', dayCheck); window.addEventListener('pageshow', dayCheck); setInterval(dayCheck, 60000);
 </script>
 
 <script>if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));</script>
